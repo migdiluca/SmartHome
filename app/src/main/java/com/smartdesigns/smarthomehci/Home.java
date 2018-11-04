@@ -6,12 +6,18 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Home extends AppCompatActivity {
+
+    List<Room> roomList;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -37,7 +43,14 @@ public class Home extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        
+        roomList = new ArrayList<>();
+        roomList.add(new Room("Habitacion", R.drawable.ic_home_black_24dp));
 
+        RecyclerView myrv = (RecyclerView) findViewById(R.id.recyclerview);
+        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this, roomList);
+        myrv.setLayoutManager(new GridLayoutManager(this,3));
+        myrv.setAdapter(myAdapter);
     }
 
     @Override
