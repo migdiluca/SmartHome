@@ -1,7 +1,9 @@
 package com.smartdesigns.smarthomehci;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -10,8 +12,12 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.smartdesigns.smarthomehci.Utils.BottomNavigationViewHelper;
+
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class Home extends AppCompatActivity {
 
@@ -26,6 +32,7 @@ public class Home extends AppCompatActivity {
                 case R.id.navigation_home:
                     return true;
                 case R.id.navigation_dashboard:
+                    startActivity(new Intent(Home.this, RoutinesActivity.class));
                     return true;
                 case R.id.navigation_notifications:
                     return true;
@@ -34,6 +41,16 @@ public class Home extends AppCompatActivity {
         }
     };
 
+    private void addCard(String name, int image) {
+        //Cambiar por image
+        roomList.add(new Room(name, R.drawable.ic_home_black_24dp));
+
+        RecyclerView myrv = (RecyclerView) findViewById(R.id.recyclerview);
+        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this, roomList);
+        myrv.setLayoutManager(new GridLayoutManager(this,3));
+        myrv.setAdapter(myAdapter);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,15 +58,15 @@ public class Home extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        BottomNavigationViewHelper.disableShiftMode(navigation);
+        navigation.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
 
         roomList = new ArrayList<>();
-        roomList.add(new Room("Habitacion", R.drawable.ic_home_black_24dp));
+        addCard("Plus", 58);
 
-        RecyclerView myrv = (RecyclerView) findViewById(R.id.recyclerview);
-        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this, roomList);
-        myrv.setLayoutManager(new GridLayoutManager(this,3));
-        myrv.setAdapter(myAdapter);
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
