@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">SmartHomeHCI</string>
+    <string name="app_name">SmartHome</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="Search">Search</string>
     <string name="Settings">Settings</string>
     <string name="About">About</string>
+    <string name="Blinds">Blinds</string>
+    <string name="UpDown">Up/Down</string>
 </resources>
