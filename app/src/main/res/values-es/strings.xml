@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartHome</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_dashboard">Panel</string>
+    <string name="title_notifications">Notificaciones</string>
+    <string name="Search">Búsqueda</string>
+    <string name="Settings">Configuraciones</string>
+    <string name="About">Sobre</string>
+    <string name="Blinds">Persianas</string>
+    <string name="UpDown">Arriba/Abajo</string>
+
+
+
+</resources>

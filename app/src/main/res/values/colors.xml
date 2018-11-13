@@ -3,4 +3,11 @@
     <color name="colorPrimary">#ea7100</color>
     <color name="colorPrimaryDark">#99460e</color>
     <color name="colorAccent">#1b34d8</color>
+
+
+    <color name="white">#ffffff</color>
+    <color name="darkGrey">#6c6c6c</color>
+
+    <color name="blindsColorPrimary">#23efef</color>
+    <color name="blindsColorPrimaryDark">#179393</color>
 </resources>

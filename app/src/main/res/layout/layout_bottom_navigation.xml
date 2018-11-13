@@ -5,16 +5,16 @@
     <RelativeLayout
         android:layout_height="50dp"
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        >
 
         <android.support.design.widget.BottomNavigationView
             android:layout_alignParentBottom="true"
             android:id="@+id/navigation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:menu="@menu/navigation" >
-
-        </android.support.design.widget.BottomNavigationView>
-
+            app:menu="@menu/navigation"
+            app:labelVisibilityMode="labeled"/>
     </RelativeLayout>
 </merge>
