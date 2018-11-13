@@ -1,13 +1,29 @@
 package com.smartdesigns.smarthomehci.backend;
 
-public class Action {
-    private String id;
-    private String name;
-    private String params;
+import java.util.List;
 
-    public Action(String id, String name, String params){
-        this.id = id;
-        this.name = name;
+public class Action {
+    private String deviceId;
+    private String actionName;
+    private List<String> params;
+    private String meta;
+
+    public Action(String deviceId, String name, List<String> params, String meta){
+        this(deviceId, name, params);
+        this.meta = meta;
+    }
+
+    public Action(String deviceId, String name, List<String> params){
+        this.deviceId = deviceId;
+        this.actionName = name;
         this.params = params;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public List<String> getParams() {
+        return params;
     }
 }

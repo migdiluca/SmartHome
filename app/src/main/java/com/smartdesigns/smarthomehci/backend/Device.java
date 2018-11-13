@@ -4,21 +4,52 @@ package com.smartdesigns.smarthomehci.backend;
 
 import java.util.List;
 
-public abstract class Device {
-    protected String id = null;
+public class Device {
+    protected String id;
     private String name;
     private String typeId;
+    private String meta;
 
-    public Device(String name, String typeId){
+
+    public Device(String name, String typeId,String meta){
         this.name = name;
         this.typeId = typeId;
+        this.meta = meta;
     }
 
-    public Action getState(){
-        return new Action(id, "getState", "{}");
+    public Device(String name, String typeId, String meta, String id){
+        this(name, typeId, meta);
+        this.id=id;
     }
 
     public void setId(String id){
         this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setMeta(String meta) {
+        this.meta = meta;
+    }
+
+    @Override
+    public String toString() {
+        return "Id: " + this.id + "; typeId: "+ this.typeId + "; name: "+ this.name+"; meta: "+ this.meta;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(o == null || !(o instanceof Device)) {
+            return false;
+        }
+
+        Device d = (Device)o;
+        return this.name.equals(d.name) && this.typeId.equals(d.typeId) && this.meta.equals(d.meta);
     }
 }
