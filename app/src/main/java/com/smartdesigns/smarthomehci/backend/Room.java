@@ -1,6 +1,8 @@
 package com.smartdesigns.smarthomehci.backend;
 
-public class Room {
+import java.io.Serializable;
+
+public class Room implements RecyclerInterface, Serializable {
     private String id;
     private String name;
     private String meta;

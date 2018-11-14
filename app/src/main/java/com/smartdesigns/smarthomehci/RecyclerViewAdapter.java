@@ -3,6 +3,8 @@ package com.smartdesigns.smarthomehci;
 
 import android.content.Context;
 import android.content.Intent;
+
+import com.smartdesigns.smarthomehci.backend.RecyclerInterface;
 import com.smartdesigns.smarthomehci.backend.Room;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,15 +18,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
     private Context mContext ;
-    private List<Room> mData ;
+    private List<T> mData ;
 
 
-    public RecyclerViewAdapter(Context mContext, List<Room> mData) {
+    public RecyclerViewAdapter(Context mContext, List<T> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -42,18 +45,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         holder.title.setText(mData.get(position).getName());
-        holder.img_thumbnail.setImageResource(mData.get(position).getThumbnail());
+
+        holder.img_thumbnail.setImageResource(Integer.parseInt(mData.get(position).getMeta()));
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DevicesFragment fragment = new DevicesFragment();
+                Bundle arguments = new Bundle();
+                arguments.putSerializable("Object", mData.get(position));
+                fragment.setArguments(arguments);
 
-                /*Intent intent = new Intent(mContext,Room.class);
+                Home home = Home.getInstance();
+                home.setFragmentWithStack(fragment);
 
-                // passing data to the book activity
-                intent.putExtra("Title",mData.get(position).getName());
-                intent.putExtra("Thumbnail",mData.get(position).getThumbnail());
-                // start the activity
-                mContext.startActivity(intent);*/
 
             }
         });

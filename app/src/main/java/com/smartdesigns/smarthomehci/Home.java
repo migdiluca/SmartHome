@@ -2,6 +2,7 @@ package com.smartdesigns.smarthomehci;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.bottomnavigation.LabelVisibilityMode;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -27,10 +29,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Home extends AppCompatActivity {
 
+public class Home extends AppCompatActivity implements DevicesFragment.OnFragmentInteractionListener, RoomFragment.OnFragmentInteractionListener {
 
-    Response.Listener<List<Room>> roomList;
+    private FrameLayout mMainFrame;
+
+    private RoomFragment roomFragment;
+    private RoutinesFragment routinesFragment;
+    static private Home homeInstance = null;
+
+    public static Home getInstance() {
+        return homeInstance;
+    }
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -38,15 +48,12 @@ public class Home extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Intent newActivity;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    setFragment(roomFragment);
                     return true;
                 case R.id.navigation_dashboard:
-                    newActivity = new Intent(Home.this, RoutinesActivity.class);
-                    newActivity.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    newActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    startActivity(newActivity);
+                    setFragment(routinesFragment);
                     return true;
                 case R.id.navigation_notifications:
                     return true;
@@ -56,15 +63,27 @@ public class Home extends AppCompatActivity {
     };
 
 
-    private void addCards(Response.Listener<List<Room>> roomList) {
+    protected void setFragmentWithStack(Fragment fragment){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame, fragment);
 
-        List roomListAux = new ArrayList();
-        roomList.onResponse(roomListAux);
 
-        RecyclerView myrv = (RecyclerView) findViewById(R.id.recyclerview);
-        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this, roomListAux);
-        myrv.setLayoutManager(new GridLayoutManager(this,3));
-        myrv.setAdapter(myAdapter);
+        String backStateName = fragment.getClass().getName();
+        String fragmentTag = backStateName;
+        FragmentManager manager = this.getSupportFragmentManager();
+        boolean fragmentPopped = manager.popBackStackImmediate(backStateName, 0);
+
+        if(!fragmentPopped) {
+            Log.d("as", "asd");
+            fragmentTransaction.addToBackStack(fragment.getClass().getName());
+        }
+        fragmentTransaction.commit();
+    }
+
+    protected void setFragment(Fragment fragment){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame, fragment);
+        fragmentTransaction.commit();
     }
 
 
@@ -72,22 +91,19 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        homeInstance = this;
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
-        navigation.setSelectedItemId(R.id.navigation_home);
 
-        Context appContext = getApplicationContext();
-        ApiConnection api = ApiConnection.getInstance(appContext);
-        roomList = new Response.Listener<List<Room>>() {
-            @Override
-            public void onResponse(List<Room> response) {
+        mMainFrame = (FrameLayout) findViewById(R.id.main_frame);
 
-            }
-        };
-        api.getRooms(roomList, null);
-        addCards(roomList);
+        roomFragment = new RoomFragment();
+        routinesFragment = new RoutinesFragment();
+
+        setFragment(roomFragment);
+
     }
 
     @Override
@@ -116,6 +132,11 @@ public class Home extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
 
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri){
+        //you can leave it empty
     }
 
 //    @Override
