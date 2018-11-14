@@ -16,6 +16,9 @@ public class Room {
         this.meta = meta;
     }
 
+    /* PREGUNTAR A MIKE */
+    public int getThumbnail() {return 1;}
+
     public void setId(String id) {
         this.id = id;
     }

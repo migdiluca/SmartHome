@@ -1,40 +1,59 @@
 package com.smartdesigns.smarthomehci;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
+
+import com.android.volley.Response;
+import com.smartdesigns.smarthomehci.backend.Room;
 
 import com.smartdesigns.smarthomehci.Utils.BottomNavigationViewHelper;
+import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class Home extends AppCompatActivity {
 
-    List<Room> roomList;
+    private FrameLayout mMainFrame;
+
+    private RoomFragment roomFragment;
+    private RoutinesFragment routinesFragment;
+    static private Home homeInstance = null;
+
+    private Home() {
+    }
+
+    public static Home getInstance() {
+        return homeInstance;
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    setFragment(roomFragment);
                     return true;
                 case R.id.navigation_dashboard:
-                    startActivity(new Intent(Home.this, RoutinesActivity.class));
+                    setFragment(routinesFragment);
                     return true;
                 case R.id.navigation_notifications:
                     return true;
@@ -43,29 +62,41 @@ public class Home extends AppCompatActivity {
         }
     };
 
-    private void addCard(String name, int image) {
-        //Cambiar por image
-        roomList.add(new Room(name, R.drawable.ic_home_black_24dp));
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().findFragmentByTag("FragmentC") != null) {
+            // I'm viewing Fragment C
+            getSupportFragmentManager().popBackStack("A_B_TAG",
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
-        RecyclerView myrv = (RecyclerView) findViewById(R.id.recyclerview);
-        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this, roomList);
-        myrv.setLayoutManager(new GridLayoutManager(this,3));
-        myrv.setAdapter(myAdapter);
+    protected void setFragment(Fragment fragment){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame, fragment);
+        fragmentTransaction.addToBackStack(fragment.getClass().getName());
+        fragmentTransaction.commit();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        homeInstance = this;
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+        mMainFrame = (FrameLayout) findViewById(R.id.main_frame);
 
-        roomList = new ArrayList<>();
-        addCard("Plus", 58);
+        roomFragment = new RoomFragment();
+        routinesFragment = new RoutinesFragment();
 
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame, roomFragment);
+        fragmentTransaction.commit();
     }
 
 
