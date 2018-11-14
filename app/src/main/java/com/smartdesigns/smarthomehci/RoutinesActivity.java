@@ -1,5 +1,6 @@
 package com.smartdesigns.smarthomehci;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,8 +19,13 @@ public class RoutinesActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Intent newActivity;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    newActivity = new Intent(RoutinesActivity.this, Home.class);
+                    newActivity.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    newActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(newActivity);
                     return true;
                 case R.id.navigation_dashboard:
                     return true;
@@ -38,9 +44,15 @@ public class RoutinesActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+        navigation.setSelectedItemId(R.id.navigation_dashboard);
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        // TODO Auto-generated method stub
+        super.onBackPressed();
+        overridePendingTransition(0,0);
+    }
 
 }

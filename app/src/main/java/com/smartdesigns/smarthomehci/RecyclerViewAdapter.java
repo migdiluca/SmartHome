@@ -45,18 +45,19 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         holder.title.setText(mData.get(position).getName());
+
         holder.img_thumbnail.setImageResource(Integer.parseInt(mData.get(position).getMeta()));
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DevicesFragment fragment = new DevicesFragment();
-
                 Bundle arguments = new Bundle();
                 arguments.putSerializable("Object", mData.get(position));
                 fragment.setArguments(arguments);
 
                 Home home = Home.getInstance();
                 home.setFragmentWithStack(fragment);
+
 
             }
         });

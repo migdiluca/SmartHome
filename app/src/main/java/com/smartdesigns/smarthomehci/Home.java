@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 public class Home extends AppCompatActivity implements DevicesFragment.OnFragmentInteractionListener, RoomFragment.OnFragmentInteractionListener {
 
     private FrameLayout mMainFrame;
@@ -41,12 +42,12 @@ public class Home extends AppCompatActivity implements DevicesFragment.OnFragmen
         return homeInstance;
     }
 
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     setFragment(roomFragment);
@@ -60,6 +61,7 @@ public class Home extends AppCompatActivity implements DevicesFragment.OnFragmen
             return false;
         }
     };
+
 
     protected void setFragmentWithStack(Fragment fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -84,6 +86,7 @@ public class Home extends AppCompatActivity implements DevicesFragment.OnFragmen
         fragmentTransaction.commit();
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,15 +96,22 @@ public class Home extends AppCompatActivity implements DevicesFragment.OnFragmen
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+
         mMainFrame = (FrameLayout) findViewById(R.id.main_frame);
 
         roomFragment = new RoomFragment();
         routinesFragment = new RoutinesFragment();
 
         setFragment(roomFragment);
+
     }
 
-
+    @Override
+    public void onBackPressed() {
+        // TODO Auto-generated method stub
+        super.onBackPressed();
+        overridePendingTransition(0,0);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
