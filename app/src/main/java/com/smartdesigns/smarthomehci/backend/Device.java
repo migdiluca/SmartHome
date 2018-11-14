@@ -2,9 +2,10 @@ package com.smartdesigns.smarthomehci.backend;
 
 
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Device {
+public class Device implements RecyclerInterface, Serializable {
     protected String id;
     private String name;
     private String typeId;
@@ -30,12 +31,20 @@ public class Device {
         return id;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
     public void setMeta(String meta) {
         this.meta = meta;
+    }
+
+    public String getMeta() {
+        return this.meta;
     }
 
     @Override

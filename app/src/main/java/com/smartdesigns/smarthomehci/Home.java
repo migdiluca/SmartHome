@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Home extends AppCompatActivity implements RoomFragment.OnFragmentInteractionListener {
+public class Home extends AppCompatActivity implements DevicesFragment.OnFragmentInteractionListener, RoomFragment.OnFragmentInteractionListener {
 
     private FrameLayout mMainFrame;
 
