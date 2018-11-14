@@ -32,16 +32,6 @@ public class Home extends AppCompatActivity {
 
     Response.Listener<List<Room>> roomList;
 
-    private FrameLayout mMainFrame;
-
-    static private Home homeInstance = null;
-
-    public Home() {
-    }
-
-    public static Home getInstance() {
-        return homeInstance;
-    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -82,7 +72,6 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        homeInstance = this;
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
