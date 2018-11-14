@@ -1,40 +1,62 @@
 package com.smartdesigns.smarthomehci;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
+
+import com.android.volley.Response;
+import com.smartdesigns.smarthomehci.backend.Room;
 
 import com.smartdesigns.smarthomehci.Utils.BottomNavigationViewHelper;
+import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class Home extends AppCompatActivity {
 
-    List<Room> roomList;
+
+    Response.Listener<List<Room>> roomList;
+
+    private FrameLayout mMainFrame;
+
+    static private Home homeInstance = null;
+
+    public Home() {
+    }
+
+    public static Home getInstance() {
+        return homeInstance;
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Intent newActivity;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     return true;
                 case R.id.navigation_dashboard:
-                    startActivity(new Intent(Home.this, RoutinesActivity.class));
+                    newActivity = new Intent(Home.this, RoutinesActivity.class);
+                    newActivity.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    newActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(newActivity);
                     return true;
                 case R.id.navigation_notifications:
                     return true;
@@ -43,32 +65,48 @@ public class Home extends AppCompatActivity {
         }
     };
 
-    private void addCard(String name, int image) {
-        //Cambiar por image
-        roomList.add(new Room(name, R.drawable.ic_home_black_24dp));
+
+    private void addCards(Response.Listener<List<Room>> roomList) {
+
+        List roomListAux = new ArrayList();
+        roomList.onResponse(roomListAux);
 
         RecyclerView myrv = (RecyclerView) findViewById(R.id.recyclerview);
-        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this, roomList);
+        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this, roomListAux);
         myrv.setLayoutManager(new GridLayoutManager(this,3));
         myrv.setAdapter(myAdapter);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        homeInstance = this;
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+        navigation.setSelectedItemId(R.id.navigation_home);
 
-        roomList = new ArrayList<>();
-        addCard("Plus", 58);
+        Context appContext = getApplicationContext();
+        ApiConnection api = ApiConnection.getInstance(appContext);
+        roomList = new Response.Listener<List<Room>>() {
+            @Override
+            public void onResponse(List<Room> response) {
 
+            }
+        };
+        api.getRooms(roomList, null);
+        addCards(roomList);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        // TODO Auto-generated method stub
+        super.onBackPressed();
+        overridePendingTransition(0,0);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

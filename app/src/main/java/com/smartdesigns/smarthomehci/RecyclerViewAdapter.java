@@ -3,6 +3,11 @@ package com.smartdesigns.smarthomehci;
 
 import android.content.Context;
 import android.content.Intent;
+import com.smartdesigns.smarthomehci.backend.Room;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,19 +41,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
-        holder.tv_book_title.setText(mData.get(position).getName());
-        holder.img_book_thumbnail.setImageResource(mData.get(position).getThumbnail());
+        holder.title.setText(mData.get(position).getName());
+        holder.img_thumbnail.setImageResource(mData.get(position).getThumbnail());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(mContext,Room.class);
+                /*Intent intent = new Intent(mContext,Room.class);
 
                 // passing data to the book activity
                 intent.putExtra("Title",mData.get(position).getName());
                 intent.putExtra("Thumbnail",mData.get(position).getThumbnail());
                 // start the activity
-                mContext.startActivity(intent);
+                mContext.startActivity(intent);*/
 
             }
         });
@@ -64,15 +69,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_book_title;
-        ImageView img_book_thumbnail;
+        TextView title;
+        ImageView img_thumbnail;
         CardView cardView ;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            tv_book_title = (TextView) itemView.findViewById(R.id.card_view_title) ;
-            img_book_thumbnail = (ImageView) itemView.findViewById(R.id.card_view_img);
+            title = (TextView) itemView.findViewById(R.id.card_view_title) ;
+            img_thumbnail = (ImageView) itemView.findViewById(R.id.card_view_img);
             cardView = (CardView) itemView.findViewById(R.id.card_view);
 
 
