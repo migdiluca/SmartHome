@@ -42,7 +42,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         holder.title.setText(mData.get(position).getName());
-        holder.img_thumbnail.setImageResource(mData.get(position).getThumbnail());
+        holder.img_thumbnail.setImageResource(Integer.parseInt(mData.get(position).getMeta()));
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +53,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 fragment.setArguments(arguments);
 
                 Home home = Home.getInstance();
-                home.setFragment(fragment);
+                home.setFragmentWithStack(fragment);
                 /*Intent intent = new Intent(mContext,Room.class);
 
                 // passing data to the book activity

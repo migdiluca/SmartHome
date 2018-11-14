@@ -2,6 +2,7 @@ package com.smartdesigns.smarthomehci;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.bottomnavigation.LabelVisibilityMode;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -27,16 +29,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements RoomFragment.OnFragmentInteractionListener {
 
     private FrameLayout mMainFrame;
 
     private RoomFragment roomFragment;
     private RoutinesFragment routinesFragment;
     static private Home homeInstance = null;
-
-    private Home() {
-    }
 
     public static Home getInstance() {
         return homeInstance;
@@ -62,21 +61,26 @@ public class Home extends AppCompatActivity {
         }
     };
 
-    @Override
-    public void onBackPressed() {
-        if (getSupportFragmentManager().findFragmentByTag("FragmentC") != null) {
-            // I'm viewing Fragment C
-            getSupportFragmentManager().popBackStack("A_B_TAG",
-                    FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        } else {
-            super.onBackPressed();
+    protected void setFragmentWithStack(Fragment fragment){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame, fragment);
+
+
+        String backStateName = fragment.getClass().getName();
+        String fragmentTag = backStateName;
+        FragmentManager manager = this.getSupportFragmentManager();
+        boolean fragmentPopped = manager.popBackStackImmediate(backStateName, 0);
+
+        if(!fragmentPopped) {
+            Log.d("as", "asd");
+            fragmentTransaction.addToBackStack(fragment.getClass().getName());
         }
+        fragmentTransaction.commit();
     }
 
     protected void setFragment(Fragment fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
-        fragmentTransaction.addToBackStack(fragment.getClass().getName());
         fragmentTransaction.commit();
     }
 
@@ -94,9 +98,7 @@ public class Home extends AppCompatActivity {
         roomFragment = new RoomFragment();
         routinesFragment = new RoutinesFragment();
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_frame, roomFragment);
-        fragmentTransaction.commit();
+        setFragment(roomFragment);
     }
 
 
@@ -120,6 +122,11 @@ public class Home extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
 
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri){
+        //you can leave it empty
     }
 
 //    @Override
