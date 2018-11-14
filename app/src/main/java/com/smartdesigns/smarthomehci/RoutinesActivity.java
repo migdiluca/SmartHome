@@ -21,13 +21,13 @@ public class RoutinesActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Intent newActivity;
             switch (item.getItemId()) {
-                case R.id.navigation_home:
+                case R.id.navigation_rooms:
                     newActivity = new Intent(RoutinesActivity.this, Home.class);
                     newActivity.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     newActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(newActivity);
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_routines:
                     return true;
                 case R.id.navigation_notifications:
                     return true;
@@ -44,7 +44,7 @@ public class RoutinesActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
-        navigation.setSelectedItemId(R.id.navigation_dashboard);
+        navigation.setSelectedItemId(R.id.navigation_routines);
 
     }
 

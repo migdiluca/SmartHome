@@ -1,5 +1,9 @@
 package com.smartdesigns.smarthomehci.backend;
 
+import android.support.v4.app.Fragment;
+
+import com.smartdesigns.smarthomehci.DevicesFragment;
+
 import java.io.Serializable;
 
 public class Room implements RecyclerInterface, Serializable {
@@ -40,6 +44,10 @@ public class Room implements RecyclerInterface, Serializable {
 
     public String getMeta() {
         return this.meta;
+    }
+
+    public Fragment getChildFragment(){
+        return new DevicesFragment();
     }
 
     @Override

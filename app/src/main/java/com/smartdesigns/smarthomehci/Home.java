@@ -27,15 +27,17 @@ import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Stack;
 
 
 public class Home extends AppCompatActivity implements DevicesFragment.OnFragmentInteractionListener, RoomFragment.OnFragmentInteractionListener {
 
     private FrameLayout mMainFrame;
 
-    private RoomFragment roomFragment;
-    private RoutinesFragment routinesFragment;
+
+    private Stack<Fragment> bottomStacks[] = new Stack[5];
+
+    private int currentMode = 0;
     static private Home homeInstance = null;
 
     public static Home getInstance() {
@@ -49,11 +51,13 @@ public class Home extends AppCompatActivity implements DevicesFragment.OnFragmen
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    setFragment(roomFragment);
+                case R.id.navigation_rooms:
+                    currentMode = 0;
+                    setFragment(bottomStacks[currentMode].peek());
                     return true;
-                case R.id.navigation_dashboard:
-                    setFragment(routinesFragment);
+                case R.id.navigation_routines:
+                    currentMode = 1;
+                    setFragment(bottomStacks[currentMode].peek());
                     return true;
                 case R.id.navigation_notifications:
                     return true;
@@ -67,6 +71,8 @@ public class Home extends AppCompatActivity implements DevicesFragment.OnFragmen
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
 
+
+        bottomStacks[currentMode].push(fragment);
 
         String backStateName = fragment.getClass().getName();
         String fragmentTag = backStateName;
@@ -99,8 +105,16 @@ public class Home extends AppCompatActivity implements DevicesFragment.OnFragmen
 
         mMainFrame = (FrameLayout) findViewById(R.id.main_frame);
 
-        roomFragment = new RoomFragment();
-        routinesFragment = new RoutinesFragment();
+
+        RoomFragment roomFragment = new RoomFragment();
+        RoutinesFragment routinesFragment = new RoutinesFragment();
+
+        for(int i = 0; i<5; i++) {
+            bottomStacks[i] = new Stack<>();
+        }
+
+        bottomStacks[0].push(roomFragment);
+        bottomStacks[1].push(routinesFragment);
 
         setFragment(roomFragment);
 
@@ -111,6 +125,7 @@ public class Home extends AppCompatActivity implements DevicesFragment.OnFragmen
         // TODO Auto-generated method stub
         super.onBackPressed();
         overridePendingTransition(0,0);
+        bottomStacks[currentMode].pop();
     }
 
     @Override

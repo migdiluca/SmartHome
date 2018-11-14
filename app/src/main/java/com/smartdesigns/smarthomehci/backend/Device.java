@@ -2,6 +2,10 @@ package com.smartdesigns.smarthomehci.backend;
 
 
 
+import android.support.v4.app.Fragment;
+
+import com.smartdesigns.smarthomehci.DevicesFragment;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -21,6 +25,11 @@ public class Device implements RecyclerInterface, Serializable {
     public Device(String name, String typeId, String meta, String id){
         this(name, typeId, meta);
         this.id=id;
+    }
+
+    public Fragment getChildFragment(){
+        // ACA VA EL DE PEIO
+        return new DevicesFragment();
     }
 
     public void setId(String id){

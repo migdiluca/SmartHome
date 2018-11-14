@@ -18,10 +18,10 @@ public class Blinds extends Activity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
+                case R.id.navigation_rooms:
                     Intent intentHome = new Intent();
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_routines:
                     return true;
                 case R.id.navigation_notifications:
                     return true;
