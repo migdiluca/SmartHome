@@ -126,7 +126,7 @@ public class Home extends AppCompatActivity implements DevicesFragment.OnFragmen
 
     @Override
     public void onBackPressed() {
-        if(bottomStacks[currentMode].size() <= 2){
+        if(bottomStacks[currentMode].size() <= 1){
             Intent intent = new Intent(this, Home.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("Exit me", true);
