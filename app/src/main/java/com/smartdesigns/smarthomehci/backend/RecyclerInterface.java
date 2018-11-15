@@ -1,6 +1,9 @@
 package com.smartdesigns.smarthomehci.backend;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
+
+import java.io.Serializable;
 
 public interface RecyclerInterface {
 
@@ -8,4 +11,5 @@ public interface RecyclerInterface {
     public String getMeta();
     public String getId();
     public Fragment getChildFragment();
+    public void onClickAction(Serializable arg, Context context);
 }

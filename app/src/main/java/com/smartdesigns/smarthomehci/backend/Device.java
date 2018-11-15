@@ -1,10 +1,13 @@
 package com.smartdesigns.smarthomehci.backend;
-
-
-
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.smartdesigns.smarthomehci.Blinds;
 import com.smartdesigns.smarthomehci.DevicesFragment;
+import com.smartdesigns.smarthomehci.RoomFragment;
 
 import java.io.Serializable;
 import java.util.List;
@@ -54,6 +57,11 @@ public class Device implements RecyclerInterface, Serializable {
 
     public String getMeta() {
         return this.meta;
+    }
+
+    public void onClickAction(Serializable arg, Context context) {
+        Intent device = new Intent(context, Blinds.class);
+        context.startActivity(device);
     }
 
     @Override

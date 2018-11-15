@@ -67,7 +67,7 @@ public class Home extends AppCompatActivity implements DevicesFragment.OnFragmen
     };
 
 
-    protected void setFragmentWithStack(Fragment fragment){
+    public void setFragmentWithStack(Fragment fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
 
@@ -97,6 +97,10 @@ public class Home extends AppCompatActivity implements DevicesFragment.OnFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        if( getIntent().getBooleanExtra("Exit me", false)){
+            finish();
+            return; // add this to prevent from doing unnecessary stuffs
+        }
         homeInstance = this;
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -122,10 +126,18 @@ public class Home extends AppCompatActivity implements DevicesFragment.OnFragmen
 
     @Override
     public void onBackPressed() {
-        // TODO Auto-generated method stub
-        super.onBackPressed();
-        overridePendingTransition(0,0);
-        bottomStacks[currentMode].pop();
+        if(bottomStacks[currentMode].size() <= 2){
+            Intent intent = new Intent(this, Home.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("Exit me", true);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            bottomStacks[currentMode].pop();
+            Fragment back = bottomStacks[currentMode].pop();
+            setFragment(back);
+        }
     }
 
     @Override

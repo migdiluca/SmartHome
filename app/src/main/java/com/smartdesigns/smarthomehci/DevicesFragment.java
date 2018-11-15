@@ -59,7 +59,7 @@ public class DevicesFragment extends Fragment {
 
         List devicesListAux = new ArrayList();
         roomList.onResponse(devicesListAux);
-        devicesListAux.add(new Room("25","ESTE ES UN DISPOSITIVO","0"));
+        devicesListAux.add(new Device("25","ESTE ES UN DISPOSITIVO","0"));
 
         RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), devicesListAux);
         devicesRecycler.setLayoutManager(new GridLayoutManager(this.getContext(),3));

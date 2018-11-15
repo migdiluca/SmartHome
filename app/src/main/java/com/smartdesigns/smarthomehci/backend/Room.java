@@ -1,8 +1,11 @@
 package com.smartdesigns.smarthomehci.backend;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.smartdesigns.smarthomehci.DevicesFragment;
+import com.smartdesigns.smarthomehci.Home;
 
 import java.io.Serializable;
 
@@ -48,6 +51,16 @@ public class Room implements RecyclerInterface, Serializable {
 
     public Fragment getChildFragment(){
         return new DevicesFragment();
+    }
+
+    public void onClickAction(Serializable arg, Context context) {
+        Fragment fragment = new DevicesFragment();
+        Bundle arguments = new Bundle();
+        arguments.putSerializable("Object", arg);
+        fragment.setArguments(arguments);
+
+        Home home = Home.getInstance();
+        home.setFragmentWithStack(fragment);
     }
 
     @Override

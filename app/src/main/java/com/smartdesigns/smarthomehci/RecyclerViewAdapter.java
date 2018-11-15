@@ -50,15 +50,7 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = mData.get(position).getChildFragment();
-                Bundle arguments = new Bundle();
-                arguments.putSerializable("Object", mData.get(position));
-                fragment.setArguments(arguments);
-
-                Home home = Home.getInstance();
-                home.setFragmentWithStack(fragment);
-
-
+                mData.get(position).onClickAction(mData.get(position), mContext);
             }
         });
 
