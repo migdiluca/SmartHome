@@ -53,6 +53,7 @@ public class Device implements RecyclerInterface, Serializable {
     }
 
     public void onClickAction(Serializable arg, Context context) {
+
         Intent device = new Intent(context, Devices.class);
         if(Home.getInstance().getCurrentMode() == 0)
             device.putExtra("mode", 0);
@@ -60,6 +61,7 @@ public class Device implements RecyclerInterface, Serializable {
             device.putExtra("mode", 1);
             device.putExtra("routine",RoutinesFragment.getCurrentRoutine());
         }
+
         device.putExtra("device", this);
         context.startActivity(device);
     }

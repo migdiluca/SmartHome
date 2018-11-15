@@ -32,6 +32,7 @@ public class Routine implements RecyclerInterface, Serializable{
     public String getName(){return name;}
     public String getMeta(){return meta;}
     public String getId(){return id;}
+
     public void onClickAction(Serializable arg, Context context){
         RoutinesFragment.setCurrentRoutine(this);
 
@@ -41,6 +42,6 @@ public class Routine implements RecyclerInterface, Serializable{
         fragment.setArguments(arguments);
 
         Home home = Home.getInstance();
-        home.setFragmentWithStack(fragment);
+        home.setFragment(fragment);
     };
 }

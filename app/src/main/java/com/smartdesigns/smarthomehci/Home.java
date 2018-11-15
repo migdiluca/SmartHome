@@ -57,7 +57,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
                         endApp();
                         return true;
                     }
-                    setFragment(bottomStacks[currentMode].peek());
+                    setFragment(bottomStacks[currentMode].pop());
                     return true;
                 case R.id.navigation_routines:
                     currentMode = 1;
@@ -65,7 +65,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
                         endApp();
                         return true;
                     }
-                    setFragment(bottomStacks[currentMode].peek());
+                    setFragment(bottomStacks[currentMode].pop());
                     return true;
                 case R.id.navigation_cameras:
                     currentMode = 2;
@@ -75,28 +75,12 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         }
     };
 
-
-    public void setFragmentWithStack(Fragment fragment){
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_frame, fragment);
-
-
+    public void setFragment(Fragment fragment){
         bottomStacks[currentMode].push(fragment);
 
-        String backStateName = fragment.getClass().getName();
-        String fragmentTag = backStateName;
-        FragmentManager manager = this.getSupportFragmentManager();
-        boolean fragmentPopped = manager.popBackStackImmediate(backStateName, 0);
-
-        if(!fragmentPopped) {
-            Log.d("as", "asd");
-            fragmentTransaction.addToBackStack(fragment.getClass().getName());
-        }
-        fragmentTransaction.commit();
-    }
-
-    protected void setFragment(Fragment fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        //fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();
     }
@@ -126,9 +110,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
             bottomStacks[i] = new Stack<>();
         }
 
-        bottomStacks[0].push(roomFragment);
         bottomStacks[1].push(routinesFragment);
-
         setFragment(roomFragment);
 
     }
@@ -143,12 +125,15 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 
     @Override
     public void onBackPressed() {
+        Log.d("ENTRE", "SI");
+        Log.d("SIZE", Integer.toString(bottomStacks[currentMode].size()));
         if(bottomStacks[currentMode].size() <= 1){
             endApp();
         }
         else {
+            Log.d("poppiong", "pop");
             bottomStacks[currentMode].pop();
-            Fragment back = bottomStacks[currentMode].peek();
+            Fragment back = bottomStacks[currentMode].pop();
             setFragment(back);
         }
     }
