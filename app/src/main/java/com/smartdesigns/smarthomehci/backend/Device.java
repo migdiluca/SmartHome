@@ -58,6 +58,7 @@ public class Device implements RecyclerInterface, Serializable {
 
     public void onClickAction(Serializable arg, Context context) {
         Intent device = new Intent(context, Blinds.class);
+        device.putExtra("device", this);
         context.startActivity(device);
     }
 
