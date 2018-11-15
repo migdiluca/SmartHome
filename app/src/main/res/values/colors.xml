@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ea7100</color>
-    <color name="colorPrimaryDark">#99460e</color>
-    <color name="colorAccent">#1b34d8</color>
+    <color name="colorPrimary">#2195f2</color>
+    <color name="colorPrimaryDark">#1976d1</color>
+    <color name="colorAccent">#fdc205</color>
 
 
     <color name="white">#ffffff</color>
@@ -10,4 +10,5 @@
 
     <color name="blindsColorPrimary">#23efef</color>
     <color name="blindsColorPrimaryDark">#179393</color>
+
 </resources>

@@ -1,17 +1,15 @@
-package com.smartdesigns.smarthomehci;
+package com.smartdesigns.smarthomehci.Utils;
 
 
 import android.content.Context;
-import android.content.Intent;
 
+import com.smartdesigns.smarthomehci.R;
 import com.smartdesigns.smarthomehci.backend.RecyclerInterface;
-import com.smartdesigns.smarthomehci.backend.Room;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +23,7 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
 
     private Context mContext ;
     private List<T> mData ;
+    private int columns = 2;
 
 
     public RecyclerViewAdapter(Context mContext, List<T> mData) {
@@ -32,14 +31,25 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
         this.mData = mData;
     }
 
+    public int getColumns() {return columns;};
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view ;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
         view = mInflater.inflate(R.layout.card_view_item,parent,false);
+        GridLayoutManager.LayoutParams lp = (GridLayoutManager.LayoutParams) view.getLayoutParams();
+
+        //Podria cambiar el valor de las columnas segun la pantalla aca
+
+        lp.width = (parent.getMeasuredWidth() *95 /100) / columns;
+        lp.height = lp.width + ((TextView) view.findViewById(R.id.card_view_title)).getLineHeight()*2;
+
+        view.setLayoutParams(lp);
         return new MyViewHolder(view);
     }
+
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {

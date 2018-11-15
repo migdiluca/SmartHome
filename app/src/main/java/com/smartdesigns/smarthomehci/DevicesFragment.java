@@ -15,8 +15,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.volley.Response;
+import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
+import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
 import com.smartdesigns.smarthomehci.backend.Device;
-import com.smartdesigns.smarthomehci.backend.RecyclerInterface;
 import com.smartdesigns.smarthomehci.backend.Room;
 import com.smartdesigns.smarthomehci.backend.Routine;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;

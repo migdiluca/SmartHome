@@ -5,13 +5,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Response;
+import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
+import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
 import com.smartdesigns.smarthomehci.backend.Room;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
@@ -48,13 +49,17 @@ public class RoomFragment extends Fragment {
 
     private void addCards(Response.Listener<List<Room>> roomList) {
 
-       List roomListAux = new ArrayList();
-       roomList.onResponse(roomListAux);
-       roomListAux.add(new Room("25","ES UN TEST","0"));
+        List roomListAux = new ArrayList();
+        roomList.onResponse(roomListAux);
+        roomListAux.add(new Room("25", "ES UN TEST", "0"));
+        roomListAux.add(new Room("25", "ES UN TEST", "0"));
+        roomListAux.add(new Room("25", "ES UN TEST", "0"));
+        roomListAux.add(new Room("25", "ES UN TEST", "0"));
+        roomListAux.add(new Room("25", "ES UN TEST", "0"));
 
-       RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), roomListAux);
-       roomRecycler.setLayoutManager(new GridLayoutManager(this.getContext(),3));
-       roomRecycler.setAdapter(roomRecyclerAdapter);
+        RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), roomListAux);
+        roomRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), roomRecyclerAdapter.getColumns()));
+        roomRecycler.setAdapter(roomRecyclerAdapter);
     }
 
     /**
@@ -106,11 +111,10 @@ public class RoomFragment extends Fragment {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         getActivity().setTitle(R.string.title_rooms);
     }
-
 
 
     @Override

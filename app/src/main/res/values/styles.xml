@@ -12,5 +12,4 @@
         <item name="colorPrimaryDark">@color/blindsColorPrimaryDark</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-
 </resources>

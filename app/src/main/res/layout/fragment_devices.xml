@@ -17,7 +17,7 @@
         android:elevation="5dp"
         android:focusable="true"
         android:src="@android:drawable/ic_media_play"
-        app:backgroundTint="@color/colorPrimaryDark" />
+        app:backgroundTint="@color/colorAccent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/devices_recyclerview"

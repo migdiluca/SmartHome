@@ -6,13 +6,15 @@
         android:layout_height="50dp"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
-        android:background="#FFFFFF"
+        android:background="@color/colorPrimary"
         >
 
         <android.support.design.widget.BottomNavigationView
             android:layout_alignParentBottom="true"
             android:id="@+id/navigation"
             android:layout_width="match_parent"
+            app:itemTextColor="@color/bottom_nav_color"
+            app:itemIconTint="@color/bottom_nav_color"
             android:layout_height="match_parent"
             app:menu="@menu/navigation"
             app:labelVisibilityMode="labeled"/>

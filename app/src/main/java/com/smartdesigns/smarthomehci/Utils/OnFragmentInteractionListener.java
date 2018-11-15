@@ -1,4 +1,4 @@
-package com.smartdesigns.smarthomehci;
+package com.smartdesigns.smarthomehci.Utils;
 
 import android.net.Uri;
 
