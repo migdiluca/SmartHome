@@ -1,18 +1,12 @@
 package com.smartdesigns.smarthomehci.backend;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 
-import com.smartdesigns.smarthomehci.Blinds;
-import com.smartdesigns.smarthomehci.DevicesFragment;
+import com.smartdesigns.smarthomehci.Devices;
 import com.smartdesigns.smarthomehci.Home;
-import com.smartdesigns.smarthomehci.RoomFragment;
 import com.smartdesigns.smarthomehci.RoutinesFragment;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class Device implements RecyclerInterface, Serializable {
     protected String id;
@@ -40,6 +34,8 @@ public class Device implements RecyclerInterface, Serializable {
         return id;
     }
 
+    public String getTypeId() { return typeId; }
+
     public String getName() {
         return this.name;
     }
@@ -57,7 +53,7 @@ public class Device implements RecyclerInterface, Serializable {
     }
 
     public void onClickAction(Serializable arg, Context context) {
-        Intent device = new Intent(context, Blinds.class);
+        Intent device = new Intent(context, Devices.class);
         if(Home.getInstance().getCurrentMode() == 0)
             device.putExtra("mode", 0);
         else {
