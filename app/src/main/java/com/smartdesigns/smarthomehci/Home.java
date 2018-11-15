@@ -69,7 +69,6 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         bottomStacks[currentMode].push(fragment);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        //fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();

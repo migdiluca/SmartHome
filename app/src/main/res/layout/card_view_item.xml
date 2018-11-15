@@ -25,7 +25,7 @@
                 android:id="@+id/card_view_img"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
-                android:background="#2d2d2d" />
+                android:background="#00ffffff"/>
 
         </android.support.constraint.ConstraintLayout>
 
@@ -37,7 +37,8 @@
             android:layout_alignParentBottom="true"
             android:text="Title"
             android:textColor="#2d2d2d"
-            android:textSize="13sp" />
+            android:textSize="18sp"
+            android:background="#27000000"/>
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

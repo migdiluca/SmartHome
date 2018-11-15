@@ -67,10 +67,14 @@ public class DevicesFragment extends Fragment {
         List devicesListAux = new ArrayList();
         devicesList.onResponse(devicesListAux);
         devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
+        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
+        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
+        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
+        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
 
-        RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), devicesListAux);
-        devicesRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
-        devicesRecycler.setAdapter(roomRecyclerAdapter);
+        RecyclerViewAdapter devicesRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), devicesListAux);
+        devicesRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), devicesRecyclerAdapter.getColumns()));
+        devicesRecycler.setAdapter(devicesRecyclerAdapter);
     }
 
     @Override

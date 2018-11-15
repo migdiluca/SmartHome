@@ -16,6 +16,7 @@ public class Routine implements RecyclerInterface, Serializable{
     private String name;
     private List<Action> actions;
     private String meta;
+    private int background = -1;
 
     public Routine(String id, List<Action> actions, String meta){
         this(actions, meta);
@@ -32,6 +33,15 @@ public class Routine implements RecyclerInterface, Serializable{
     public String getName(){return name;}
     public String getMeta(){return meta;}
     public String getId(){return id;}
+    @Override
+    public void setBackground(int background) {
+        this.background = background;
+    }
+
+    @Override
+    public int getBackground() {
+        return background;
+    }
 
     public void onClickAction(Serializable arg, Context context){
         RoutinesFragment.setCurrentRoutine(this);
