@@ -64,6 +64,7 @@ public class Device implements RecyclerInterface, Serializable {
             device.putExtra("mode", 1);
             device.putExtra("routine",RoutinesFragment.getCurrentRoutine());
         }
+        device.putExtra("device", this);
         context.startActivity(device);
     }
 

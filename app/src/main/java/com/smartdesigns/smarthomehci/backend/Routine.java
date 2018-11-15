@@ -21,6 +21,8 @@ public class Routine implements RecyclerInterface, Serializable{
     public Routine(String id, List<Action> actions, String meta){
         this(actions, meta);
         this.id = id;
+        //BORRAR
+        this.name = "hola";
     }
 
     public Routine(List<Action> actions, String meta){
@@ -34,7 +36,7 @@ public class Routine implements RecyclerInterface, Serializable{
     public void onClickAction(Serializable arg, Context context){
         RoutinesFragment.setCurrentRoutine(this);
 
-        Fragment fragment = new RoutineDevicesFragment();
+        Fragment fragment = new DevicesFragment();
         Bundle arguments = new Bundle();
         arguments.putSerializable("Object", this);
         fragment.setArguments(arguments);
