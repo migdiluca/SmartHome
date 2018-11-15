@@ -1,18 +1,24 @@
 package com.smartdesigns.smarthomehci;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.smartdesigns.smarthomehci.backend.Device;
+import com.smartdesigns.smarthomehci.backend.RecyclerInterface;
 import com.smartdesigns.smarthomehci.backend.Room;
+import com.smartdesigns.smarthomehci.backend.Routine;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
 import java.util.ArrayList;
@@ -28,7 +34,8 @@ import java.util.List;
  */
 public class DevicesFragment extends Fragment {
 
-    private Room room;
+    private Room room = null;
+    private Routine routine = null;
     Response.Listener<List<Device>> devicesList;
 
     private OnFragmentInteractionListener mListener;
@@ -54,10 +61,10 @@ public class DevicesFragment extends Fragment {
         return fragment;
     }
 
-    private void addCards(Response.Listener<List<Device>> roomList) {
+    private void addCards(Response.Listener<List<Device>> devicesList) {
 
         List devicesListAux = new ArrayList();
-        roomList.onResponse(devicesListAux);
+        devicesList.onResponse(devicesListAux);
         devicesListAux.add(new Device("25","ESTE ES UN DISPOSITIVO","0"));
 
         RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), devicesListAux);
@@ -69,17 +76,43 @@ public class DevicesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            room = (Room) getArguments().getSerializable("Object");
-            getActivity().setTitle(room.getName());
+            if(Home.getInstance().getCurrentMode() == 0){
+                room =  (Room) getArguments().getSerializable("Object");
+                getActivity().setTitle(room.getName());
+            }
+            else if(Home.getInstance().getCurrentMode() == 1) {
+                routine =  (Routine) getArguments().getSerializable("Object");
+                getActivity().setTitle(routine.getName());
+            }
         }
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_devices, container, false);
 
-        getActivity().setTitle(room.getName());
+        if(room != null)
+            getActivity().setTitle(room.getName());
+        else
+            getActivity().setTitle(routine.getName());
+
         devicesRecycler = view.findViewById(R.id.devices_recyclerview);
+
+        FloatingActionButton playRoutineButton = (FloatingActionButton) view.findViewById(R.id.play_routine_button);
+        playRoutineButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //ACTIVAR RUTINA API
+                Log.d("hola","hola");
+                //SI anda bien
+                Toast.makeText(getActivity(), getResources().getString(R.string.apply_routine), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        if(Home.getInstance().getCurrentMode() != 1)
+            playRoutineButton.setVisibility(View.GONE);
+
+
         Context appContext = getContext();
         ApiConnection api = ApiConnection.getInstance(appContext);
         devicesList = new Response.Listener<List<Device>>() {
@@ -88,7 +121,10 @@ public class DevicesFragment extends Fragment {
 
             }
         };
-        api.getRoomDevices(room,devicesList, null);
+        if(Home.getInstance().getCurrentMode() == 0)
+            api.getRoomDevices(room,devicesList, null);
+        else if(Home.getInstance().getCurrentMode() == 1){}
+            //getRoutineDevices();
         addCards(devicesList);
         return view;
     }
@@ -120,7 +156,10 @@ public class DevicesFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
-        getActivity().setTitle(room.getName());
+        if(room != null)
+            getActivity().setTitle(room.getName());
+        else
+            getActivity().setTitle(routine.getName());
     }
 
 

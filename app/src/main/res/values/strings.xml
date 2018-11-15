@@ -3,6 +3,7 @@
     <string name="title_rooms">Rooms</string>
     <string name="title_routines">Routines</string>
     <string name="title_cameras">Cameras</string>
+    <string name="apply_routine">Routine Applied!</string>
     <string name="Search">Search</string>
     <string name="Settings">Settings</string>
     <string name="About">About</string>

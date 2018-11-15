@@ -29,12 +29,21 @@ import java.util.List;
 public class RoomFragment extends Fragment {
 
     Response.Listener<List<Room>> roomList;
+    private static Room currentRoom;
 
     private OnFragmentInteractionListener mListener;
     RecyclerView roomRecycler;
 
     public RoomFragment() {
         // Required empty public constructor
+    }
+
+    public static Room getCurrentRoutine() {
+        return currentRoom;
+    }
+
+    public static void setCurrentRoutine(Room routine) {
+        currentRoom = routine;
     }
 
     private void addCards(Response.Listener<List<Room>> roomList) {

@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 
 import com.smartdesigns.smarthomehci.DevicesFragment;
 import com.smartdesigns.smarthomehci.Home;
-import com.smartdesigns.smarthomehci.RoutineDevicesFragment;
 import com.smartdesigns.smarthomehci.RoutinesFragment;
 
 import java.io.Serializable;

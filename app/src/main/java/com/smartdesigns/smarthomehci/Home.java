@@ -53,10 +53,18 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
             switch (item.getItemId()) {
                 case R.id.navigation_rooms:
                     currentMode = 0;
+                    if(bottomStacks[currentMode].empty()){
+                        endApp();
+                        return true;
+                    }
                     setFragment(bottomStacks[currentMode].peek());
                     return true;
                 case R.id.navigation_routines:
                     currentMode = 1;
+                    if(bottomStacks[currentMode].empty()){
+                        endApp();
+                        return true;
+                    }
                     setFragment(bottomStacks[currentMode].peek());
                     return true;
                 case R.id.navigation_cameras:
@@ -125,18 +133,22 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 
     }
 
+    private void endApp() {
+        Intent intent = new Intent(this, Home.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("Exit me", true);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     public void onBackPressed() {
         if(bottomStacks[currentMode].size() <= 1){
-            Intent intent = new Intent(this, Home.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra("Exit me", true);
-            startActivity(intent);
-            finish();
+            endApp();
         }
         else {
             bottomStacks[currentMode].pop();
-            Fragment back = bottomStacks[currentMode].pop();
+            Fragment back = bottomStacks[currentMode].peek();
             setFragment(back);
         }
     }
