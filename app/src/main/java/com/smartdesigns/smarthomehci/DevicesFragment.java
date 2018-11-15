@@ -22,7 +22,6 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DevicesFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link DevicesFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -135,8 +134,4 @@ public class DevicesFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

@@ -49,14 +49,10 @@ public class Room implements RecyclerInterface, Serializable {
         return this.meta;
     }
 
-    public Fragment getChildFragment(){
-        return new DevicesFragment();
-    }
-
     public void onClickAction(Serializable arg, Context context) {
         Fragment fragment = new DevicesFragment();
         Bundle arguments = new Bundle();
-        arguments.putSerializable("Object", arg);
+        arguments.putSerializable("Object", this);
         fragment.setArguments(arguments);
 
         Home home = Home.getInstance();

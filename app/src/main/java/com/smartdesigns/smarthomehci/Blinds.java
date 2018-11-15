@@ -23,7 +23,7 @@ public class Blinds extends Activity {
                     return true;
                 case R.id.navigation_routines:
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_cameras:
                     return true;
             }
             return false;

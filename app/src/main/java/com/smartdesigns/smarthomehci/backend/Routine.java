@@ -1,9 +1,20 @@
 package com.smartdesigns.smarthomehci.backend;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+
+import com.smartdesigns.smarthomehci.DevicesFragment;
+import com.smartdesigns.smarthomehci.Home;
+import com.smartdesigns.smarthomehci.RoutineDevicesFragment;
+import com.smartdesigns.smarthomehci.RoutinesFragment;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class Routine {
+public class Routine implements RecyclerInterface, Serializable{
     private String id;
+    private String name;
     private List<Action> actions;
     private String meta;
 
@@ -17,7 +28,18 @@ public class Routine {
         this.actions = actions;
     }
 
-    public String getId() {
-        return id;
-    }
+    public String getName(){return name;}
+    public String getMeta(){return meta;}
+    public String getId(){return id;}
+    public void onClickAction(Serializable arg, Context context){
+        RoutinesFragment.setCurrentRoutine(this);
+
+        Fragment fragment = new RoutineDevicesFragment();
+        Bundle arguments = new Bundle();
+        arguments.putSerializable("Object", this);
+        fragment.setArguments(arguments);
+
+        Home home = Home.getInstance();
+        home.setFragmentWithStack(fragment);
+    };
 }

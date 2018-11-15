@@ -7,7 +7,9 @@ import android.support.v4.app.Fragment;
 
 import com.smartdesigns.smarthomehci.Blinds;
 import com.smartdesigns.smarthomehci.DevicesFragment;
+import com.smartdesigns.smarthomehci.Home;
 import com.smartdesigns.smarthomehci.RoomFragment;
+import com.smartdesigns.smarthomehci.RoutinesFragment;
 
 import java.io.Serializable;
 import java.util.List;
@@ -28,11 +30,6 @@ public class Device implements RecyclerInterface, Serializable {
     public Device(String name, String typeId, String meta, String id){
         this(name, typeId, meta);
         this.id=id;
-    }
-
-    public Fragment getChildFragment(){
-        // ACA VA EL DE PEIO
-        return new DevicesFragment();
     }
 
     public void setId(String id){
@@ -61,6 +58,12 @@ public class Device implements RecyclerInterface, Serializable {
 
     public void onClickAction(Serializable arg, Context context) {
         Intent device = new Intent(context, Blinds.class);
+        if(Home.getInstance().getCurrentMode() == 0)
+            device.putExtra("mode", 0);
+        else {
+            device.putExtra("mode", 1);
+            device.putExtra("routine",RoutinesFragment.getCurrentRoutine());
+        }
         context.startActivity(device);
     }
 

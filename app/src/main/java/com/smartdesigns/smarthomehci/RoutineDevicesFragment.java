@@ -3,14 +3,17 @@ package com.smartdesigns.smarthomehci;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Response;
+import com.smartdesigns.smarthomehci.backend.Device;
 import com.smartdesigns.smarthomehci.backend.Room;
 import com.smartdesigns.smarthomehci.backend.Routine;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
@@ -23,75 +26,80 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * to handle interaction events.
- * Use the {@link RoutinesFragment#newInstance} factory method to
+ * Use the {@link DevicesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RoutinesFragment extends Fragment {
+public class RoutineDevicesFragment extends Fragment {
 
-    private Response.Listener<List<Routine>> routineList;
-    private RecyclerView routineRecycler;
-
-    private static Routine currentRoutine;
+    private Routine routine;
+    Response.Listener<List<Device>> devicesList;
 
     private OnFragmentInteractionListener mListener;
+    RecyclerView devicesRecycler;
 
-    public RoutinesFragment() {
+    public RoutineDevicesFragment() {
         // Required empty public constructor
-    }
-
-    public static Routine getCurrentRoutine() {
-        return currentRoutine;
-    }
-
-    public static void setCurrentRoutine(Routine routine) {
-        currentRoutine = routine;
-    }
-
-    private void addCards(Response.Listener<List<Routine>> routineList) {
-
-        List routineListAux = new ArrayList();
-        routineList.onResponse(routineListAux);
-        routineListAux.add(new Routine("25",null,"0"));
-
-        RecyclerViewAdapter routineRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), routineListAux);
-        routineRecycler.setLayoutManager(new GridLayoutManager(this.getContext(),3));
-        routineRecycler.setAdapter(routineRecyclerAdapter);
     }
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RoutinesFragment.
+     * @param room Room.
+     * @return A new instance of fragment DevicesFragment.
      */
-    public static RoutinesFragment newInstance(String param1, String param2) {
-        RoutinesFragment fragment = new RoutinesFragment();
+    // TODO: Rename and change types and number of parameters
+    public static DevicesFragment newInstance(Room room) {
+        DevicesFragment fragment = new DevicesFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("Object", room);
+        fragment.setArguments(args);
         return fragment;
+    }
+
+    private void addCards(Response.Listener<List<Device>> roomList) {
+
+        List devicesListAux = new ArrayList();
+        roomList.onResponse(devicesListAux);
+        devicesListAux.add(new Device("25","ESTE ES UN DISPOSITIVO","0"));
+
+        RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), devicesListAux);
+        devicesRecycler.setLayoutManager(new GridLayoutManager(this.getContext(),3));
+        devicesRecycler.setAdapter(roomRecyclerAdapter);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            routine = (Routine) getArguments().getSerializable("Object");
+            getActivity().setTitle(routine.getName());
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_routines, container, false);
+        View view = inflater.inflate(R.layout.fragment_routine_devices, container, false);
 
-        routineRecycler = view.findViewById(R.id.routine_recyclerview);
-        getActivity().setTitle(R.string.title_routines);
+        getActivity().setTitle(routine.getName());
+        devicesRecycler = view.findViewById(R.id.devices_routine_recyclerview);
+
+        FloatingActionButton playRoutineButton = (FloatingActionButton) view.findViewById(R.id.play_routine_button);
+        playRoutineButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.d("hola","hola");
+            }
+        });
+
         Context appContext = getContext();
         ApiConnection api = ApiConnection.getInstance(appContext);
-        routineList = new Response.Listener<List<Routine>>() {
+        devicesList = new Response.Listener<List<Device>>() {
             @Override
-            public void onResponse(List<Routine> response) {
+            public void onResponse(List<Device> response) {
 
             }
         };
-        api.getRoutines();
-        addCards(routineList);
+        addCards(devicesList);
         return view;
     }
 
@@ -118,6 +126,13 @@ public class RoutinesFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        getActivity().setTitle(routine.getName());
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this

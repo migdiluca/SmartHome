@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Stack;
 
 
-public class Home extends AppCompatActivity implements DevicesFragment.OnFragmentInteractionListener, RoomFragment.OnFragmentInteractionListener {
+public class Home extends AppCompatActivity implements OnFragmentInteractionListener {
 
     private FrameLayout mMainFrame;
 
@@ -59,7 +59,8 @@ public class Home extends AppCompatActivity implements DevicesFragment.OnFragmen
                     currentMode = 1;
                     setFragment(bottomStacks[currentMode].peek());
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_cameras:
+                    currentMode = 2;
                     return true;
             }
             return false;
@@ -164,6 +165,10 @@ public class Home extends AppCompatActivity implements DevicesFragment.OnFragmen
     @Override
     public void onFragmentInteraction(Uri uri){
         //you can leave it empty
+    }
+
+    public int getCurrentMode() {
+        return currentMode;
     }
 
 //    @Override

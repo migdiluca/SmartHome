@@ -10,6 +10,5 @@ public interface RecyclerInterface {
     public String getName();
     public String getMeta();
     public String getId();
-    public Fragment getChildFragment();
     public void onClickAction(Serializable arg, Context context);
 }
