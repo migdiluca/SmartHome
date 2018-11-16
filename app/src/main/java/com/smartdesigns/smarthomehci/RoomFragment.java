@@ -67,7 +67,10 @@ public class RoomFragment extends Fragment {
         roomListAux.add(new Room("25", "ES UN TEST", "0"));
 
         RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), roomListAux);
-        roomRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), roomRecyclerAdapter.getColumns()));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int columns = preferences.getString("columns_amount","2").charAt(0) - '0';
+        roomRecyclerAdapter.setColumns(columns);
+        roomRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), columns));
         roomRecycler.setAdapter(roomRecyclerAdapter);
     }
 
@@ -125,6 +128,7 @@ public class RoomFragment extends Fragment {
     public void onResume() {
         super.onResume();
         setBackgroundColor(getView());
+        addCards(roomList);
     }
 
     private void setBackgroundColor(View view) {

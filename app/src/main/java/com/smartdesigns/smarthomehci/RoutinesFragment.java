@@ -60,7 +60,10 @@ public class RoutinesFragment extends Fragment {
         routineListAux.add(new Routine("25",null,"0"));
 
         RecyclerViewAdapter routineRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), routineListAux);
-        routineRecycler.setLayoutManager(new GridLayoutManager(this.getContext(),routineRecyclerAdapter.getColumns()));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int columns = preferences.getString("columns_amount","2").charAt(0) - '0';
+        routineRecyclerAdapter.setColumns(columns);
+        routineRecycler.setLayoutManager(new GridLayoutManager(this.getContext(),columns));
         routineRecycler.setAdapter(routineRecyclerAdapter);
     }
 
@@ -107,6 +110,7 @@ public class RoutinesFragment extends Fragment {
     public void onResume() {
         super.onResume();
         setBackgroundColor(getView());
+        addCards(routineList);
     }
 
     private void setBackgroundColor(View view) {

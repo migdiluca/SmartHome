@@ -45,6 +45,13 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
 
     public int getColumns() {return columns;};
 
+    public void setColumns(int columns){
+        if(columns <= 0 || columns > 5){
+            return;
+        }
+        this.columns = columns;
+    }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -80,17 +87,13 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
         TextView tv = (TextView) view.findViewById(R.id.card_view_title);
         lp.width = (parent.getMeasuredWidth() *95 /100) / columns;
         lp.height = lp.width + tv.getLineHeight();
+        int textSize =  (int)(30  / (columns * 0.9));
+        tv.setTextSize(textSize);
 
         ImageView iv = (ImageView) view.findViewById(R.id.card_view_img);
         iv.getLayoutParams().height = (lp.width) * IMAGE_SIZE / 100;
         iv.getLayoutParams().width = (lp.width) * IMAGE_SIZE/100;
         iv.setPadding((lp.width * (100-IMAGE_SIZE)) / 100, 0,0,0);
-
-        /*GradientDrawable shape = new GradientDrawable();
-        shape.setShape(GradientDrawable.RECTANGLE);
-        shape.setColor(ThreadLocalRandom.current().nextInt(0, colors.size()));
-        CardView cv = view.findViewById(R.id.card_view);
-        cv.setBackground(shape);*/
 
 
         view.setLayoutParams(lp);

@@ -78,7 +78,10 @@ public class DevicesFragment extends Fragment {
         devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
 
         RecyclerViewAdapter devicesRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), devicesListAux);
-        devicesRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), devicesRecyclerAdapter.getColumns()));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int columns = preferences.getString("columns_amount","2").charAt(0) - '0';
+        devicesRecyclerAdapter.setColumns(columns);
+        devicesRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), columns));
         devicesRecycler.setAdapter(devicesRecyclerAdapter);
     }
 
@@ -190,6 +193,7 @@ public class DevicesFragment extends Fragment {
         else
             getActivity().setTitle(routine.getName());
         setBackgroundColor(getView());
+        addCards(devicesList);
     }
 
 

@@ -9,6 +9,7 @@
     <string name="About">About</string>
     <string name="Blinds">Blinds</string>
     <string name="UpDown">Up/Down</string>
+    <string name="ColumnsAmount">Columns amount</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -60,10 +61,12 @@
         <item>-1</item>
     </string-array>
 
-    <string-array name="list_preference_entries">
-        <item>Entry 1</item>
-        <item>Entry 2</item>
-        <item>Entry 3</item>
+    <string-array name="columns_amount">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
     </string-array>
 
     <string-array name="list_preference_entry_values">
