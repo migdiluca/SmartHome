@@ -13,7 +13,8 @@
     <item
         android:id="@+id/settingsMenu"
         android:title="@string/Settings"
-        android:icon="@drawable/ic_settingsicon" />
+        android:icon="@drawable/ic_settingsicon"
+        android:onClick="settings_onClick"/>
 
     <item
         android:id="@+id/aboutMenu"

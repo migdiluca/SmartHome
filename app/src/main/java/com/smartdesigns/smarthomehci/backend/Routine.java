@@ -21,7 +21,7 @@ public class Routine implements RecyclerInterface, Serializable{
     public Routine(String id, List<Action> actions, String meta){
         this(actions, meta);
         this.id = id;
-        //BORRAR
+        //TODO:BORRAR
         this.name = "hola";
     }
 

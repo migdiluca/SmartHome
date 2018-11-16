@@ -13,10 +13,13 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -31,8 +34,9 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
 
     private Context mContext ;
     private List<T> mData ;
-    private int columns = 2;
+    private static int columns = 2;
     private static List<Integer> colors = new ArrayList<>();
+    private static final int IMAGE_SIZE = 90;
 
     public RecyclerViewAdapter(Context mContext, List<T> mData) {
         this.mContext = mContext;
@@ -76,6 +80,11 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
         TextView tv = (TextView) view.findViewById(R.id.card_view_title);
         lp.width = (parent.getMeasuredWidth() *95 /100) / columns;
         lp.height = lp.width + tv.getLineHeight();
+
+        ImageView iv = (ImageView) view.findViewById(R.id.card_view_img);
+        iv.getLayoutParams().height = (lp.width) * IMAGE_SIZE / 100;
+        iv.getLayoutParams().width = (lp.width) * IMAGE_SIZE/100;
+        iv.setPadding((lp.width * (100-IMAGE_SIZE)) / 100, 0,0,0);
 
         /*GradientDrawable shape = new GradientDrawable();
         shape.setShape(GradientDrawable.RECTANGLE);

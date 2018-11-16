@@ -1,9 +1,14 @@
 package com.smartdesigns.smarthomehci;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -81,6 +86,8 @@ public class RoutinesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_routines, container, false);
 
+        setBackgroundColor(view);
+
         routineRecycler = view.findViewById(R.id.routine_recyclerview);
         getActivity().setTitle(R.string.title_routines);
         Context appContext = getContext();
@@ -94,6 +101,32 @@ public class RoutinesFragment extends Fragment {
         api.getRoutines();
         addCards(routineList);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setBackgroundColor(getView());
+    }
+
+    private void setBackgroundColor(View view) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        Boolean darkTheme = preferences.getBoolean("dark_theme_checkbox",false);
+        if(darkTheme == true) {
+            Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_YES);
+            view.setBackgroundColor(getResources().getColor(R.color.black));
+            Home.setNavColor(R.color.dark_grey);
+            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_grey)));
+            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey_navbar));
+        } else if(getView() != null) {
+            Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_NO);
+            view.setBackgroundColor(getResources().getColor(R.color.white));
+            Home.setNavColor(R.color.colorPrimary);
+            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
+            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey));
+            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
+            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

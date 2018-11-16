@@ -11,33 +11,25 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/card_view_relative">
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                app:layout_constraintDimensionRatio="1:1"
-                android:id="@+id/card_view_img"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true"
-                android:background="#00ffffff"/>
-
-        </android.support.constraint.ConstraintLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:id="@+id/card_view_img"
+            android:background="#00ffffff"/>
 
         <TextView
             android:id="@+id/card_view_title"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="45dp"
             android:gravity="center"
             android:layout_alignParentBottom="true"
             android:text="Title"
             android:textColor="#2d2d2d"
-            android:textSize="18sp"
+            android:textSize="22sp"
             android:background="#27000000"/>
     </RelativeLayout>
 

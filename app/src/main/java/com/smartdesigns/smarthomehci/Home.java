@@ -1,9 +1,11 @@
 package com.smartdesigns.smarthomehci;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.bottomappbar.BottomAppBar;
 import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -64,6 +66,12 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
             return false;
         }
     };
+
+    public static void setNavColor(int color){
+        BottomNavigationView navigation = (BottomNavigationView) homeInstance.findViewById(R.id.navigation);
+        navigation.setBackgroundColor(homeInstance.getResources().getColor(color));
+
+    }
 
     public void setFragment(Fragment fragment){
         bottomStacks[currentMode].push(fragment);
@@ -155,6 +163,11 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 
     public int getCurrentMode() {
         return currentMode;
+    }
+
+    public void settings_onClick(MenuItem item) {
+        Intent settings = new Intent(this, SettingsActivity.class);
+        startActivity(settings);
     }
 
 //    @Override
