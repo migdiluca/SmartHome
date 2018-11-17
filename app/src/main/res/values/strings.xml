@@ -7,8 +7,47 @@
     <string name="Search">Search</string>
     <string name="Settings">Settings</string>
     <string name="About">About</string>
+
     <string name="Blinds">Blinds</string>
     <string name="UpDown">Up/Down</string>
+    <string name="Up">Up</string>
+    <string name="Down">Down</string>
+
+    <string name="Ac">Air Conditioner</string>
+    <string name="OnOff" translatable="false">On/Off</string>
+    <string name="On" translatable="false">On</string>
+    <string name="Off" translatable="false">Off</string>
+    <string name="Temperature">Temperature</string>
+    <string name="VerticalSwing">Vertical Swing</string>
+    <string name="HorizontalSwing">Horizontal Swing</string>
+    <string name="FanSpeed">Fan Speed</string>
+    <string name="AcMode">Mode</string>
+    <string name="Cool">Cool</string>
+    <string name="Heat">Heat</string>
+    <string name="Fan">Fan</string>
+
+
+    <string name="Door">Door</string>
+    <string name="OpenClose">Open/Close</string>
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
+    <string name="Lock">Lock</string>
+    <string name="Unlock">Unlock</string>
+    <string name="LockUnlock">Lock/Unlock</string>
+
+    <string name="Lamp">Lamp</string>
+    <string name="Brightness">Brightness</string>
+
+    <string name="Oven">Oven</string>
+
+    <string name="Refrigerator">Refrigerator</string>
+
+    <string name="Timer">Timer</string>
+
+    <string name="Alarm">Alarm</string>
+
+
+    <string name="devState"></string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

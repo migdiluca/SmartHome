@@ -33,11 +33,9 @@ public class Devices extends AppCompatActivity {
 
             if(Home.getInstance().getCurrentMode() == 0){
                 room =  (Room) i.getSerializableExtra("Object");
-                setTitle(room.getName());
             }
             else if(Home.getInstance().getCurrentMode() == 1) {
                 routine =  (Routine) i.getSerializableExtra("Object");
-                setTitle(routine.getName());
             }
 
             if(device.getTypeId().equals(TypeId.Ac.getTypeId())) {
@@ -77,8 +75,6 @@ public class Devices extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Not valid deviceType", Toast.LENGTH_LONG).show();
 
             }
-
-
 
         }
     }

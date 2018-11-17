@@ -8,9 +8,43 @@
     <string name="Search">Búsqueda</string>
     <string name="Settings">Configuraciones</string>
     <string name="About">Sobre</string>
+
     <string name="Blinds">Persianas</string>
     <string name="UpDown">Arriba/Abajo</string>
+    <string name="Up">Arriba</string>
+    <string name="Down">Abajo</string>
 
+    <string name="Ac">Aire Acondicionado</string>
+    <string name="Temperature">Temperatura</string>
+    <string name="VerticalSwing">Oscilación Vertical</string>
+    <string name="HorizontalSwing">Oscilación Horizontal</string>
+    <string name="FanSpeed">Velocidad del Ventilador</string>
+    <string name="AcMode">Modo</string>
+    <string name="Cool">Enfriar</string>
+    <string name="Heat">Calefacción</string>
+    <string name="Fan">Ventiladora</string>
 
+    <string name="Door">Puerta</string>
+    <string name="OpenClose">Abrir/Cerrar</string>
+    <string name="Open">Abrir</string>
+    <string name="Close">Cerrar</string>
+    <string name="Lock">Bloquear</string>
+    <string name="Unlock">Desbloquear</string>
+    <string name="LockUnlock">Bloqueo/Desbloqueo</string>
+
+    <string name="Lamp">Lámpara</string>
+    <string name="Brightness">Brillo</string>
+
+    <string name="Oven">Horno</string>
+
+    <string name="Refrigerator">Heladera</string>
+
+    <string name="Timer">Temporizador</string>
+
+    <string name="Alarm">Alarma</string>
+
+    <string name="devState"></string>
+
+    <string name="hello_blank_fragment">Hola fragmento vacio</string>
 
 </resources>
