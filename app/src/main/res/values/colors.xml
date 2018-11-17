@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ea7100</color>
-    <color name="colorPrimaryDark">#99460e</color>
-    <color name="colorAccent">#1b34d8</color>
+    <color name="colorPrimary">#2195f2</color>
+    <color name="colorPrimaryDark">#1976d1</color>
+    <color name="colorAccent">#fdc205</color>
 
 
-    <color name="white">#ffffff</color>
-    <color name="darkGrey">#6c6c6c</color>
-
+    <color name="white">#ffffffff</color>
+    <color name="dark_grey">#6c6c6c</color>
+    <color name ="dark_grey_navbar">#5c5c5c</color>
 
     <color name="acColorPrimary">#23efef</color>
     <color name="acColorPrimaryDark">#179393</color>
 
-    <color name="blindsColorPrimary">#6b28fd</color>
-    <color name="blindsColorPrimaryDark">#41158c</color>
-
     <color name="doorColorPrimary">#ff4000</color>
     <color name="doorColorPrimaryDark">#873315</color>
+
+    <color name="blindsColorPrimary">#6b28fd</color>
+    <color name="blindsColorPrimaryDark">#41158c</color>
 
     <color name="lampColorPrimary">#fae711</color>
     <color name="lampColorPrimaryDark">#948e0e</color>
@@ -32,5 +32,26 @@
 
     <color name="timerColorPrimary">#ef23d7</color>
     <color name="timerColorPrimaryDark">#931787</color>
+
+    <color name ="black">#ff000000</color>
+    <color name ="red">#f0453d</color>
+    <color name ="pink">#e52564</color>
+    <color name ="purple">#9830ac</color>
+    <color name ="deep_purple">#663fb2</color>
+    <color name ="indigo">#4054b0</color>
+    <color name ="blue">#2c96ee</color>
+    <color name ="light_blue">#1ea8ef</color>
+    <color name ="cyan">#1fbad1</color>
+    <color name ="teal">#159385</color>
+    <color name ="green">#50ac54</color>
+    <color name ="light_green">#8ac052</color>
+    <color name ="lime">#cbd949</color>
+    <color name ="yellow">#fce84e</color>
+    <color name ="amber">#fbbe2f</color>
+    <color name ="orange">#fb9527</color>
+    <color name ="deep_orange">#fa5830</color>
+    <color name ="brown">#775549</color>
+    <color name ="grey">#9c9c9c</color>
+    <color name ="blue_grey">#617c88</color>
 
 </resources>

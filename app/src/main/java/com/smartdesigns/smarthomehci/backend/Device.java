@@ -13,6 +13,7 @@ public class Device implements RecyclerInterface, Serializable {
     private String name;
     private String typeId;
     private String meta;
+    private int background = -1;
 
 
     public Device(String name, String typeId,String meta){
@@ -24,6 +25,17 @@ public class Device implements RecyclerInterface, Serializable {
     public Device(String name, String typeId, String meta, String id){
         this(name, typeId, meta);
         this.id=id;
+    }
+
+
+    @Override
+    public void setBackground(int background) {
+        this.background = background;
+    }
+
+    @Override
+    public int getBackground() {
+        return background;
     }
 
     public void setId(String id){

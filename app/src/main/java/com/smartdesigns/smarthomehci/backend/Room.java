@@ -13,6 +13,7 @@ public class Room implements RecyclerInterface, Serializable {
     private String id;
     private String name;
     private String meta;
+    private int background = -1;
 
     public Room(String name, String meta) {
         this.name = name;
@@ -23,6 +24,16 @@ public class Room implements RecyclerInterface, Serializable {
         this.id = id;
         this.name = name;
         this.meta = meta;
+    }
+
+    @Override
+    public void setBackground(int background) {
+        this.background = background;
+    }
+
+    @Override
+    public int getBackground() {
+        return background;
     }
 
     public void setId(String id) {

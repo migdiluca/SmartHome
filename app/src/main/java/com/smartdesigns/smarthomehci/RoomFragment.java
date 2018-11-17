@@ -1,17 +1,27 @@
 package com.smartdesigns.smarthomehci;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.android.volley.Response;
+import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
+import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
 import com.smartdesigns.smarthomehci.backend.Room;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
@@ -48,13 +58,20 @@ public class RoomFragment extends Fragment {
 
     private void addCards(Response.Listener<List<Room>> roomList) {
 
-       List roomListAux = new ArrayList();
-       roomList.onResponse(roomListAux);
-       roomListAux.add(new Room("25","ES UN TEST","0"));
+        List roomListAux = new ArrayList();
+        roomList.onResponse(roomListAux);
+        roomListAux.add(new Room("25", "ES UN TEST", "0"));
+        roomListAux.add(new Room("25", "ES UN TEST", "0"));
+        roomListAux.add(new Room("25", "ES UN TEST", "0"));
+        roomListAux.add(new Room("25", "ES UN TEST", "0"));
+        roomListAux.add(new Room("25", "ES UN TEST", "0"));
 
-       RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), roomListAux);
-       roomRecycler.setLayoutManager(new GridLayoutManager(this.getContext(),3));
-       roomRecycler.setAdapter(roomRecyclerAdapter);
+        RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), roomListAux);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int columns = preferences.getString("columns_amount","2").charAt(0) - '0';
+        roomRecyclerAdapter.setColumns(columns);
+        roomRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), columns));
+        roomRecycler.setAdapter(roomRecyclerAdapter);
     }
 
     /**
@@ -76,14 +93,16 @@ public class RoomFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_room, container, false);
 
+        setBackgroundColor(view);
 
-        getActivity().setTitle(R.string.title_rooms);
         roomRecycler = view.findViewById(R.id.room_recyclerview);
+        getActivity().setTitle(R.string.title_rooms);
         Context appContext = getContext();
         ApiConnection api = ApiConnection.getInstance(appContext);
         roomList = new Response.Listener<List<Room>>() {
@@ -106,12 +125,31 @@ public class RoomFragment extends Fragment {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        getActivity().setTitle(R.string.title_rooms);
+        setBackgroundColor(getView());
+        addCards(roomList);
     }
 
-
+    private void setBackgroundColor(View view) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        Boolean darkTheme = preferences.getBoolean("dark_theme_checkbox",false);
+        if(darkTheme == true) {
+            Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_YES);
+            view.setBackgroundColor(getResources().getColor(R.color.black));
+            Home.setNavColor(R.color.dark_grey);
+            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_grey)));
+            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey_navbar));
+        } else if(getView() != null) {
+            Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_NO);
+            view.setBackgroundColor(getResources().getColor(R.color.white));
+            Home.setNavColor(R.color.colorPrimary);
+            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
+            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey));
+            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
+            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        }
+    }
 
     @Override
     public void onAttach(Context context) {

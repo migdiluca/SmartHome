@@ -1,33 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="165dp"
+    xmlns:app="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_height="200dp"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:layout_margin="5dp"
     cardview:cardCornerRadius="2dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/card_view_relative">
+
 
         <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:id="@+id/card_view_img"
-            android:layout_width="165dp"
-            android:layout_height="165dp"
-            android:scaleType="centerCrop"
-            android:background="#2d2d2d"/>
+            android:background="#00ffffff"/>
 
         <TextView
             android:id="@+id/card_view_title"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
             android:text="Title"
             android:textColor="#2d2d2d"
-            android:textSize="13sp"
-            android:gravity="center"
-            />
-    </LinearLayout>
+            android:textSize="22sp"
+            android:background="#27000000"/>
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>

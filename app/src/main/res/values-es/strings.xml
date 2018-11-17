@@ -4,7 +4,7 @@
     <string name="title_rooms">Habitaciones</string>
     <string name="title_routines">Rutinas</string>
     <string name="apply_routine">Rutina aplicada!</string>
-    <string name="title_cameras">Cameras</string>
+    <string name="title_cameras">Camaras</string>
     <string name="Search">Búsqueda</string>
     <string name="Settings">Configuraciones</string>
     <string name="About">Sobre</string>
@@ -42,9 +42,10 @@
     <string name="Timer">Temporizador</string>
 
     <string name="Alarm">Alarma</string>
+    <string name="ColumnsAmount">Cantidad de columnas</string>
+    <string name="title_activity_settings">Ajustes</string>
+    <string name="pref_dark_theme">Tema oscuro</string>
 
     <string name="devState"></string>
-
-    <string name="hello_blank_fragment">Hola fragmento vacio</string>
 
 </resources>

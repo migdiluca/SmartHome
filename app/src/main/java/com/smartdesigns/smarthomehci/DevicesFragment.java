@@ -2,10 +2,15 @@ package com.smartdesigns.smarthomehci;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,8 +20,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.volley.Response;
+import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
+import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
 import com.smartdesigns.smarthomehci.backend.Device;
-import com.smartdesigns.smarthomehci.backend.RecyclerInterface;
 import com.smartdesigns.smarthomehci.backend.Room;
 import com.smartdesigns.smarthomehci.backend.Routine;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
@@ -65,34 +71,40 @@ public class DevicesFragment extends Fragment {
 
         List devicesListAux = new ArrayList();
         devicesList.onResponse(devicesListAux);
-        devicesListAux.add(new Device("25","ESTE ES UN DISPOSITIVO",Integer.toString(R.drawable.blind)));
+        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
+        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
+        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
+        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
+        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
 
-        RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), devicesListAux);
-        devicesRecycler.setLayoutManager(new GridLayoutManager(this.getContext(),3));
-        devicesRecycler.setAdapter(roomRecyclerAdapter);
+        RecyclerViewAdapter devicesRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), devicesListAux);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int columns = preferences.getString("columns_amount","2").charAt(0) - '0';
+        devicesRecyclerAdapter.setColumns(columns);
+        devicesRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), columns));
+        devicesRecycler.setAdapter(devicesRecyclerAdapter);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            if(Home.getInstance().getCurrentMode() == 0){
-                room =  (Room) getArguments().getSerializable("Object");
-                getActivity().setTitle(room.getName());
-            }
-            else if(Home.getInstance().getCurrentMode() == 1) {
-                routine =  (Routine) getArguments().getSerializable("Object");
-                getActivity().setTitle(routine.getName());
-            }
+        if (Home.getInstance().getCurrentMode() == 0) {
+            room = (Room) getArguments().getSerializable("Object");
+            getActivity().setTitle(room.getName());
+        } else if (Home.getInstance().getCurrentMode() == 1) {
+            routine = (Routine) getArguments().getSerializable("Object");
+            getActivity().setTitle(routine.getName());
         }
+
     }
 
     @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_devices, container, false);
+        setBackgroundColor(view);
 
-        if(room != null)
+        if (room != null)
             getActivity().setTitle(room.getName());
         else
             getActivity().setTitle(routine.getName());
@@ -103,13 +115,13 @@ public class DevicesFragment extends Fragment {
         playRoutineButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //ACTIVAR RUTINA API
-                Log.d("hola","hola");
+                Log.d("hola", "hola");
                 //SI anda bien
                 Toast.makeText(getActivity(), getResources().getString(R.string.apply_routine), Toast.LENGTH_LONG).show();
             }
         });
 
-        if(Home.getInstance().getCurrentMode() != 1)
+        if (Home.getInstance().getCurrentMode() != 1)
             playRoutineButton.setVisibility(View.GONE);
 
 
@@ -121,10 +133,11 @@ public class DevicesFragment extends Fragment {
 
             }
         };
-        if(Home.getInstance().getCurrentMode() == 0)
-            api.getRoomDevices(room,devicesList, null);
-        else if(Home.getInstance().getCurrentMode() == 1){}
-            //getRoutineDevices();
+        if (Home.getInstance().getCurrentMode() == 0)
+            api.getRoomDevices(room, devicesList, null);
+        else if (Home.getInstance().getCurrentMode() == 1) {
+        }
+        //getRoutineDevices();
         addCards(devicesList);
         return view;
     }
@@ -136,6 +149,25 @@ public class DevicesFragment extends Fragment {
         }
     }
 
+    private void setBackgroundColor(View view) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        Boolean darkTheme = preferences.getBoolean("dark_theme_checkbox",false);
+        if(darkTheme == true) {
+            Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_YES);
+            view.setBackgroundColor(getResources().getColor(R.color.black));
+            Home.setNavColor(R.color.dark_grey);
+            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_grey)));
+            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey_navbar));
+        } else if(getView() != null) {
+            Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_NO);
+            view.setBackgroundColor(getResources().getColor(R.color.white));
+            Home.setNavColor(R.color.colorPrimary);
+            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
+            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey));
+            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
+            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        }
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -154,12 +186,14 @@ public class DevicesFragment extends Fragment {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        if(room != null)
+        if (room != null)
             getActivity().setTitle(room.getName());
         else
             getActivity().setTitle(routine.getName());
+        setBackgroundColor(getView());
+        addCards(devicesList);
     }
 
 
