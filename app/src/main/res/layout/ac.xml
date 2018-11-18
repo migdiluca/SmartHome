@@ -55,7 +55,7 @@
                 android:orientation="vertical">
 
                 <Switch
-                    android:id="@+id/OnOff"
+                    android:id="@+id/OnOffAc"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"

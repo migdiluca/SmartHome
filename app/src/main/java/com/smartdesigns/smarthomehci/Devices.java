@@ -7,17 +7,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.Toast;
 
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.smartdesigns.smarthomehci.backend.Action;
 import com.smartdesigns.smarthomehci.backend.Device;
 import com.smartdesigns.smarthomehci.backend.Room;
 import com.smartdesigns.smarthomehci.backend.Routine;
 import com.smartdesigns.smarthomehci.backend.TypeId;
+import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
 public class Devices extends AppCompatActivity {
 
@@ -25,11 +29,14 @@ public class Devices extends AppCompatActivity {
     private Routine routine = null;
     private Device device = null;
 
+    private ApiConnection api = ApiConnection.getInstance(this);
+
     /**
      * Buttons
      */
 
-    Button onOff = (Button) findViewById(R.id.OnOff);
+    Button onOffLights = (Button) findViewById(R.id.OnOff);
+    Switch onOffAc = (Switch) findViewById(R.id.OnOffAc);
 
     RadioButton up = (RadioButton) findViewById(R.id.UpBut);
     RadioButton down = (RadioButton) findViewById(R.id.DownBut);
@@ -46,50 +53,118 @@ public class Devices extends AppCompatActivity {
 
         if (i.getExtras() != null) {
 
-            device = (Device) i.getSerializableExtra("Object");
+            device = (Device) i.getSerializableExtra("device");
             setTitle(device.getName());
 
 
-            if(Home.getInstance().getCurrentMode() == 0){
-                room =  (Room) i.getSerializableExtra("Object");
-            }
-            else if(Home.getInstance().getCurrentMode() == 1) {
-                routine =  (Routine) i.getSerializableExtra("Object");
+            if (Home.getInstance().getCurrentMode() == 0) {
+                room = (Room) i.getSerializableExtra("Object");
+            } else if (Home.getInstance().getCurrentMode() == 1) {
+                routine = (Routine) i.getSerializableExtra("Object");
             }
 
-            if(device.getTypeId().equals(TypeId.Ac.getTypeId())) {
+            if (device.getTypeId().equals(TypeId.Ac.getTypeId())) {
 
                 setTheme(R.style.acStyle);
                 this.setContentView(R.layout.ac);
 
-            }else if(device.getTypeId().equals(TypeId.Blind.getTypeId())) {
+                if (Home.getInstance().getCurrentMode() == 0) {
+
+                    onOffAc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            String s;
+                            final String sPrint;
+                            if (isChecked) {
+                                s = "turnOn";
+                                sPrint = getResources().getString(R.string.OnM);
+                            } else {
+                                s = "turnOff";
+                                sPrint = getResources().getString(R.string.OffM);
+                            }
+                            Action action = new Action(device.getId(), s, null);
+                            api.runAction(action, new Response.Listener<Boolean>() {
+                                @Override
+                                public void onResponse(Boolean response) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.SuccessMsgOnOff) + sPrint
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.ActionFail)
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            });
+                        }
+                    });
+
+                    
+                } else {
+
+                }
+
+            } else if (device.getTypeId().equals(TypeId.Blind.getTypeId())) {
 
                 setTheme(R.style.blindsStyle);
                 this.setContentView(R.layout.blinds);
 
-                up.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //ApiConnection instance = new ApiConnection(this);
-                        //Action action = new Action();
-                        //instance.runAction();
-                    }
-                });
+                if (Home.getInstance().getCurrentMode() == 0) {
 
-                down.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Action action = new Action(i.getType(), );
-                        //instance.runAction();
-                    }
-                });
+                    up.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Action action = new Action(device.getId(), "up", null);
+                            api.runAction(action, new Response.Listener<Boolean>() {
+                                @Override
+                                public void onResponse(Boolean response) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.SuccessBlindsDown)
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.ActionFail)
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            });
+                        }
+                    });
+
+                    down.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Action action = new Action(device.getId(), "down", null);
+                            api.runAction(action, new Response.Listener<Boolean>() {
+                                @Override
+                                public void onResponse(Boolean response) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.SuccessBlindsDown)
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+
+                                }
+                            });
+                        }
+                    });
+
+                } else {
+                    up.setEnabled(false);
+                    down.setEnabled(false);
+                }
 
 
-            }else if(device.getTypeId().equals(TypeId.Door.getTypeId())) {
+            } else if (device.getTypeId().equals(TypeId.Door.getTypeId())) {
                 setTheme(R.style.doorStyle);
                 this.setContentView(R.layout.door);
 
-            }else if(device.getTypeId().equals(TypeId.Lamp.getTypeId())) {
+            } else if (device.getTypeId().equals(TypeId.Lamp.getTypeId())) {
 
                 setTheme(R.style.lampStyle);
                 this.setContentView(R.layout.lamp);
@@ -101,31 +176,30 @@ public class Devices extends AppCompatActivity {
                     }
                 });
 
-            }else if(device.getTypeId().equals(TypeId.Oven.getTypeId())) {
+            } else if (device.getTypeId().equals(TypeId.Oven.getTypeId())) {
 
                 setTheme(R.style.ovenStyle);
                 this.setContentView(R.layout.oven);
 
-            }else if(device.getTypeId().equals(TypeId.Refrigerator.getTypeId())) {
+            } else if (device.getTypeId().equals(TypeId.Refrigerator.getTypeId())) {
 
                 setTheme(R.style.refrigeratorStyle);
                 this.setContentView(R.layout.refrigerator);
 
-            }else if(device.getTypeId().equals(TypeId.Alarm.getTypeId())) {
+            } else if (device.getTypeId().equals(TypeId.Alarm.getTypeId())) {
 
                 setTheme(R.style.alarmStyle);
                 this.setContentView(R.layout.alarm);
 
-            }else if(device.getTypeId().equals(TypeId.Timer.getTypeId())) {
+            } else if (device.getTypeId().equals(TypeId.Timer.getTypeId())) {
                 setTheme(R.style.timerStyle);
                 this.setContentView(R.layout.timer);
 
-            }else {
+            } else {
 
                 Toast.makeText(getApplicationContext(), "Not valid deviceType", Toast.LENGTH_LONG).show();
 
             }
-
 
 
         }
@@ -136,28 +210,28 @@ public class Devices extends AppCompatActivity {
 
     }
 
-    public void showDialogueConvectionMode(View view){
-            AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-            builder.setTitle(R.string.ConvectionMode);
+    public void showDialogueConvectionMode(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setTitle(R.string.ConvectionMode);
 
-            //list of items
-            String[] items = getResources().getStringArray(R.array.ConvectionMode);
-            builder.setSingleChoiceItems(items, 0,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // item selected logic
-                            dialog.dismiss();
-                        }
-                    });
+        //list of items
+        String[] items = getResources().getStringArray(R.array.ConvectionMode);
+        builder.setSingleChoiceItems(items, 0,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // item selected logic
+                        dialog.dismiss();
+                    }
+                });
 
 
-            AlertDialog dialog = builder.create();
-            // display dialog
-            dialog.show();
+        AlertDialog dialog = builder.create();
+        // display dialog
+        dialog.show();
     }
 
-    public void showDialogueHeatMode(View view){
+    public void showDialogueHeatMode(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(R.string.ConvectionMode);
 
@@ -178,7 +252,7 @@ public class Devices extends AppCompatActivity {
         dialog.show();
     }
 
-    public void showDialogueGrillMode(View view){
+    public void showDialogueGrillMode(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(R.string.ConvectionMode);
 
@@ -198,8 +272,6 @@ public class Devices extends AppCompatActivity {
         // display dialog
         dialog.show();
     }
-
-
 
 
 }
