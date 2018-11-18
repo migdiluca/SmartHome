@@ -39,7 +39,7 @@
     <string name="Close">Cerrar</string>
     <string name="Lock">Bloquear</string>
     <string name="Unlock">Desbloquear</string>
-    <string name="LockUnlock">Bloqueo/Desbloqueo</string>
+    <string name="LockUnlock">Bloquear la Puerta</string>
 
     <string name="Lamp">Lámpara</string>
     <string name="Brightness">Brillo</string>

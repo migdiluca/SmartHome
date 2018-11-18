@@ -41,7 +41,7 @@
     <string name="Close">Close</string>
     <string name="Lock">Lock</string>
     <string name="Unlock">Unlock</string>
-    <string name="LockUnlock">Lock/Unlock</string>
+    <string name="LockUnlock">Lock the Door</string>
 
     <string name="Lamp">Lamp</string>
     <string name="Brightness">Brightness</string>

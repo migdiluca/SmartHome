@@ -104,7 +104,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <SeekBar
-                        android:id="@+id/AcTempSeekBar"
+                        android:id="@+id/BrightnessLamp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>
