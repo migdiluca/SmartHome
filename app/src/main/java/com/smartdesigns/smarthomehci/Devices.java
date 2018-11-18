@@ -13,6 +13,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 
+import com.smartdesigns.smarthomehci.backend.Action;
 import com.smartdesigns.smarthomehci.backend.Device;
 import com.smartdesigns.smarthomehci.backend.Room;
 import com.smartdesigns.smarthomehci.backend.Routine;
@@ -41,7 +42,7 @@ public class Devices extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        Intent i = getIntent();
+        final Intent i = getIntent();
 
         if (i.getExtras() != null) {
 
@@ -71,6 +72,14 @@ public class Devices extends AppCompatActivity {
                     public void onClick(View view) {
                         //ApiConnection instance = new ApiConnection(this);
                         //Action action = new Action();
+                        //instance.runAction();
+                    }
+                });
+
+                down.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Action action = new Action(i.getType(), );
                         //instance.runAction();
                     }
                 });
