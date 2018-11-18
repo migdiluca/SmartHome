@@ -22,9 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Blinds"
-            android:configChanges="screenLayout|orientation|screenSize" />
+        <activity android:name=".Devices" android:configChanges="screenLayout|orientation|screenSize"></activity>
+
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"></activity>

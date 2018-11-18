@@ -9,6 +9,11 @@
         <item name="backgroundColor">@color/white</item>
     </style>
 
+    <style name="acStyle" parent="AppThemeLight">
+        <item name="colorPrimary">@color/acColorPrimary</item>
+        <item name="colorPrimaryDark">@color/acColorPrimaryDark</item>
+    </style>
+
     <style name="AppThemeDark" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -20,6 +25,29 @@
     <style name="blindsStyle">
         <item name="colorPrimary">@color/blindsColorPrimary</item>
         <item name="colorPrimaryDark">@color/blindsColorPrimaryDark</item>
-        <item name="android:windowNoTitle">true</item>
+    </style>
+    <style name="doorStyle" parent="AppThemeLight">
+        <item name="colorPrimary">@color/doorColorPrimary</item>
+        <item name="colorPrimaryDark">@color/doorColorPrimaryDark</item>
+    </style>
+    <style name="lampStyle" parent="AppThemeLight">
+        <item name="colorPrimary">@color/lampColorPrimary</item>
+        <item name="colorPrimaryDark">@color/lampColorPrimaryDark</item>
+    </style>
+    <style name="ovenStyle" parent="AppThemeLight">
+        <item name="colorPrimary">@color/ovenColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ovenColorPrimaryDark</item>
+    </style>
+    <style name="refrigeratorStyle" parent="AppThemeLight">
+        <item name="colorPrimary">@color/refrigeratorColorPrimary</item>
+        <item name="colorPrimaryDark">@color/refrigeratorColorPrimaryDark</item>
+    </style>
+    <style name="alarmStyle" parent="AppThemeLight">
+        <item name="colorPrimary">@color/alarmColorPrimary</item>
+        <item name="colorPrimaryDark">@color/alarmColorPrimaryDark</item>
+    </style>
+    <style name="timerStyle" parent="AppThemeLight">
+        <item name="colorPrimary">@color/timerColorPrimary</item>
+        <item name="colorPrimaryDark">@color/timerColorPrimaryDark</item>
     </style>
 </resources>
