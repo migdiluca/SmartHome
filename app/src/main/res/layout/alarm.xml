@@ -54,7 +54,7 @@
                 android:orientation="vertical">
 
                 <Switch
-                    android:id="@+id/OnOff"
+                    android:id="@+id/OnOffAlarm"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -92,13 +92,13 @@
                         android:text="@string/Temperature"
                         android:textColor="#000000"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/TempSeekBar"
+                        app:layout_constraintEnd_toStartOf="@+id/AcTempSeekBar"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <SeekBar
-                        android:id="@+id/TempSeekBar"
+                        android:id="@+id/AcTempSeekBar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>

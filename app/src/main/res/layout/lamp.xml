@@ -98,13 +98,13 @@
                         android:text="@string/Brightness"
                         android:textColor="#000000"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/TempSeekBar"
+                        app:layout_constraintEnd_toStartOf="@+id/AcTempSeekBar"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <SeekBar
-                        android:id="@+id/TempSeekBar"
+                        android:id="@+id/AcTempSeekBar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>

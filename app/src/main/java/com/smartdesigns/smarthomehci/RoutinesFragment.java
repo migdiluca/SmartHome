@@ -95,11 +95,11 @@ public class RoutinesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_routines, container, false);
+        View view = inflater.inflate(R.layout.fragment_recycler, container, false);
 
         setBackgroundColor(view);
 
-        routineRecycler = view.findViewById(R.id.routine_recyclerview);
+        routineRecycler = view.findViewById(R.id.recyclerview);
         getActivity().setTitle(R.string.title_routines);
         Context appContext = getContext();
         ApiConnection api = ApiConnection.getInstance(appContext);

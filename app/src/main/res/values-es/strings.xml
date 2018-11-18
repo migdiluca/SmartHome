@@ -9,10 +9,14 @@
     <string name="Settings">Configuraciones</string>
     <string name="About">Sobre</string>
 
+    <string name="ActionFail">Error, no se pudo realizar el cambio!</string>
+
     <string name="Blinds">Persianas</string>
     <string name="UpDown">Arriba/Abajo</string>
     <string name="Up">Arriba</string>
     <string name="Down">Abajo</string>
+    <string name="SuccessBlindsDown"> Se bajaron las Persianas!</string>
+    <string name="SuccessBlindsUp"> Se subieron las Persianas!</string>
 
     <string name="Ac">Aire Acondicionado</string>
     <string name="Temperature">Temperatura</string>
@@ -23,6 +27,11 @@
     <string name="Cool">Enfriar</string>
     <string name="Heat">Calefacción</string>
     <string name="Fan">Ventiladora</string>
+
+    <string name="SuccessMsgOnOff">El Dispositivo esta </string>
+    <string name="OnM">Prendido</string>
+    <string name="OffM">Apagado</string>
+    <string name="SuccessMsgTemp">La temperatura ha cambiado.</string>
 
     <string name="Door">Puerta</string>
     <string name="OpenClose">Abrir/Cerrar</string>
@@ -44,6 +53,10 @@
     <string name="Top">Arriba</string>
     <string name="Conventional">Convencional</string>
     <string name="HeatMode">Modo Calor</string>
+
+    <string name="SuccessCMode">Se ha cambiado la Convección.</string>
+    <string name="SuccessGMode">Se ha cambiado el Modo Grill.</string>
+    <string name="SuccessHMode">Se ha cambiado el Modo Calor.</string>
 
     <string name="Refrigerator">Heladera</string>
 
