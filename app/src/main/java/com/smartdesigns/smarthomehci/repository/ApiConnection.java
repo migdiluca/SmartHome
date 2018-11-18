@@ -10,6 +10,14 @@ import com.smartdesigns.smarthomehci.backend.Action;
 import com.smartdesigns.smarthomehci.backend.Device;
 import com.smartdesigns.smarthomehci.backend.Room;
 import com.smartdesigns.smarthomehci.backend.Routine;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.getStateAc;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.getStateAlarm;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.getStateBlinds;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.getStateDoor;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.getStateLamp;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.getStateOven;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.getStateRefrigerator;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.getStateTimer;
 
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -35,6 +43,8 @@ public class ApiConnection {
 
     //private static final String apiUrl = "http://192.168.1.137:8080/api/";
     private static final String apiUrl = "http://190.210.157.78:8080/";
+
+
     private static ApiConnection instance;
     private static RequestQueue requestQueue;
 
@@ -123,8 +133,9 @@ public class ApiConnection {
         return uuid;
     }
 
+
     public String runAction(Action action, Response.Listener<Boolean> listener, Response.ErrorListener errorListener){
-        String url = apiUrl + "rooms/" + action.getDeviceId();
+        String url = apiUrl + "devices/" + action.getDeviceId() +"/" + action.getActionName();
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Content-Type", "application/json");
         GsonRequest<List<String>, Boolean> request =
@@ -135,6 +146,113 @@ public class ApiConnection {
 
         return uuid;
     }
+
+    public String getStateAc(Device device, Response.Listener<getStateAc> listener, Response.ErrorListener errorListener){
+        String url = apiUrl + "devices/" + device.getId() +"/" + "getState";
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        GsonRequest<Object, getStateAc> request =
+                new GsonRequest<>(Request.Method.PUT, url, null , "result", new TypeToken<getStateAc>(){}, headers, listener, errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+
+        return uuid;
+    }
+
+    public String getStateAlarm(Device device, Response.Listener<getStateAlarm> listener, Response.ErrorListener errorListener){
+        String url = apiUrl + "devices/" + device.getId() +"/" + "getState";
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        GsonRequest<Object, getStateAlarm> request =
+                new GsonRequest<>(Request.Method.PUT, url, null , "result", new TypeToken<getStateAlarm>(){}, headers, listener, errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+
+        return uuid;
+    }
+
+    public String getStateBlinds(Device device, Response.Listener<getStateBlinds> listener, Response.ErrorListener errorListener){
+        String url = apiUrl + "devices/" + device.getId() +"/" + "getState";
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        GsonRequest<Object, getStateBlinds> request =
+                new GsonRequest<>(Request.Method.PUT, url, null , "result", new TypeToken<getStateBlinds>(){}, headers, listener, errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+
+        return uuid;
+    }
+
+    public String getStateDoor(Device device, Response.Listener<getStateDoor> listener, Response.ErrorListener errorListener){
+        String url = apiUrl + "devices/" + device.getId() +"/" + "getState";
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        GsonRequest<Object, getStateDoor> request =
+                new GsonRequest<>(Request.Method.PUT, url, null , "result", new TypeToken<getStateDoor>(){}, headers, listener, errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+
+        return uuid;
+    }
+
+
+    public String getStateLamp(Device device, Response.Listener<getStateLamp> listener, Response.ErrorListener errorListener){
+        String url = apiUrl + "devices/" + device.getId() +"/" + "getState";
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        GsonRequest<Object, getStateLamp> request =
+                new GsonRequest<>(Request.Method.PUT, url, null , "result", new TypeToken<getStateLamp>(){}, headers, listener, errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+
+        return uuid;
+    }
+
+    public String getStateOven(Device device, Response.Listener<getStateOven> listener, Response.ErrorListener errorListener){
+        String url = apiUrl + "devices/" + device.getId() +"/" + "getState";
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        GsonRequest<Object, getStateOven> request =
+                new GsonRequest<>(Request.Method.PUT, url, null , "result", new TypeToken<getStateOven>(){}, headers, listener, errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+
+        return uuid;
+    }
+
+    public String getStateRefrigerator(Device device, Response.Listener<getStateRefrigerator> listener, Response.ErrorListener errorListener){
+        String url = apiUrl + "devices/" + device.getId() +"/" + "getState";
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        GsonRequest<Object, getStateRefrigerator> request =
+                new GsonRequest<>(Request.Method.PUT, url, null , "result", new TypeToken<getStateRefrigerator>(){}, headers, listener, errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+
+        return uuid;
+    }
+
+    public String getStateTimer(Device device, Response.Listener<getStateTimer> listener, Response.ErrorListener errorListener){
+        String url = apiUrl + "devices/" + device.getId() +"/" + "getState";
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        GsonRequest<Object, getStateTimer> request =
+                new GsonRequest<>(Request.Method.PUT, url, null , "result", new TypeToken<getStateTimer>(){}, headers, listener, errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+
+        return uuid;
+    }
+
+
 
     public String createRoom(Room room, Response.Listener<Room> listener, Response.ErrorListener errorListener){
         String url = apiUrl + "rooms";
