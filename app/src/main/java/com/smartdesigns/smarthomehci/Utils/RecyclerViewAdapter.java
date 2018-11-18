@@ -105,7 +105,7 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         holder.title.setText(mData.get(position).getName());
-        holder.img_thumbnail.setImageResource(Integer.parseInt(mData.get(position).getMeta()));
+        holder.img_thumbnail.setImageResource(Integer.parseInt(mData.get(position).getMeta().get(0)));
 
         if(mData.get(position).getBackground() == -1){
             mData.get(position).setBackground(colors.get(ThreadLocalRandom.current().nextInt(0,colors.size())));

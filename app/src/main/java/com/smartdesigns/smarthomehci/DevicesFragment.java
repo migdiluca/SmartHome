@@ -28,6 +28,7 @@ import com.smartdesigns.smarthomehci.backend.Routine;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -71,11 +72,11 @@ public class DevicesFragment extends Fragment {
 
         List devicesListAux = new ArrayList();
         devicesList.onResponse(devicesListAux);
-        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
-        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
-        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
-        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
-        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
+        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Arrays.asList(new String[]{Integer.toString(R.drawable.blind)})));
+        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Arrays.asList(new String[]{Integer.toString(R.drawable.blind)})));
+        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Arrays.asList(new String[]{Integer.toString(R.drawable.blind)})));
+        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Arrays.asList(new String[]{Integer.toString(R.drawable.blind)})));
+        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Arrays.asList(new String[]{Integer.toString(R.drawable.blind)})));
 
         RecyclerViewAdapter devicesRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), devicesListAux);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());

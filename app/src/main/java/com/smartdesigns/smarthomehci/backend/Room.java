@@ -8,19 +8,20 @@ import com.smartdesigns.smarthomehci.DevicesFragment;
 import com.smartdesigns.smarthomehci.Home;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Room implements RecyclerInterface, Serializable {
     private String id;
     private String name;
-    private String meta;
-    private int background = -1;
+    private List<String> meta;
+    //private int background = -1;
 
-    public Room(String name, String meta) {
+    public Room(String name, List<String> meta) {
         this.name = name;
         this.meta = meta;
     }
 
-    public Room(String id, String name, String meta) {
+    public Room(String id, String name, List<String> meta) {
         this.id = id;
         this.name = name;
         this.meta = meta;
@@ -28,12 +29,12 @@ public class Room implements RecyclerInterface, Serializable {
 
     @Override
     public void setBackground(int background) {
-        this.background = background;
+        this.meta.add(Integer.toString(background));
     }
 
     @Override
     public int getBackground() {
-        return background;
+        return Integer.parseInt(this.meta.get(1));
     }
 
     public void setId(String id) {
@@ -52,11 +53,11 @@ public class Room implements RecyclerInterface, Serializable {
         return this.name;
     }
 
-    public void setMeta(String meta) {
+    public void setMeta(List<String> meta) {
         this.meta = meta;
     }
 
-    public String getMeta() {
+    public List<String> getMeta() {
         return this.meta;
     }
 

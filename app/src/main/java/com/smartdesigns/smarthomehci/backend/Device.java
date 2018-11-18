@@ -7,22 +7,25 @@ import com.smartdesigns.smarthomehci.Home;
 import com.smartdesigns.smarthomehci.RoutinesFragment;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Device implements RecyclerInterface, Serializable {
     protected String id;
     private String name;
     private String typeId;
-    private String meta;
-    private int background = -1;
+    private List<String> meta;
+    //private int background = -1;
 
 
-    public Device(String name, String typeId,String meta){
+    public Device(String name, String typeId,List<String> meta){
         this.name = name;
         this.typeId = typeId;
         this.meta = meta;
+        if(meta.size()==1)
+            meta.add(Integer.toString(-1));
     }
 
-    public Device(String name, String typeId, String meta, String id){
+    public Device(String name, String typeId, List<String> meta, String id){
         this(name, typeId, meta);
         this.id=id;
     }
@@ -30,12 +33,12 @@ public class Device implements RecyclerInterface, Serializable {
 
     @Override
     public void setBackground(int background) {
-        this.background = background;
+        this.meta.add(Integer.toString(background));
     }
 
     @Override
     public int getBackground() {
-        return background;
+        return Integer.parseInt(meta.get(1));
     }
 
     public void setId(String id){
@@ -56,11 +59,11 @@ public class Device implements RecyclerInterface, Serializable {
         this.name = name;
     }
 
-    public void setMeta(String meta) {
+    public void setMeta(List<String> meta) {
         this.meta = meta;
     }
 
-    public String getMeta() {
+    public List<String> getMeta() {
         return this.meta;
     }
 
