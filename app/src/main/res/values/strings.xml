@@ -37,8 +37,18 @@
 
     <string name="Lamp">Lamp</string>
     <string name="Brightness">Brightness</string>
+    <string name="ColorPicker">Color Picker</string>
 
     <string name="Oven">Oven</string>
+    <string name="Eco" translatable="false">Eco</string>
+    <string name="Normal">Normal</string>
+    <string name="Large">Large</string>
+    <string name="ConvectionMode">Convection Mode</string>
+    <string name="Bottom">Bottom</string>
+    <string name="Top">Top</string>
+    <string name="Conventional">Conventional</string>
+    <string name="HeatMode">Heat mode</string>
+    <string name="GrillMode">Grill Mode</string>
 
     <string name="Refrigerator">Refrigerator</string>
 
@@ -46,8 +56,6 @@
 
     <string name="Alarm">Alarm</string>
 
-
-    <string name="devState"></string>
     <string name="ColumnsAmount">Columns amount</string>
     <string name="title_activity_settings">Settings</string>
     <string name="pref_dark_theme">Dark theme</string>
@@ -61,6 +69,24 @@
         <item>3</item>
         <item>4</item>
         <item>5</item>
+    </string-array>
+
+    <string-array name="ConvectionMode">
+        <item>@string/Normal</item>
+        <item>@string/Eco</item>
+        <item>@string/Off</item>
+    </string-array>
+
+    <string-array name="GrillMode">
+        <item>@string/Large</item>
+        <item>@string/Eco</item>
+        <item>@string/Off</item>
+    </string-array>
+
+    <string-array name="HeatMode">
+        <item>@string/Conventional</item>
+        <item>@string/Bottom</item>
+        <item>@string/Top</item>
     </string-array>
 
 

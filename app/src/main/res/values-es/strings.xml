@@ -34,8 +34,16 @@
 
     <string name="Lamp">Lámpara</string>
     <string name="Brightness">Brillo</string>
+    <string name="ColorPicker">Paleta</string>
 
     <string name="Oven">Horno</string>
+    <string name="Normal">Normal</string>
+    <string name="Large">Grande</string>
+    <string name="ConvectionMode">Convección</string>
+    <string name="Bottom">Fondo</string>
+    <string name="Top">Arriba</string>
+    <string name="Conventional">Convencional</string>
+    <string name="HeatMode">Modo Calor</string>
 
     <string name="Refrigerator">Heladera</string>
 
@@ -45,7 +53,7 @@
     <string name="ColumnsAmount">Cantidad de columnas</string>
     <string name="title_activity_settings">Ajustes</string>
     <string name="pref_dark_theme">Tema oscuro</string>
+    <string name="GrillMode">Modo Grill</string>
 
-    <string name="devState"></string>
 
 </resources>
