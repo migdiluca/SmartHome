@@ -15,32 +15,32 @@ public class Routine implements RecyclerInterface, Serializable{
     private String id;
     private String name;
     private List<Action> actions;
-    private String meta;
-    private int background = -1;
+    private List<String> meta;
+    //private int background = -1;
 
-    public Routine(String id, List<Action> actions, String meta){
+    public Routine(String id, List<Action> actions, List<String> meta){
         this(actions, meta);
         this.id = id;
         //TODO:BORRAR
         this.name = "hola";
     }
 
-    public Routine(List<Action> actions, String meta){
+    public Routine(List<Action> actions, List<String> meta){
         this.meta = meta;
         this.actions = actions;
     }
 
     public String getName(){return name;}
-    public String getMeta(){return meta;}
+    public List<String> getMeta(){return meta;}
     public String getId(){return id;}
     @Override
     public void setBackground(int background) {
-        this.background = background;
+        this.meta.add(Integer.toString(background));
     }
 
     @Override
     public int getBackground() {
-        return background;
+        return Integer.parseInt(meta.get(1));
     }
 
     public void onClickAction(Serializable arg, Context context){
