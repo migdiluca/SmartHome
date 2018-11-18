@@ -31,6 +31,7 @@
     <string name="SuccessMsgOnOff">El Dispositivo esta </string>
     <string name="OnM">Prendido</string>
     <string name="OffM">Apagado</string>
+    <string name="SuccessMsgTemp">La temperatura ha cambiado.</string>
 
     <string name="Door">Puerta</string>
     <string name="OpenClose">Abrir/Cerrar</string>
@@ -52,6 +53,10 @@
     <string name="Top">Arriba</string>
     <string name="Conventional">Convencional</string>
     <string name="HeatMode">Modo Calor</string>
+
+    <string name="SuccessCMode">Se ha cambiado la Convección.</string>
+    <string name="SuccessGMode">Se ha cambiado el Modo Grill.</string>
+    <string name="SuccessHMode">Se ha cambiado el Modo Calor.</string>
 
     <string name="Refrigerator">Heladera</string>
 

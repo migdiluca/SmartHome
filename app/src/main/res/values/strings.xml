@@ -33,6 +33,7 @@
     <string name="SuccessMsgOnOff">Success! Device is now </string>
     <string name="OnM">On</string>
     <string name="OffM">Off</string>
+    <string name="SuccessMsgTemp">Success! Temperature hass Changed.</string>
 
     <string name="Door">Door</string>
     <string name="OpenClose">Open/Close</string>
@@ -57,6 +58,11 @@
     <string name="HeatMode">Heat mode</string>
     <string name="GrillMode">Grill Mode</string>
 
+    <string name="SuccessCMode">Success! Convection Mode has successfully changed.</string>
+    <string name="SuccessGMode">Success! Grill Mode has successfully changed.</string>
+    <string name="SuccessHMode">Success! Heat Mode has successfully changed.</string>
+
+
     <string name="Refrigerator">Refrigerator</string>
 
     <string name="Timer">Timer</string>
@@ -64,7 +70,6 @@
     <string name="Alarm">Alarm</string>
 
 
-    <string name="devState"></string>
     <string name="ColumnsAmountPotrait">Columns amount (Potrait mode)</string>
     <string name="ColumnsAmountLandscape">Columns amount (Landscape mode)</string>
     <string name="title_activity_settings">Settings</string>
@@ -103,6 +108,37 @@
         <item>@string/Conventional</item>
         <item>@string/Bottom</item>
         <item>@string/Top</item>
+    </string-array>
+
+    <string-array name="VSwing">
+        <item>auto</item>
+        <item>22</item>
+        <item>45</item>
+        <item>67</item>
+        <item>90</item>
+    </string-array>
+
+    <string-array name="HSwing">
+        <item>auto</item>
+        <item>-90</item>
+        <item>-45</item>
+        <item>0</item>
+        <item>45</item>
+        <item>90</item>
+    </string-array>
+
+    <string-array name="FanSpeed">
+        <item>auto</item>
+        <item>25</item>
+        <item>50</item>
+        <item>75</item>
+        <item>100</item>
+    </string-array>
+
+    <string-array name="AcMode">
+        <item>@string/Cool</item>
+        <item>@string/Heat</item>
+        <item>@string/Fan</item>
     </string-array>
 
 

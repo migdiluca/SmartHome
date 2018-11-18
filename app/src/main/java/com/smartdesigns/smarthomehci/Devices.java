@@ -3,14 +3,21 @@ package com.smartdesigns.smarthomehci;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -22,6 +29,8 @@ import com.smartdesigns.smarthomehci.backend.Room;
 import com.smartdesigns.smarthomehci.backend.Routine;
 import com.smartdesigns.smarthomehci.backend.TypeId;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
+
+import java.util.LinkedList;
 
 public class Devices extends AppCompatActivity {
 
@@ -37,17 +46,29 @@ public class Devices extends AppCompatActivity {
 
     Button onOffLights = (Button) findViewById(R.id.OnOff);
     Switch onOffAc = (Switch) findViewById(R.id.OnOffAc);
+    SeekBar temperatureAc = (SeekBar) findViewById(R.id.AcTempSeekBar);
+    TextView vSwing = (TextView) findViewById(R.id.VSwing);
+    TextView hSwing = (TextView) findViewById(R.id.HSwing);
+    TextView fanSpeed = (TextView) findViewById(R.id.FanSpeed);
+    TextView acMode = (TextView) findViewById(R.id.AcMode);
+
 
     RadioButton up = (RadioButton) findViewById(R.id.UpBut);
     RadioButton down = (RadioButton) findViewById(R.id.DownBut);
 
 
     Button lampColorPicker = (Button) findViewById(R.id.colorPickerView);
+    View thumbView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        thumbView = LayoutInflater.from(this).inflate(R.layout.layout_seekbar_thumb, null, false);
 
         final Intent i = getIntent();
 
@@ -99,10 +120,54 @@ public class Devices extends AppCompatActivity {
                             });
                         }
                     });
+                    //t 18 38
+                    temperatureAc.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                        @Override
+                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                    
+                            // You can have your own calculation for progress
+
+                            int aux = 18 + progress;
+
+                            seekBar.setThumb(getThumb(aux));
+                        }
+
+                        @Override
+                        public void onStartTrackingTouch(SeekBar seekBar) {
+
+                        }
+
+                        @Override
+                        public void onStopTrackingTouch(SeekBar seekBar) {
+                            int value = seekBar.getProgress() + 18;
+                            LinkedList<String> l = new LinkedList<>();
+                            l.add(Integer.toString(value));
+                            Action action = new Action(device.getId(), "setTemperature", l);
+                            api.runAction(action, new Response.Listener<Boolean>() {
+                                @Override
+                                public void onResponse(Boolean response) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.SuccessMsgTemp)
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.ActionFail)
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            });
+                        }
+                    });
+
                 } else {
-
+                    onOffAc.setEnabled(false);
+                    temperatureAc.setEnabled(false);
+                    vSwing.setClickable(false);
+                    hSwing.setClickable(false);
+                    fanSpeed.setClickable(false);
+                    acMode.setClickable(false);
                 }
 
             } else if (device.getTypeId().equals(TypeId.Blind.getTypeId())) {
@@ -221,6 +286,26 @@ public class Devices extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // item selected logic
+
+                        LinkedList<String> l = new LinkedList<>();
+                        l.add(getResources().getStringArray(R.array.ConvectionMode)[which]);
+
+                        Action action = new Action(device.getId(), "setConvection", l);
+                        api.runAction(action, new Response.Listener<Boolean>() {
+                            @Override
+                            public void onResponse(Boolean response) {
+                                Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.SuccessCMode)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.ActionFail)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        });
                         dialog.dismiss();
                     }
                 });
@@ -242,6 +327,27 @@ public class Devices extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // item selected logic
+
+                        LinkedList<String> l = new LinkedList<>();
+                        l.add(getResources().getStringArray(R.array.ConvectionMode)[which]);
+
+                        Action action = new Action(device.getId(), "setHeat", l);
+                        api.runAction(action, new Response.Listener<Boolean>() {
+                            @Override
+                            public void onResponse(Boolean response) {
+                                Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.SuccessHMode)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.ActionFail)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        });
+
                         dialog.dismiss();
                     }
                 });
@@ -263,14 +369,210 @@ public class Devices extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // item selected logic
+
+                        LinkedList<String> l = new LinkedList<>();
+                        l.add(getResources().getStringArray(R.array.ConvectionMode)[which]);
+
+                        Action action = new Action(device.getId(), "setGrill", l);
+                        api.runAction(action, new Response.Listener<Boolean>() {
+                            @Override
+                            public void onResponse(Boolean response) {
+                                Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.SuccessGMode)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.ActionFail)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        });
+
                         dialog.dismiss();
                     }
                 });
 
+        AlertDialog dialog = builder.create();
+        // display dialog
+        dialog.show();
+    }
+
+    public void showDialogueVSwing(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setTitle(R.string.ConvectionMode);
+
+        //list of items
+        String[] items = getResources().getStringArray(R.array.VSwing);
+        builder.setSingleChoiceItems(items, 0,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // item selected logic
+
+                        LinkedList<String> l = new LinkedList<>();
+                        l.add(getResources().getStringArray(R.array.VSwing)[which]);
+
+                        Action action = new Action(device.getId(), "setVerticalSwing", l);
+                        api.runAction(action, new Response.Listener<Boolean>() {
+                            @Override
+                            public void onResponse(Boolean response) {
+                                Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.SuccessGMode)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.ActionFail)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        });
+
+                        dialog.dismiss();
+                    }
+                });
 
         AlertDialog dialog = builder.create();
         // display dialog
         dialog.show();
+    }
+
+    public void showDialogueHSwing(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setTitle(R.string.ConvectionMode);
+
+        //list of items
+        String[] items = getResources().getStringArray(R.array.HSwing);
+        builder.setSingleChoiceItems(items, 0,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // item selected logic
+
+                        LinkedList<String> l = new LinkedList<>();
+                        l.add(getResources().getStringArray(R.array.HSwing)[which]);
+
+                        Action action = new Action(device.getId(), "setHorizontalSwing", l);
+                        api.runAction(action, new Response.Listener<Boolean>() {
+                            @Override
+                            public void onResponse(Boolean response) {
+                                Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.SuccessGMode)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.ActionFail)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        });
+
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        // display dialog
+        dialog.show();
+    }
+
+    public void showDialogueFanSpeed(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setTitle(R.string.ConvectionMode);
+
+        //list of items
+        String[] items = getResources().getStringArray(R.array.FanSpeed);
+        builder.setSingleChoiceItems(items, 0,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // item selected logic
+
+                        LinkedList<String> l = new LinkedList<>();
+                        l.add(getResources().getStringArray(R.array.FanSpeed)[which]);
+
+                        Action action = new Action(device.getId(), "setFanSpeed", l);
+                        api.runAction(action, new Response.Listener<Boolean>() {
+                            @Override
+                            public void onResponse(Boolean response) {
+                                Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.SuccessGMode)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.ActionFail)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        });
+
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        // display dialog
+        dialog.show();
+    }
+
+    public void showDialogueAcMode(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setTitle(R.string.ConvectionMode);
+
+        //list of items
+        String[] items = getResources().getStringArray(R.array.AcMode);
+        builder.setSingleChoiceItems(items, 0,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // item selected logic
+
+                        LinkedList<String> l = new LinkedList<>();
+                        l.add(getResources().getStringArray(R.array.AcMode)[which]);
+
+                        Action action = new Action(device.getId(), "setMode", l);
+                        api.runAction(action, new Response.Listener<Boolean>() {
+                            @Override
+                            public void onResponse(Boolean response) {
+                                Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.SuccessGMode)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.ActionFail)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        });
+
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        // display dialog
+        dialog.show();
+    }
+
+    public Drawable getThumb(int progress) {
+        ((TextView) thumbView.findViewById(R.id.tvProgress)).setText(progress + "");
+
+        thumbView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        Bitmap bitmap = Bitmap.createBitmap(thumbView.getMeasuredWidth(), thumbView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        thumbView.layout(0, 0, thumbView.getMeasuredWidth(), thumbView.getMeasuredHeight());
+        thumbView.draw(canvas);
+
+        return new BitmapDrawable(getResources(), bitmap);
     }
 
 
