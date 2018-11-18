@@ -3,6 +3,7 @@ package com.smartdesigns.smarthomehci;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
 import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
 import com.smartdesigns.smarthomehci.backend.Room;
@@ -27,6 +29,10 @@ import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+import static java.lang.Thread.sleep;
 
 
 /**
@@ -38,7 +44,7 @@ import java.util.List;
  */
 public class RoomFragment extends Fragment {
 
-    Response.Listener<List<Room>> roomList;
+    private static List<Room> roomList = new ArrayList<>();
     private static Room currentRoom;
 
     private OnFragmentInteractionListener mListener;
@@ -56,21 +62,27 @@ public class RoomFragment extends Fragment {
         currentRoom = routine;
     }
 
-    private void addCards(Response.Listener<List<Room>> roomList) {
-
-        List roomListAux = new ArrayList();
-        roomList.onResponse(roomListAux);
-        roomListAux.add(new Room("25", "ES UN TEST", "0"));
-        roomListAux.add(new Room("25", "ES UN TEST", "0"));
-        roomListAux.add(new Room("25", "ES UN TEST", "0"));
-        roomListAux.add(new Room("25", "ES UN TEST", "0"));
-        roomListAux.add(new Room("25", "ES UN TEST", "0"));
-
-        RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), roomListAux);
+    private int getColumns() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        int columns = preferences.getString("columns_amount","2").charAt(0) - '0';
-        roomRecyclerAdapter.setColumns(columns);
-        roomRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), columns));
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_potrait","2").charAt(0) - '0');
+        }
+        else {
+            RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_landscape","5").charAt(0) - '0');
+        }
+        return RecyclerViewAdapter.getColumns();
+    }
+
+    private void addCards() {
+        roomList.add(new Room("25", "ES UN TEST", "0"));
+        roomList.add(new Room("25", "ES UN TEST", "0"));
+        roomList.add(new Room("25", "ES UN TEST", "0"));
+        roomList.add(new Room("25", "ES UN TEST", "0"));
+        roomList.add(new Room("25", "ES UN TEST", "0"));
+
+
+        RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), roomList);
+        roomRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), getColumns()));
         roomRecycler.setAdapter(roomRecyclerAdapter);
     }
 
@@ -91,6 +103,7 @@ public class RoomFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @SuppressLint("ResourceAsColor")
@@ -99,20 +112,28 @@ public class RoomFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_room, container, false);
 
-        setBackgroundColor(view);
-
         roomRecycler = view.findViewById(R.id.room_recyclerview);
         getActivity().setTitle(R.string.title_rooms);
-        Context appContext = getContext();
-        ApiConnection api = ApiConnection.getInstance(appContext);
-        roomList = new Response.Listener<List<Room>>() {
+
+        ApiConnection api = ApiConnection.getInstance(getContext());
+        Response.Listener<List<Room>> response = new Response.Listener<List<Room>>() {
             @Override
             public void onResponse(List<Room> response) {
-
+                for(Room room: response) {
+                    if(!roomList.contains(room))
+                        roomList.add(room);
+                    addCards();
+                }
             }
         };
-        api.getRooms(roomList, null);
-        addCards(roomList);
+        api.getRooms(response, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        setBackgroundColor(view);
+
         return view;
     }
 
@@ -128,7 +149,7 @@ public class RoomFragment extends Fragment {
     public void onResume() {
         super.onResume();
         setBackgroundColor(getView());
-        addCards(roomList);
+        addCards();
     }
 
     private void setBackgroundColor(View view) {

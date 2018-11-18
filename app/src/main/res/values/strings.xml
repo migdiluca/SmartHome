@@ -63,19 +63,28 @@
 
     <string name="Alarm">Alarm</string>
 
-    <string name="ColumnsAmount">Columns amount</string>
+
+    <string name="devState"></string>
+    <string name="ColumnsAmountPotrait">Columns amount (Potrait mode)</string>
+    <string name="ColumnsAmountLandscape">Columns amount (Landscape mode)</string>
     <string name="title_activity_settings">Settings</string>
     <string name="pref_dark_theme">Dark theme</string>
 
     <!-- Strings related to Settings -->
 
 
-    <string-array name="columns_amount">
+    <string-array name="columns_amount_potrait">
         <item>1</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>
+    </string-array>
+
+    <string-array name="columns_amount_landscape">
+        <item>3</item>
+        <item>4</item>
         <item>5</item>
+        <item>6</item>
     </string-array>
 
     <string-array name="ConvectionMode">

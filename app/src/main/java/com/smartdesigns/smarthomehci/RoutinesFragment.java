@@ -2,6 +2,7 @@ package com.smartdesigns.smarthomehci;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -53,6 +54,17 @@ public class RoutinesFragment extends Fragment {
         currentRoutine = routine;
     }
 
+    private int getColumns() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_potrait","2").charAt(0) - '0');
+        }
+        else {
+            RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_landscape","5").charAt(0) - '0');
+        }
+        return RecyclerViewAdapter.getColumns();
+    }
+
     private void addCards(Response.Listener<List<Routine>> routineList) {
 
         List routineListAux = new ArrayList();
@@ -60,10 +72,7 @@ public class RoutinesFragment extends Fragment {
         routineListAux.add(new Routine("25",null,"0"));
 
         RecyclerViewAdapter routineRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), routineListAux);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        int columns = preferences.getString("columns_amount","2").charAt(0) - '0';
-        routineRecyclerAdapter.setColumns(columns);
-        routineRecycler.setLayoutManager(new GridLayoutManager(this.getContext(),columns));
+        routineRecycler.setLayoutManager(new GridLayoutManager(this.getContext(),getColumns()));
         routineRecycler.setAdapter(routineRecyclerAdapter);
     }
 
