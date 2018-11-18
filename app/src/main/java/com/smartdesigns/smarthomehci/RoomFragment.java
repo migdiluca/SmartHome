@@ -74,11 +74,6 @@ public class RoomFragment extends Fragment {
     }
 
     private void addCards() {
-        roomList.add(new Room("25", "ES UN TEST", "0"));
-        roomList.add(new Room("25", "ES UN TEST", "0"));
-        roomList.add(new Room("25", "ES UN TEST", "0"));
-        roomList.add(new Room("25", "ES UN TEST", "0"));
-        roomList.add(new Room("25", "ES UN TEST", "0"));
 
 
         RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), roomList);

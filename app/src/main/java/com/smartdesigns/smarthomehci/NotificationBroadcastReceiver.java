@@ -27,7 +27,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = new Notification.Builder(context)
-                .setContentTitle("Lamp Status Has Changed")
+                .setContentTitle("Blinds has changed status")
                 .setContentText("Blinds are up")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))

@@ -24,7 +24,7 @@ public class Devices extends AppCompatActivity {
     private BroadcastReceiver broadcastReceiver;
     public static final String MESSAGE_ID = "com.smartdesigns.smarthomehci.MESSAGE_ID";
 
-    
+
 
     private Room room = null;
     private Routine routine = null;
