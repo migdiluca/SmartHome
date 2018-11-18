@@ -3,6 +3,7 @@ package com.smartdesigns.smarthomehci;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -42,7 +43,7 @@ public class DevicesFragment extends Fragment {
 
     private Room room = null;
     private Routine routine = null;
-    Response.Listener<List<Device>> devicesList;
+    private List<Device> devicesList = new ArrayList<>();
 
     private OnFragmentInteractionListener mListener;
     RecyclerView devicesRecycler;
@@ -67,21 +68,20 @@ public class DevicesFragment extends Fragment {
         return fragment;
     }
 
-    private void addCards(Response.Listener<List<Device>> devicesList) {
-
-        List devicesListAux = new ArrayList();
-        devicesList.onResponse(devicesListAux);
-        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
-        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
-        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
-        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
-        devicesListAux.add(new Device("25", "ESTE ES UN DISPOSITIVO", Integer.toString(R.drawable.blind)));
-
-        RecyclerViewAdapter devicesRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), devicesListAux);
+    private int getColumns() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        int columns = preferences.getString("columns_amount","2").charAt(0) - '0';
-        devicesRecyclerAdapter.setColumns(columns);
-        devicesRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), columns));
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_potrait","2").charAt(0) - '0');
+        }
+        else {
+            RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_landscape","5").charAt(0) - '0');
+        }
+        return RecyclerViewAdapter.getColumns();
+    }
+
+    private void addCards() {
+        RecyclerViewAdapter devicesRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), devicesList);
+        devicesRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), getColumns()));
         devicesRecycler.setAdapter(devicesRecyclerAdapter);
     }
 
@@ -103,6 +103,8 @@ public class DevicesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_devices, container, false);
         setBackgroundColor(view);
+
+        Home.getInstance().getSupportActionBar().setHomeButtonEnabled(true);
 
         if (room != null)
             getActivity().setTitle(room.getName());
@@ -127,18 +129,20 @@ public class DevicesFragment extends Fragment {
 
         Context appContext = getContext();
         ApiConnection api = ApiConnection.getInstance(appContext);
-        devicesList = new Response.Listener<List<Device>>() {
-            @Override
-            public void onResponse(List<Device> response) {
 
-            }
-        };
         if (Home.getInstance().getCurrentMode() == 0)
-            api.getRoomDevices(room, devicesList, null);
+            api.getRoomDevices(room, new Response.Listener<List<Device>>() {
+                @Override
+                public void onResponse(List<Device> response) {
+                    devicesList.removeAll(devicesList);
+                    devicesList.addAll(response);
+                    addCards();
+                }
+            }, null);
         else if (Home.getInstance().getCurrentMode() == 1) {
-        }
         //getRoutineDevices();
-        addCards(devicesList);
+        }
+
         return view;
     }
 
@@ -193,7 +197,7 @@ public class DevicesFragment extends Fragment {
         else
             getActivity().setTitle(routine.getName());
         setBackgroundColor(getView());
-        addCards(devicesList);
+        addCards();
     }
 
 
