@@ -35,13 +35,6 @@ import java.util.concurrent.locks.ReentrantLock;
 import static java.lang.Thread.sleep;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * to handle interaction events.
- * Use the {@link RoomFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RoomFragment extends Fragment {
 
     private static List<Room> roomList = new ArrayList<>();
@@ -49,10 +42,6 @@ public class RoomFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     RecyclerView roomRecycler;
-
-    public RoomFragment() {
-        // Required empty public constructor
-    }
 
     public static Room getCurrentRoutine() {
         return currentRoom;
@@ -81,32 +70,19 @@ public class RoomFragment extends Fragment {
         roomRecycler.setAdapter(roomRecyclerAdapter);
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment RoomFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RoomFragment newInstance() {
-        RoomFragment fragment = new RoomFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    @SuppressLint("ResourceAsColor")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_room, container, false);
+        View view = inflater.inflate(R.layout.fragment_recycler, container, false);
 
-        roomRecycler = view.findViewById(R.id.room_recyclerview);
+        roomRecycler = view.findViewById(R.id.recyclerview);
         getActivity().setTitle(R.string.title_rooms);
 
 
@@ -185,15 +161,6 @@ public class RoomFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
 
 }
