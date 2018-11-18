@@ -34,7 +34,7 @@ public class Devices extends AppCompatActivity {
     RadioButton down = (RadioButton) findViewById(R.id.DownBut);
 
 
-    Button lampColorPicker = (Button) findViewById(R.id.ColorPickerView);
+    Button lampColorPicker = (Button) findViewById(R.id.colorPickerView);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
