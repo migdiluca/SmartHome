@@ -8,10 +8,14 @@
     <string name="Settings">Settings</string>
     <string name="About">About</string>
 
+    <string name="ActionFail">Error, could not apply the change!</string>
+
     <string name="Blinds">Blinds</string>
     <string name="UpDown">Up/Down</string>
     <string name="Up">Up</string>
     <string name="Down">Down</string>
+    <string name="SuccessBlindsDown">Success! Blind is now Down.</string>
+    <string name="SuccessBlindsUp">Success! Blind is now Up.</string>
 
     <string name="Ac">Air Conditioner</string>
     <string name="OnOff" translatable="false">On/Off</string>
@@ -26,6 +30,10 @@
     <string name="Heat">Heat</string>
     <string name="Fan">Fan</string>
 
+    <string name="SuccessMsgOnOff">Success! Device is now </string>
+    <string name="OnM">On</string>
+    <string name="OffM">Off</string>
+    <string name="SuccessMsgTemp">Success! Temperature hass Changed.</string>
 
     <string name="Door">Door</string>
     <string name="OpenClose">Open/Close</string>
@@ -49,6 +57,11 @@
     <string name="Conventional">Conventional</string>
     <string name="HeatMode">Heat mode</string>
     <string name="GrillMode">Grill Mode</string>
+
+    <string name="SuccessCMode">Success! Convection Mode has successfully changed.</string>
+    <string name="SuccessGMode">Success! Grill Mode has successfully changed.</string>
+    <string name="SuccessHMode">Success! Heat Mode has successfully changed.</string>
+
 
     <string name="Refrigerator">Refrigerator</string>
 
@@ -101,6 +114,36 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_favourites">Favourites</string>
+    <string-array name="VSwing">
+        <item>auto</item>
+        <item>22</item>
+        <item>45</item>
+        <item>67</item>
+        <item>90</item>
+    </string-array>
+
+    <string-array name="HSwing">
+        <item>auto</item>
+        <item>-90</item>
+        <item>-45</item>
+        <item>0</item>
+        <item>45</item>
+        <item>90</item>
+    </string-array>
+
+    <string-array name="FanSpeed">
+        <item>auto</item>
+        <item>25</item>
+        <item>50</item>
+        <item>75</item>
+        <item>100</item>
+    </string-array>
+
+    <string-array name="AcMode">
+        <item>@string/Cool</item>
+        <item>@string/Heat</item>
+        <item>@string/Fan</item>
+    </string-array>
 
 
 </resources>

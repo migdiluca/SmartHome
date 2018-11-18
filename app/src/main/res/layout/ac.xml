@@ -54,8 +54,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dip"
+                    android:background="#eeeeeeee" />
+
                 <Switch
-                    android:id="@+id/OnOff"
+                    android:id="@+id/OnOffAc"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -75,7 +80,7 @@
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dip"
-                    android:background="#ffffffff" />
+                    android:background="#eeeeeeee" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -93,69 +98,71 @@
                         android:text="@string/Temperature"
                         android:textColor="#000000"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/TempSeekBar"
+                        app:layout_constraintEnd_toStartOf="@+id/AcTempSeekBar"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <SeekBar
-                        android:id="@+id/TempSeekBar"
+                        android:id="@+id/AcTempSeekBar"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:max="20"
+                        />
                 </LinearLayout>
 
                 <View
                     android:layout_width="fill_parent"
-                    android:layout_height="2dip"
-                    android:background="#ffffffff" />
+                    android:layout_height="1dip"
+                    android:background="#eeeeeeee" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/VSwing"
-                        android:layout_width="93dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/VerticalSwing"
                         android:textColor="#000000"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="showDialogueVSwing"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.65" />
 
-                    <SeekBar
-                        android:id="@+id/VSwingSeekBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="fill_parent"
-                    android:layout_height="2dip"
-                    android:background="#ffffffff" />
+                    android:layout_height="1dip"
+                    android:background="#eeeeeeee" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/HSwing"
-                        android:layout_width="93dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/HorizontalSwing"
                         android:textColor="#000000"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="showDialogueHSwing"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/FanSpeedSeekBar"
                         app:layout_constraintHorizontal_bias="1.0"
@@ -163,16 +170,12 @@
                         app:layout_constraintTop_toBottomOf="@+id/VSwing"
                         app:layout_constraintVertical_bias="0.65" />
 
-                    <SeekBar
-                        android:id="@+id/HSwingSeekBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="fill_parent"
-                    android:layout_height="2dip"
-                    android:background="#ffffffff" />
+                    android:layout_height="1dip"
+                    android:background="#eeeeeeee" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -183,11 +186,14 @@
 
                     <TextView
                         android:id="@+id/FanSpeed"
-                        android:layout_width="93dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/FanSpeed"
                         android:textColor="#000000"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="showDialogueFanSpeed"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/FanSpeedSeekBar"
                         app:layout_constraintHorizontal_bias="1.0"
@@ -195,22 +201,12 @@
                         app:layout_constraintTop_toBottomOf="@+id/VSwing"
                         app:layout_constraintVertical_bias="0.65" />
 
-                    <SeekBar
-                        android:id="@+id/FanSpeedSeekBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/VSwingSeekBar"
-                        app:layout_constraintVertical_bias="0.65" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="fill_parent"
-                    android:layout_height="2dip"
-                    android:background="#ffffffff" />
+                    android:layout_height="1dip"
+                    android:background="#eeeeeeee" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -221,45 +217,26 @@
 
                     <TextView
                         android:id="@+id/AcMode"
-                        android:layout_width="93dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/AcMode"
                         android:textColor="#000000"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="showDialogueAcMode"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintVertical_bias="0.65" />
 
-                    <RadioGroup
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/CoolBut"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/Cool" />
-
-                        <RadioButton
-                            android:id="@+id/HeatBut"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/Heat" />
-
-                        <RadioButton
-                            android:id="@+id/FanBut"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/Fan" />
-                    </RadioGroup>
-
 
                 </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dip"
+                    android:background="#eeeeeeee" />
 
             </LinearLayout>
         </ScrollView>
