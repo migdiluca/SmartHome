@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
@@ -61,6 +62,10 @@ public class Devices extends AppCompatActivity {
     TextView grillMode = (TextView) findViewById(R.id.GrillMode);
     TextView heatMode = (TextView) findViewById(R.id.HeatMode);
     TextView convectionMode = (TextView) findViewById(R.id.ConvectionMode);
+
+    /** Door*/
+    CheckBox openBut = (CheckBox) findViewById(R.id.OpenButton);
+    CheckBox lockBut = (CheckBox) findViewById(R.id.LockButton);
 
     /** Lamp*/
     Button onOffLights = (Button) findViewById(R.id.OnOff);
@@ -236,10 +241,82 @@ public class Devices extends AppCompatActivity {
 
 
             } else if (device.getTypeId().equals(TypeId.Door.getTypeId())) {
+
                 setTheme(R.style.doorStyle);
                 this.setContentView(R.layout.door);
 
-            } else if (device.getTypeId().equals(TypeId.Lamp.getTypeId())) {
+                if(Home.getInstance().getCurrentMode() == 0) {
+
+                    openBut.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            String s;
+                            final String f;
+                            if(openBut.isChecked()){
+                                s = "open";
+                                f = getResources().getString(R.string.OpenMsg);
+                            }else{
+                                s = "close";
+                                f = getResources().getString(R.string.CloseMsg);
+                            }
+                            Action action = new Action(device.getId(), s, null);
+                            api.runAction(action, new Response.Listener<Boolean>() {
+                                @Override
+                                public void onResponse(Boolean response) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.SuccessMsgDoor) + f
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.ActionFail)
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            });
+                        }
+                    });
+
+                    lockBut.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            String s;
+                            final String f;
+                            if(lockBut.isChecked()){
+                                s = "lock";
+                                f = getResources().getString(R.string.LockMsg);
+                            }else{
+                                s = "unlock";
+                                f = getResources().getString(R.string.UnlockMsg);
+                            }
+                            Action action = new Action(device.getId(), s, null);
+                            api.runAction(action, new Response.Listener<Boolean>() {
+                                @Override
+                                public void onResponse(Boolean response) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.SuccessMsgDoor) + f
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.ActionFail)
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            });
+                        }
+                    });
+
+                }
+                else {
+
+                }
+
+                } else if (device.getTypeId().equals(TypeId.Lamp.getTypeId())) {
 
                 setTheme(R.style.lampStyle);
                 this.setContentView(R.layout.lamp);

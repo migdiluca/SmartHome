@@ -48,49 +48,37 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/TemperatureLL"
+                android:id="@+id/OCLL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dip"
+                    android:background="#eeeeeeee" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_gravity="end"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
 
-                    <TextView
-                        android:id="@+id/OpenClose"
-                        android:layout_width="93dp"
+                    <CheckBox
+                        android:id="@+id/OpenButton"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
                         android:text="@string/OpenClose"
-                        android:textColor="#000000"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintVertical_bias="0.65" />
-
-                    <RadioGroup
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/Open"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/Open" />
-
-                        <RadioButton
-                            android:id="@+id/Close"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/Close" />
-                    </RadioGroup>
+                        android:layout_marginStart="8dp"
+                        android:textAlignment="viewStart"
+                        android:button="@null"
+                        android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"/>
 
 
                 </LinearLayout>
@@ -98,7 +86,7 @@
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="2dip"
-                    android:background="#ffffffff" />
+                    android:background="#eeeeeeee" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -114,9 +102,13 @@
                         android:id="@+id/LockButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="0dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_weight="1"
-                        android:text="@string/LockUnlock" />
+                        android:text="@string/LockUnlock"
+                        android:layout_marginStart="8dp"
+                        android:textAlignment="viewStart"
+                        android:button="@null"
+                        android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"/>
 
 
                 </LinearLayout>
@@ -124,7 +116,7 @@
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="2dip"
-                    android:background="#ffffffff" />
+                    android:background="#eeeeeeee" />
 
             </LinearLayout>
         </ScrollView>

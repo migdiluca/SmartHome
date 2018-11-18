@@ -34,12 +34,17 @@
     <string name="SuccessMsgTemp">La temperatura ha cambiado.</string>
 
     <string name="Door">Puerta</string>
-    <string name="OpenClose">Abrir/Cerrar</string>
+    <string name="OpenClose">Puerta Abierta</string>
     <string name="Open">Abrir</string>
     <string name="Close">Cerrar</string>
     <string name="Lock">Bloquear</string>
     <string name="Unlock">Desbloquear</string>
     <string name="LockUnlock">Bloquear la Puerta</string>
+    <string name="SuccessMsgDoor">La puerta ahora esta </string>
+    <string name="OpenMsg">Abierta.</string>
+    <string name="CloseMsg">Cerrada.</string>
+    <string name="LockMsg">Bloqueada.</string>
+    <string name="UnlockMsg">Desbloqueda.</string>
 
     <string name="Lamp">Lámpara</string>
     <string name="Brightness">Brillo</string>
