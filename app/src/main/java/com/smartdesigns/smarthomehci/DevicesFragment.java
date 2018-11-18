@@ -88,6 +88,7 @@ public class DevicesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Home.getInstance().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (Home.getInstance().getCurrentMode() == 0) {
             room = (Room) getArguments().getSerializable("Object");
             getActivity().setTitle(room.getName());
@@ -98,12 +99,18 @@ public class DevicesFragment extends Fragment {
 
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        Home.getInstance().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    }
+
+
     @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_devices, container, false);
         setBackgroundColor(view);
-
         Home.getInstance().getSupportActionBar().setHomeButtonEnabled(true);
 
         if (room != null)

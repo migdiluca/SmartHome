@@ -75,7 +75,7 @@ public class RoomFragment extends Fragment {
 
     private void addCards() {
 
-
+        roomList.add(new Room("nmasd",new ArrayList<String>()));
         RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), roomList);
         roomRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), getColumns()));
         roomRecycler.setAdapter(roomRecyclerAdapter);
@@ -98,7 +98,6 @@ public class RoomFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @SuppressLint("ResourceAsColor")
@@ -110,18 +109,20 @@ public class RoomFragment extends Fragment {
         roomRecycler = view.findViewById(R.id.room_recyclerview);
         getActivity().setTitle(R.string.title_rooms);
 
+
+        Log.d("ROOMSIZEASD", "asd");
         ApiConnection api = ApiConnection.getInstance(getContext());
-        Response.Listener<List<Room>> response = new Response.Listener<List<Room>>() {
+        api.getRooms(new Response.Listener<List<Room>>() {
             @Override
             public void onResponse(List<Room> response) {
+                Log.d("ROOMSIZEASD", Integer.toString(response.size()));
                 for(Room room: response) {
                     if(!roomList.contains(room))
                         roomList.add(room);
                     addCards();
                 }
             }
-        };
-        api.getRooms(response, new Response.ErrorListener() {
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 

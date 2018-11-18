@@ -65,15 +65,13 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
 
         TextView tv = (TextView) view.findViewById(R.id.card_view_title);
 
+        ViewGroup.MarginLayoutParams marginParam =  (ViewGroup.MarginLayoutParams) view.findViewById(R.id.card_view).getLayoutParams();
 
-        CardView cardView = view.findViewById(R.id.card_view);
-        ViewGroup.MarginLayoutParams ml =  (ViewGroup.MarginLayoutParams) cardView.getLayoutParams();
-
-        lp.width = ((parent.getMeasuredWidth()) / columns) - ml.bottomMargin * 2;
+        lp.width = ((parent.getMeasuredWidth()) / columns) - marginParam.bottomMargin * 2;
 
         tv.getLayoutParams().width = lp.width;
         tv.getLayoutParams().height = lp.width* 25 / 100;
-        tv.setTextSize((float) (tv.getTextSize() / columns ));
+        tv.setTextSize((float) (tv.getTextSize() / (columns /((columns*2.1+10)/10))));
 
         lp.height = lp.width + tv.getLayoutParams().height;
 
@@ -118,7 +116,7 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
         holder.title.setText(mData.get(position).getName());
         //holder.img_thumbnail.setImageResource(Integer.parseInt(mData.get(position).getMeta()));
 
-        if(mData.get(position).getBackground() == -1){
+        if(true){
             mData.get(position).setBackground(colors.get(ThreadLocalRandom.current().nextInt(0,colors.size())));
         }
 
@@ -149,12 +147,9 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
 
         public MyViewHolder(View itemView) {
             super(itemView);
-
             title = (TextView) itemView.findViewById(R.id.card_view_title) ;
             img_thumbnail = (ImageView) itemView.findViewById(R.id.card_view_img);
             cardView = (CardView) itemView.findViewById(R.id.card_view);
-
-
         }
     }
 
