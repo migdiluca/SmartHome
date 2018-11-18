@@ -27,6 +27,14 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"></activity>
+        <receiver
+            android:name=".NotificationBroadcastReceiver"
+            android:exported="false">
+            <intent-filter android:priority="1">
+                <action android:name="com.smartdesigns.smarthomehci.ACTION_NEW_MESSAGE" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

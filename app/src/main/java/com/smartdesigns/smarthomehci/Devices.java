@@ -1,6 +1,7 @@
 package com.smartdesigns.smarthomehci;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,11 @@ import com.smartdesigns.smarthomehci.backend.Routine;
 import com.smartdesigns.smarthomehci.backend.TypeId;
 
 public class Devices extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
+    public static final String MESSAGE_ID = "com.smartdesigns.smarthomehci.MESSAGE_ID";
+
+    
 
     private Room room = null;
     private Routine routine = null;
