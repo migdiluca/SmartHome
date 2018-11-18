@@ -118,7 +118,7 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
         holder.title.setText(mData.get(position).getName());
         //holder.img_thumbnail.setImageResource(Integer.parseInt(mData.get(position).getMeta()));
 
-        if(mData.get(position).getBackground() == -1){
+        if(true){
             mData.get(position).setBackground(colors.get(ThreadLocalRandom.current().nextInt(0,colors.size())));
         }
 
@@ -149,12 +149,9 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
 
         public MyViewHolder(View itemView) {
             super(itemView);
-
             title = (TextView) itemView.findViewById(R.id.card_view_title) ;
             img_thumbnail = (ImageView) itemView.findViewById(R.id.card_view_img);
             cardView = (CardView) itemView.findViewById(R.id.card_view);
-
-
         }
     }
 

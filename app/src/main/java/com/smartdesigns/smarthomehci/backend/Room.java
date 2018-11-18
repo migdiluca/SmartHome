@@ -8,6 +8,7 @@ import com.smartdesigns.smarthomehci.DevicesFragment;
 import com.smartdesigns.smarthomehci.Home;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Room implements RecyclerInterface, Serializable {
@@ -34,7 +35,7 @@ public class Room implements RecyclerInterface, Serializable {
 
     @Override
     public int getBackground() {
-        return Integer.parseInt(this.meta.get(1));
+        return Integer.parseInt(this.meta.get(0));
     }
 
     public void setId(String id) {

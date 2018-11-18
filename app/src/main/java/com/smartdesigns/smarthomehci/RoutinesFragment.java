@@ -69,7 +69,6 @@ public class RoutinesFragment extends Fragment {
 
         List routineListAux = new ArrayList();
         routineList.onResponse(routineListAux);
-        routineListAux.add(new Routine("25",null,"0"));
 
         RecyclerViewAdapter routineRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), routineListAux);
         routineRecycler.setLayoutManager(new GridLayoutManager(this.getContext(),getColumns()));
