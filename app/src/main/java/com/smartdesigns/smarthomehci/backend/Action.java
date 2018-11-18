@@ -26,4 +26,8 @@ public class Action {
     public List<String> getParams() {
         return params;
     }
+
+    public String getActionName() {
+        return actionName;
+    }
 }

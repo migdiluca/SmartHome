@@ -11,6 +11,7 @@ import com.smartdesigns.smarthomehci.backend.Device;
 import com.smartdesigns.smarthomehci.backend.Room;
 import com.smartdesigns.smarthomehci.backend.TypeId;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.getStateLamp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,9 +42,10 @@ public class ExampleInstrumentedTest {
     /*Test con la base de datos inicialmente vacia*/
     @Test
     public void apiTest(){
-        DevicesApiTest();
+       /* DevicesApiTest();
         RoomsApiTest();
-       DeviceInRoomTest();
+        DeviceInRoomTest();*/
+        ActionTest();
     }
 
     public void DevicesApiTest(){
@@ -54,7 +56,7 @@ public class ExampleInstrumentedTest {
         ApiConnection api = ApiConnection.getInstance(appContext);
 
         //creating devices
-        Device device1 = new Device("Cortinas", TypeId.Blind.getTypeId(), "[]");
+        Device device1 = new Device("Lamparita", TypeId.Lamp.getTypeId(), "[]");
         Device device2 = new Device("Horno", TypeId.Oven.getTypeId(), "[]");
         Device device3 = new Device("Heladera", TypeId.Refrigerator.getTypeId(), "[]");
 
@@ -126,46 +128,9 @@ public class ExampleInstrumentedTest {
         }catch (Exception e){
 
         }
-/*
-        //executing actions
-        Action action = new Action(devices.get(0).getId(), "down", new ArrayList<String>());
-        api.runAction(action, new Response.Listener<Boolean>() {
-            @Override
-            public void onResponse(Boolean response) {
-                assertTrue(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                assertTrue(false);
-            }
-        });
 
-        try {
-            Thread.sleep(3000);
-        }catch (Exception e){
 
-        }
 
-        action = new Action(devices.get(0).getId(), "getState", new ArrayList<String>());
-        api.runAction(action, new Response.Listener<Boolean>() {
-            @Override
-            public void onResponse(Boolean response) {
-                assertTrue(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                assertTrue(false);
-            }
-        });
-
-        try {
-            Thread.sleep(3000);
-        }catch (Exception e){
-
-        }
-*/
         //deleting devices
         for(Device device: devices){
             api.deleteDevice(device, new Response.Listener<Boolean>() {
@@ -416,6 +381,111 @@ public class ExampleInstrumentedTest {
                 }
             });
         }
+
+        try {
+            Thread.sleep(3000);
+        }catch (Exception e){
+
+        }
+    }
+
+    public void ActionTest(){
+    devices = new ArrayList<>();
+
+    Context appContext = InstrumentationRegistry.getTargetContext();
+
+    ApiConnection api = ApiConnection.getInstance(appContext);
+
+
+        //retrieving devices
+        api.getDevices(new Response.Listener<List<Device>>() {
+            @Override
+            public void onResponse(List<Device> response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                assertTrue(false);
+            }
+        });
+
+        try {
+            Thread.sleep(3000);
+        }catch (Exception e){
+
+        }
+
+    //creating devices
+    Device device1 = new Device("Lamparita", TypeId.Lamp.getTypeId(), "[]");
+
+        api.createDevice(device1, new Response.Listener<Device>() {
+            @Override
+            public void onResponse(Device response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                assertTrue(false);
+            }
+        });
+
+        try {
+            Thread.sleep(3000);
+        }catch (Exception e){
+
+        }
+
+    //executing actions
+    Action action = new Action(device1.getId(), "down", new ArrayList<String>());
+    api.runAction(action, new Response.Listener<Boolean>() {
+        @Override
+        public void onResponse(Boolean response) {
+            assertTrue(response);
+        }
+    }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            assertTrue(false);
+        }
+    });
+
+    try {
+        Thread.sleep(3000);
+    }catch (Exception e){
+
+    }
+
+    api.getStateLamp(device1, new Response.Listener<getStateLamp>() {
+        @Override
+        public void onResponse(getStateLamp response) {
+            assertTrue(response.getStatus().equals("closing") || response.getStatus().equals("closed"));
+        }
+    }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            assertTrue(false);
+        }
+    });
+
+    try {
+        Thread.sleep(3000);
+    }catch (Exception e){
+
+    }
+
+        api.deleteDevice(device1, new Response.Listener<Boolean>() {
+            @Override
+            public void onResponse(Boolean response) {
+                assertTrue(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                assertTrue(false);
+            }
+        });
 
         try {
             Thread.sleep(3000);
