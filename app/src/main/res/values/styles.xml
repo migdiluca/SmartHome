@@ -9,11 +9,6 @@
         <item name="backgroundColor">@color/white</item>
     </style>
 
-    <style name="acStyle" parent="AppThemeLight">
-        <item name="colorPrimary">@color/acColorPrimary</item>
-        <item name="colorPrimaryDark">@color/acColorPrimaryDark</item>
-    </style>
-
     <style name="AppThemeDark" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -22,32 +17,47 @@
         <item name="backgroundColor">@color/black</item>
     </style>
 
-    <style name="blindsStyle">
+    <style name="acStyle" parent="AppThemeLight">
+        <item name="colorPrimary">@color/acColorPrimary</item>
+        <item name="colorPrimaryDark">@color/acColorPrimaryDark</item>
+        <item name="colorAccent">@color/acColorPrimary</item>
+    </style>
+
+    <style name="blindsStyle" parent="AppThemeLight">
         <item name="colorPrimary">@color/blindsColorPrimary</item>
         <item name="colorPrimaryDark">@color/blindsColorPrimaryDark</item>
+        <item name="colorAccent">@color/blindsColorPrimary</item>
+
     </style>
     <style name="doorStyle" parent="AppThemeLight">
         <item name="colorPrimary">@color/doorColorPrimary</item>
         <item name="colorPrimaryDark">@color/doorColorPrimaryDark</item>
+        <item name="colorAccent">@color/doorColorPrimary</item>
     </style>
     <style name="lampStyle" parent="AppThemeLight">
         <item name="colorPrimary">@color/lampColorPrimary</item>
         <item name="colorPrimaryDark">@color/lampColorPrimaryDark</item>
+        <item name="colorAccent">@color/lampColorPrimary</item>
     </style>
     <style name="ovenStyle" parent="AppThemeLight">
         <item name="colorPrimary">@color/ovenColorPrimary</item>
         <item name="colorPrimaryDark">@color/ovenColorPrimaryDark</item>
+        <item name="colorAccent">@color/ovenColorPrimary</item>
     </style>
     <style name="refrigeratorStyle" parent="AppThemeLight">
         <item name="colorPrimary">@color/refrigeratorColorPrimary</item>
         <item name="colorPrimaryDark">@color/refrigeratorColorPrimaryDark</item>
+        <item name="colorAccent">@color/refrigeratorColorPrimary</item>
     </style>
     <style name="alarmStyle" parent="AppThemeLight">
         <item name="colorPrimary">@color/alarmColorPrimary</item>
         <item name="colorPrimaryDark">@color/alarmColorPrimaryDark</item>
+        <item name="colorAccent">@color/alarmColorPrimary</item>
     </style>
     <style name="timerStyle" parent="AppThemeLight">
         <item name="colorPrimary">@color/timerColorPrimary</item>
         <item name="colorPrimaryDark">@color/timerColorPrimaryDark</item>
+        <item name="colorAccent">@color/timerColorPrimary</item>
+
     </style>
 </resources>

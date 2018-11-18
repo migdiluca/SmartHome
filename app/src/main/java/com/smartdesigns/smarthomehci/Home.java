@@ -1,7 +1,10 @@
 package com.smartdesigns.smarthomehci;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,13 +14,19 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.MenuItemImpl;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.ActionProvider;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
+import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
 
 import java.util.Stack;
 
@@ -27,15 +36,14 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
     private FrameLayout mMainFrame;
 
 
-    private Stack<Fragment> bottomStacks[] = new Stack[5];
+    private static Stack<Fragment> bottomStacks[] = new Stack[5];
 
-    private int currentMode = 0;
+    private static int currentMode = 0;
     static private Home homeInstance = null;
 
     public static Home getInstance() {
         return homeInstance;
     }
-
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -85,11 +93,12 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         if( getIntent().getBooleanExtra("Exit me", false)){
             finish();
-            return; // add this to prevent from doing unnecessary stuffs
+            return;
         }
         homeInstance = this;
 
@@ -103,12 +112,34 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         RoomFragment roomFragment = new RoomFragment();
         RoutinesFragment routinesFragment = new RoutinesFragment();
 
-        for(int i = 0; i<5; i++) {
-            bottomStacks[i] = new Stack<>();
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            RecyclerViewAdapter.setColumns(3);
+        }
+        else {
+            RecyclerViewAdapter.setColumns(5);
         }
 
-        bottomStacks[1].push(routinesFragment);
-        setFragment(roomFragment);
+
+        if(bottomStacks[0] == null){
+            for(int i = 0; i<5; i++) {
+                bottomStacks[i] = new Stack<>();
+            }
+        }
+
+        if(!bottomStacks[currentMode].empty()) {
+            setFragment(bottomStacks[currentMode].peek());
+            return;
+        }
+        else if(currentMode == 0) {
+            setFragment(roomFragment);
+            bottomStacks[1].push(routinesFragment);
+            return;
+        }
+        else if (currentMode == 1) {
+            setFragment(routinesFragment);
+            bottomStacks[0].push(roomFragment);
+            return;
+        }
 
     }
 

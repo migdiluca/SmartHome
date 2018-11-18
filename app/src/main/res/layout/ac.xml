@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:theme="@style/acStyle">
 
 
     <LinearLayout
@@ -13,7 +14,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="0dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -79,8 +80,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -111,8 +112,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -143,8 +144,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -176,8 +177,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -214,8 +215,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
 
                     <TextView
