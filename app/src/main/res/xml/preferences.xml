@@ -8,8 +8,15 @@
         android:title="@string/pref_dark_theme" />
     <ListPreference
         android:defaultValue="2"
-        android:entries="@array/columns_amount"
-        android:entryValues="@array/columns_amount"
-        android:key="columns_amount"
-        android:title="@string/ColumnsAmount" />
+        android:entries="@array/columns_amount_potrait"
+        android:entryValues="@array/columns_amount_potrait"
+        android:key="columns_amount_potrait"
+        android:title="@string/ColumnsAmountPotrait" />
+
+    <ListPreference
+        android:defaultValue="5"
+        android:entries="@array/columns_amount_landscape"
+        android:entryValues="@array/columns_amount_landscape"
+        android:key="columns_amount_landscape"
+        android:title="@string/ColumnsAmountLandscape" />
 </PreferenceScreen>
