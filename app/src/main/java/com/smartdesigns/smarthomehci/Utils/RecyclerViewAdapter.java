@@ -65,15 +65,13 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
 
         TextView tv = (TextView) view.findViewById(R.id.card_view_title);
 
+        ViewGroup.MarginLayoutParams marginParam =  (ViewGroup.MarginLayoutParams) view.findViewById(R.id.card_view).getLayoutParams();
 
-        CardView cardView = view.findViewById(R.id.card_view);
-        ViewGroup.MarginLayoutParams ml =  (ViewGroup.MarginLayoutParams) cardView.getLayoutParams();
-
-        lp.width = ((parent.getMeasuredWidth()) / columns) - ml.bottomMargin * 2;
+        lp.width = ((parent.getMeasuredWidth()) / columns) - marginParam.bottomMargin * 2;
 
         tv.getLayoutParams().width = lp.width;
         tv.getLayoutParams().height = lp.width* 25 / 100;
-        tv.setTextSize((float) (tv.getTextSize() / columns ));
+        tv.setTextSize((float) (tv.getTextSize() / (columns /((columns*2.1+10)/10))));
 
         lp.height = lp.width + tv.getLayoutParams().height;
 
