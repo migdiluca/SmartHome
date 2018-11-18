@@ -56,9 +56,9 @@ public class ExampleInstrumentedTest {
         ApiConnection api = ApiConnection.getInstance(appContext);
 
         //creating devices
-        Device device1 = new Device("Lamparita", TypeId.Lamp.getTypeId(), "[]");
-        Device device2 = new Device("Horno", TypeId.Oven.getTypeId(), "[]");
-        Device device3 = new Device("Heladera", TypeId.Refrigerator.getTypeId(), "[]");
+        Device device1 = new Device("Lamparita", TypeId.Lamp.getTypeId(), new ArrayList<String>());
+        Device device2 = new Device("Horno", TypeId.Oven.getTypeId(), new ArrayList<String>());
+        Device device3 = new Device("Heladera", TypeId.Refrigerator.getTypeId(), new ArrayList<String>());
 
         devices.add(device1);
         devices.add(device2);
@@ -260,8 +260,8 @@ public class ExampleInstrumentedTest {
 
     public void DeviceInRoomTest(){
         devices = new ArrayList<>();
-        Device device1 = new Device("Lampara", TypeId.Lamp.getTypeId(), "[]");
-        Device device2 = new Device("Cosos", TypeId.Alarm.getTypeId(), "[]");
+        Device device1 = new Device("Lampara", TypeId.Lamp.getTypeId(), new ArrayList<String>());
+        Device device2 = new Device("Cosos", TypeId.Alarm.getTypeId(), new ArrayList<String>());
         devices.add(device1);
         devices.add(device2);
         Room room = new Room("Cuarto", "[]");
@@ -417,12 +417,13 @@ public class ExampleInstrumentedTest {
         }
 
     //creating devices
-    Device device1 = new Device("Lamparita", TypeId.Lamp.getTypeId(), "[]");
+    Device device1 = new Device("Cortinita2", TypeId.Blind.getTypeId(), new ArrayList<String>());
+        devices.add(device1);
 
         api.createDevice(device1, new Response.Listener<Device>() {
             @Override
             public void onResponse(Device response) {
-
+                devices.get(0).setId(response.getId());
             }
         }, new Response.ErrorListener() {
             @Override
