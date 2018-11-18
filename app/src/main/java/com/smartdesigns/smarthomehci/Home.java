@@ -36,7 +36,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
     private FrameLayout mMainFrame;
 
 
-    private static Stack<Fragment> bottomStacks[] = new Stack[5];
+    private static Stack<Fragment> bottomStacks[] = new Stack[3];
 
     private static int currentMode = 0;
     static private Home homeInstance = null;
@@ -69,6 +69,11 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
                     return true;
                 case R.id.navigation_cameras:
                     currentMode = 2;
+                    if(bottomStacks[currentMode].empty()){
+                        endApp();
+                        return true;
+                    }
+                    setFragment(bottomStacks[currentMode].pop());
                     return true;
             }
             return false;
@@ -121,6 +126,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 
         RoomFragment roomFragment = new RoomFragment();
         RoutinesFragment routinesFragment = new RoutinesFragment();
+        FavouritesFragment favouritesFragment = new FavouritesFragment();
 
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             RecyclerViewAdapter.setColumns(3);
@@ -131,7 +137,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 
 
         if(bottomStacks[0] == null){
-            for(int i = 0; i<5; i++) {
+            for(int i = 0; i<3; i++) {
                 bottomStacks[i] = new Stack<>();
             }
         }
@@ -140,15 +146,12 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
             setFragment(bottomStacks[currentMode].peek());
             return;
         }
-        else if(currentMode == 0) {
-            setFragment(roomFragment);
-            bottomStacks[1].push(routinesFragment);
-            return;
-        }
-        else if (currentMode == 1) {
-            setFragment(routinesFragment);
+        else {
             bottomStacks[0].push(roomFragment);
-            return;
+            bottomStacks[1].push(routinesFragment);
+            bottomStacks[2].push(favouritesFragment);
+
+            setFragment(bottomStacks[currentMode].pop());
         }
 
     }
@@ -163,13 +166,11 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 
     @Override
     public void onBackPressed() {
-        Log.d("ENTRE", "SI");
-        Log.d("SIZE", Integer.toString(bottomStacks[currentMode].size()));
+
         if(bottomStacks[currentMode].size() <= 1){
             endApp();
         }
         else {
-            Log.d("poppiong", "pop");
             bottomStacks[currentMode].pop();
             Fragment back = bottomStacks[currentMode].pop();
             setFragment(back);

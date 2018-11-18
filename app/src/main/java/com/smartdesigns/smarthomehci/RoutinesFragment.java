@@ -118,7 +118,7 @@ public class RoutinesFragment extends Fragment {
     public void onResume() {
         super.onResume();
         setBackgroundColor(getView());
-        addCards(routineList);
+        //addCards(routineList);
     }
 
     private void setBackgroundColor(View view) {

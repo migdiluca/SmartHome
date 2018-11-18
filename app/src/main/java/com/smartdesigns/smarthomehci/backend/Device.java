@@ -3,8 +3,10 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.smartdesigns.smarthomehci.Devices;
+import com.smartdesigns.smarthomehci.FavouritesFragment;
 import com.smartdesigns.smarthomehci.Home;
 import com.smartdesigns.smarthomehci.RoutinesFragment;
+import com.smartdesigns.smarthomehci.Utils.FavouritesList;
 
 import java.io.Serializable;
 import java.util.List;
@@ -38,7 +40,7 @@ public class Device implements RecyclerInterface, Serializable {
 
     @Override
     public int getBackground() {
-        return Integer.parseInt(meta.get(1));
+        return 1;//Integer.parseInt(meta.get(1));
     }
 
     public void setId(String id){
@@ -69,6 +71,7 @@ public class Device implements RecyclerInterface, Serializable {
 
     public void onClickAction(Serializable arg, Context context) {
 
+        FavouritesFragment.access(this);
         Intent device = new Intent(context, Devices.class);
         if(Home.getInstance().getCurrentMode() == 0)
             device.putExtra("mode", 0);
