@@ -9,37 +9,6 @@ import java.util.Comparator;
 
 public class FavouritesList {
 
-    private Node first = null;
-
-    private class Node {
-        private Device device;
-        private int access;
-        private Node next;
-
-        public Node(Device device) {
-            this.device = device;
-            int access = 1;
-            this.next = null;
-        }
-
-        public Node(Device device, Node next){
-            this.device = device;
-            int access = 1;
-            this.next = next;
-        }
-    }
-
-
-    public void add(Device device) {
-        if(first == null) {
-            Node node = new Node(device,null);
-        }
-    }
-
-
-
- /*
-
     private class DeviceFavorite{
         private Device device;
         private int access;
@@ -56,7 +25,7 @@ public class FavouritesList {
     }
     private ArrayList<DeviceFavorite> list = new ArrayList<>();
 
-    public boolean add(Device device) {
+    public boolean access(Device device) {
         DeviceFavorite df = contains(device);
         if(df != null){
             df.access();
@@ -85,6 +54,6 @@ public class FavouritesList {
             resp.add(list.get(i).getDevice());
         }
         return resp;
-    }*/
+    }
 
 }
