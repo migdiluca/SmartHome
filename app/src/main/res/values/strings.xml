@@ -33,15 +33,21 @@
     <string name="SuccessMsgOnOff">Success! Device is now </string>
     <string name="OnM">On</string>
     <string name="OffM">Off</string>
-    <string name="SuccessMsgTemp">Success! Temperature hass Changed.</string>
+    <string name="SuccessMsgTemp">Success! Temperature has Changed.</string>
 
     <string name="Door">Door</string>
-    <string name="OpenClose">Open/Close</string>
+    <string name="OpenClose">Open the Door</string>
     <string name="Open">Open</string>
     <string name="Close">Close</string>
     <string name="Lock">Lock</string>
     <string name="Unlock">Unlock</string>
-    <string name="LockUnlock">Lock/Unlock</string>
+    <string name="LockUnlock">Lock the Door</string>
+    <string name="SuccessMsgDoor">Success! The door is now </string>
+    <string name="OpenMsg">Open.</string>
+    <string name="CloseMsg">Closed.</string>
+    <string name="LockMsg">Locked.</string>
+    <string name="UnlockMsg">Unlocked.</string>
+
 
     <string name="Lamp">Lamp</string>
     <string name="Brightness">Brightness</string>

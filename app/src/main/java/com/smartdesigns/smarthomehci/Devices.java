@@ -13,9 +13,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -50,7 +50,7 @@ public class Devices extends AppCompatActivity {
      * Buttons
      */
 
-    Button onOffLights = (Button) findViewById(R.id.OnOff);
+    /** Ac*/
     Switch onOffAc = (Switch) findViewById(R.id.OnOffAc);
     SeekBar temperatureAc = (SeekBar) findViewById(R.id.AcTempSeekBar);
     TextView vSwing = (TextView) findViewById(R.id.VSwing);
@@ -58,12 +58,25 @@ public class Devices extends AppCompatActivity {
     TextView fanSpeed = (TextView) findViewById(R.id.FanSpeed);
     TextView acMode = (TextView) findViewById(R.id.AcMode);
 
-
+    /** Blinds*/
     RadioButton up = (RadioButton) findViewById(R.id.UpBut);
     RadioButton down = (RadioButton) findViewById(R.id.DownBut);
 
+    /** Oven*/
+    Switch onOffOven = (Switch) findViewById(R.id.OnOffOven);
+    SeekBar temperatureOven = (SeekBar) findViewById(R.id.OvenTempSeekBar);
+    TextView grillMode = (TextView) findViewById(R.id.GrillMode);
+    TextView heatMode = (TextView) findViewById(R.id.HeatMode);
+    TextView convectionMode = (TextView) findViewById(R.id.ConvectionMode);
 
+    /** Door*/
+    CheckBox openBut = (CheckBox) findViewById(R.id.OpenButton);
+    CheckBox lockBut = (CheckBox) findViewById(R.id.LockButton);
+
+    /** Lamp*/
+    Button onOffLights = (Button) findViewById(R.id.OnOff);
     Button lampColorPicker = (Button) findViewById(R.id.colorPickerView);
+
     View thumbView;
 
     @Override
@@ -89,6 +102,8 @@ public class Devices extends AppCompatActivity {
             } else if (Home.getInstance().getCurrentMode() == 1) {
                 routine = (Routine) i.getSerializableExtra("Object");
             }
+
+            //Empiezo con los devices
 
             if (device.getTypeId().equals(TypeId.Ac.getTypeId())) {
 
@@ -232,10 +247,82 @@ public class Devices extends AppCompatActivity {
 
 
             } else if (device.getTypeId().equals(TypeId.Door.getTypeId())) {
+
                 setTheme(R.style.doorStyle);
                 this.setContentView(R.layout.door);
 
-            } else if (device.getTypeId().equals(TypeId.Lamp.getTypeId())) {
+                if(Home.getInstance().getCurrentMode() == 0) {
+
+                    openBut.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            String s;
+                            final String f;
+                            if(openBut.isChecked()){
+                                s = "open";
+                                f = getResources().getString(R.string.OpenMsg);
+                            }else{
+                                s = "close";
+                                f = getResources().getString(R.string.CloseMsg);
+                            }
+                            Action action = new Action(device.getId(), s, null);
+                            api.runAction(action, new Response.Listener<Boolean>() {
+                                @Override
+                                public void onResponse(Boolean response) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.SuccessMsgDoor) + f
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.ActionFail)
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            });
+                        }
+                    });
+
+                    lockBut.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            String s;
+                            final String f;
+                            if(lockBut.isChecked()){
+                                s = "lock";
+                                f = getResources().getString(R.string.LockMsg);
+                            }else{
+                                s = "unlock";
+                                f = getResources().getString(R.string.UnlockMsg);
+                            }
+                            Action action = new Action(device.getId(), s, null);
+                            api.runAction(action, new Response.Listener<Boolean>() {
+                                @Override
+                                public void onResponse(Boolean response) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.SuccessMsgDoor) + f
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.ActionFail)
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            });
+                        }
+                    });
+
+                }
+                else {
+
+                }
+
+                } else if (device.getTypeId().equals(TypeId.Lamp.getTypeId())) {
 
                 setTheme(R.style.lampStyle);
                 this.setContentView(R.layout.lamp);
@@ -251,6 +338,86 @@ public class Devices extends AppCompatActivity {
 
                 setTheme(R.style.ovenStyle);
                 this.setContentView(R.layout.oven);
+
+                if(Home.getInstance().getCurrentMode() == 0) {
+
+                    onOffOven.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            String s;
+                            final String sPrint;
+                            if (isChecked) {
+                                s = "turnOn";
+                                sPrint = getResources().getString(R.string.OnM);
+                            } else {
+                                s = "turnOff";
+                                sPrint = getResources().getString(R.string.OffM);
+                            }
+                            Action action = new Action(device.getId(), s, null);
+                            api.runAction(action, new Response.Listener<Boolean>() {
+                                @Override
+                                public void onResponse(Boolean response) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.SuccessMsgOnOff) + sPrint
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.ActionFail)
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            });
+                        }
+                    });
+
+                    temperatureOven.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                        @Override
+                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                            // You can have your own calculation for progress
+
+                            int aux = 90 + progress;
+
+                            seekBar.setThumb(getThumb(aux));
+                        }
+
+                        @Override
+                        public void onStartTrackingTouch(SeekBar seekBar) {
+
+                        }
+
+                        @Override
+                        public void onStopTrackingTouch(SeekBar seekBar) {
+                            int value = seekBar.getProgress() + 90;
+                            LinkedList<String> l = new LinkedList<>();
+                            l.add(Integer.toString(value));
+                            Action action = new Action(device.getId(), "setTemperature", l);
+                            api.runAction(action, new Response.Listener<Boolean>() {
+                                @Override
+                                public void onResponse(Boolean response) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.SuccessMsgTemp)
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast toast = Toast.makeText(Devices.this, getResources().getString(R.string.ActionFail)
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            });
+                        }
+                    });
+
+                } else {
+                    onOffOven.setEnabled(false);
+                    temperatureOven.setEnabled(false);
+                    grillMode.setClickable(false);
+                    heatMode.setClickable(false);
+                    convectionMode.setClickable(false);
+                }
 
             } else if (device.getTypeId().equals(TypeId.Refrigerator.getTypeId())) {
 
