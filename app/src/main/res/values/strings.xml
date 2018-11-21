@@ -150,6 +150,7 @@
         <item>@string/Heat</item>
         <item>@string/Fan</item>
     </string-array>
+    <string name="error_request">Error getting the JSON Request</string>
 
 
 </resources>

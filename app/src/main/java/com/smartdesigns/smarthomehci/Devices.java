@@ -36,7 +36,7 @@ import java.util.LinkedList;
 public class Devices extends AppCompatActivity {
 
     private BroadcastReceiver broadcastReceiver;
-    public static final String MESSAGE_ID = "com.smartdesigns.smarthomehci.MESSAGE_ID";
+    public static int MESSAGE_ID;
 
 
 
@@ -85,7 +85,6 @@ public class Devices extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         thumbView = LayoutInflater.from(this).inflate(R.layout.layout_seekbar_thumb, null, false);
 

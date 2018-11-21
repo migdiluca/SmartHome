@@ -1,12 +1,18 @@
 package com.smartdesigns.smarthomehci;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.bottomappbar.BottomAppBar;
 import android.support.design.bottomnavigation.LabelVisibilityMode;
@@ -23,7 +29,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
 import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
@@ -34,7 +42,6 @@ import java.util.Stack;
 public class Home extends AppCompatActivity implements OnFragmentInteractionListener {
 
     private FrameLayout mMainFrame;
-
 
     private static Stack<Fragment> bottomStacks[] = new Stack[3];
 
@@ -209,6 +216,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 
     public void settings_onClick(MenuItem item) {
         Intent settings = new Intent(this, SettingsActivity.class);
+        Toast.makeText(Home.this,"Starting settings",Toast.LENGTH_LONG);
         startActivity(settings);
     }
 
@@ -221,4 +229,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 //
 //        return super.onOptionsItemSelected(item);
 //    }
+
+
+
 }

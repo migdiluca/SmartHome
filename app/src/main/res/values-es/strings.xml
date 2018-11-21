@@ -72,6 +72,7 @@
     <string name="title_activity_settings">Ajustes</string>
     <string name="pref_dark_theme">Tema oscuro</string>
     <string name="GrillMode">Modo Grill</string>
+    <string name="error_request">Error intentanto conseguir el request de JSON</string>
 
 
 </resources>
