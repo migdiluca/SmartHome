@@ -11,7 +11,7 @@ public interface RecyclerInterface {
     public String getName();
     public int getBackground();
     public void setBackground(int color);
-    public List<String> getMeta();
+    public String getMeta();
     public String getId();
     public void onClickAction(Serializable arg, Context context);
 }

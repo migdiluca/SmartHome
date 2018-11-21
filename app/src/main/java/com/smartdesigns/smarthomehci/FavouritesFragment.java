@@ -81,7 +81,7 @@ public class FavouritesFragment extends Fragment {
 
     private void addCards() {
 
-        favouritesList.access(new Device("asd","asd",new ArrayList<String>()));
+        favouritesList.access(new Device("asd","asd",""));
         RecyclerViewAdapter favouritesRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), favouritesList.getFavouritesDevices(AMOUNT_TO_SHOW));
         Log.d("ELTAMAÑOES",Integer.toString(favouritesList.getFavouritesDevices(AMOUNT_TO_SHOW).size()));
         favouritesRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), getColumns()));

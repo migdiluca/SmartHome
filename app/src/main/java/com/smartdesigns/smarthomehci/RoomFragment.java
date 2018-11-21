@@ -64,7 +64,7 @@ public class RoomFragment extends Fragment {
 
     private void addCards() {
 
-        roomList.add(new Room("nmasd",new ArrayList<String>()));
+        //roomList.add(new Room("nmasd",""));
         RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), roomList);
         roomRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), getColumns()));
         roomRecycler.setAdapter(roomRecyclerAdapter);
@@ -85,7 +85,7 @@ public class RoomFragment extends Fragment {
         roomRecycler = view.findViewById(R.id.recyclerview);
         getActivity().setTitle(R.string.title_rooms);
 
-
+        roomList = new ArrayList<>();
         Log.d("ROOMSIZEASD", "asd");
         ApiConnection api = ApiConnection.getInstance(getContext());
         api.getRooms(new Response.Listener<List<Room>>() {
@@ -95,13 +95,27 @@ public class RoomFragment extends Fragment {
                 for(Room room: response) {
                     if(!roomList.contains(room))
                         roomList.add(room);
+                    if(room.getMeta().matches("\"background\"") == false){
+                        int aux = room.getBackground();
+                        ApiConnection.getInstance(getContext()).updateRoom(room, new Response.Listener<Boolean>() {
+                            @Override
+                            public void onResponse(Boolean response) {
+
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        });
+                    }
                     addCards();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.d("ERRORLOADINGROOMS", error.toString());
             }
         });
         setBackgroundColor(view);

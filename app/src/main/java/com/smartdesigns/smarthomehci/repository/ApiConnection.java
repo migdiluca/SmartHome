@@ -41,7 +41,10 @@ import java.util.UUID;
 
 public class ApiConnection {
 
-    private static final String apiUrl = "http://192.168.1.17:8080/api/";
+    private static final String apiUrl = "http://192.168.1.137:8080/api/";
+    //private static final String apiUrl = "http://190.210.157.78:8080/api/";
+
+
     private static ApiConnection instance;
     private static RequestQueue requestQueue;
 
@@ -79,8 +82,14 @@ public class ApiConnection {
         return uuid;
     }
 
-    public String getRoutines(){
-        return null;
+    public String getRoutines(Response.Listener<List<Routine>> listener, Response.ErrorListener errorListener){
+        String url = apiUrl + "routines/";
+        GsonRequest<Object, List<Routine>> request =
+                new GsonRequest<>(Request.Method.GET, url, null, "routines", new TypeToken<List<Routine>>(){}, null, listener, errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+        return uuid;
     }
 
     public String getRoomDevices(Room room, Response.Listener<List<Device>> listener, Response.ErrorListener errorListener){
@@ -318,6 +327,19 @@ public class ApiConnection {
         String url = apiUrl + "routines/" + routine.getId();
         GsonRequest<Object, Boolean> request =
                 new GsonRequest<Object, Boolean>(Request.Method.DELETE, url, null, "result", new TypeToken<Boolean>(){}, null, listener, errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+
+        return uuid;
+    }
+
+    public String getDeviceEvents(Device device, Response.Listener<String> listener, Response.ErrorListener errorListener){
+        String url = apiUrl+"devices/"+device.getId()+"/events";
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        GsonRequest<Object, String> request =
+                new GsonRequest<>(Request.Method.GET, url, null, "events", new TypeToken<String>(){}, null, listener, errorListener);
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
         requestQueue.add(request);

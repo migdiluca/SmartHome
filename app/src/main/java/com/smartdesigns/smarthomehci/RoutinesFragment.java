@@ -12,13 +12,16 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
 import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
+import com.smartdesigns.smarthomehci.backend.Room;
 import com.smartdesigns.smarthomehci.backend.Routine;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
@@ -35,7 +38,7 @@ import java.util.List;
  */
 public class RoutinesFragment extends Fragment {
 
-    private Response.Listener<List<Routine>> routineList;
+    private List<Routine> routineList = new ArrayList<>();
     private RecyclerView routineRecycler;
 
     private static Routine currentRoutine;
@@ -65,12 +68,10 @@ public class RoutinesFragment extends Fragment {
         return RecyclerViewAdapter.getColumns();
     }
 
-    private void addCards(Response.Listener<List<Routine>> routineList) {
+    private void addCards() {
 
-        List routineListAux = new ArrayList();
-        routineList.onResponse(routineListAux);
 
-        RecyclerViewAdapter routineRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), routineListAux);
+        RecyclerViewAdapter routineRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), routineList);
         routineRecycler.setLayoutManager(new GridLayoutManager(this.getContext(),getColumns()));
         routineRecycler.setAdapter(routineRecyclerAdapter);
     }
@@ -103,14 +104,39 @@ public class RoutinesFragment extends Fragment {
         getActivity().setTitle(R.string.title_routines);
         Context appContext = getContext();
         ApiConnection api = ApiConnection.getInstance(appContext);
-        routineList = new Response.Listener<List<Routine>>() {
+
+        routineList = new ArrayList<>();
+        api.getRoutines(new Response.Listener<List<Routine>>() {
             @Override
             public void onResponse(List<Routine> response) {
+                Log.d("ROOMSIZEASD", Integer.toString(response.size()));
+                for(Routine routine: response) {
+                    if(!routineList.contains(routine))
+                        routineList.add(routine);
+                    if(routine.getMeta().matches("\"background\"") == false){
+                        int aux = routine.getBackground();
+                        ApiConnection.getInstance(getContext()).updateRoutine(routine, new Response.Listener<Boolean>() {
+                            @Override
+                            public void onResponse(Boolean response) {
 
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        });
+                    }
+                    addCards();
+                }
             }
-        };
-        api.getRoutines();
-        addCards(routineList);
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERRORLOADINGROOMS", error.toString());
+            }
+        });
+        addCards();
         return view;
     }
 

@@ -4,25 +4,29 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.google.gson.Gson;
 import com.smartdesigns.smarthomehci.DevicesFragment;
 import com.smartdesigns.smarthomehci.Home;
+import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
+import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Room implements RecyclerInterface, Serializable {
     private String id;
     private String name;
-    private List<String> meta;
+    private String meta;
     //private int background = -1;
 
-    public Room(String name, List<String> meta) {
+    public Room(String name, String meta) {
         this.name = name;
         this.meta = meta;
     }
 
-    public Room(String id, String name, List<String> meta) {
+    public Room(String id, String name,String meta) {
         this.id = id;
         this.name = name;
         this.meta = meta;
@@ -30,12 +34,26 @@ public class Room implements RecyclerInterface, Serializable {
 
     @Override
     public void setBackground(int background) {
-        this.meta.add(Integer.toString(background));
+        Gson gson = new Gson();
+        Meta aux = gson.fromJson(this.meta, Meta.class);
+        aux.setBackground(String.valueOf(background));
+        this.meta = gson.toJson(aux, Meta.class);
     }
 
     @Override
     public int getBackground() {
-        return Integer.parseInt(this.meta.get(0));
+        Gson gson = new Gson();
+        Meta aux = gson.fromJson(this.meta, Meta.class);
+        String bg = aux.getBackground();
+        if(bg == null){
+
+            Random rand = new Random();
+
+            List<Integer> colors = RecyclerViewAdapter.getColors();
+            this.setBackground(colors.get(rand.nextInt(colors.size())));
+            return getBackground();
+        }
+        return Integer.parseInt(aux.getBackground());
     }
 
     public void setId(String id) {
@@ -54,11 +72,11 @@ public class Room implements RecyclerInterface, Serializable {
         return this.name;
     }
 
-    public void setMeta(List<String> meta) {
+    public void setMeta(String meta) {
         this.meta = meta;
     }
 
-    public List<String> getMeta() {
+    public String getMeta() {
         return this.meta;
     }
 
