@@ -4,12 +4,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.google.gson.Gson;
 import com.smartdesigns.smarthomehci.DevicesFragment;
 import com.smartdesigns.smarthomehci.Home;
+import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Room implements RecyclerInterface, Serializable {
     private String id;
@@ -30,12 +33,27 @@ public class Room implements RecyclerInterface, Serializable {
 
     @Override
     public void setBackground(int background) {
-        //this.meta.add(Integer.toString(background));
+        Gson gson = new Gson();
+        Meta aux = gson.fromJson(this.meta, Meta.class);
+        aux.setBackground(String.valueOf(background));
+        this.meta = gson.toJson(aux, Meta.class);
     }
 
     @Override
     public int getBackground() {
-        return 1;//return Integer.parseInt(this.meta.get(0));
+        Gson gson = new Gson();
+        Meta aux = gson.fromJson(this.meta, Meta.class);
+        String bg = aux.getBackground();
+        if(bg == null){
+
+            Random rand = new Random();
+
+            int n = rand.nextInt(50) + 1;
+            this.setBackground(rand.nextInt(16777214));
+            return getBackground();
+        }
+        return Integer.parseInt(aux.getBackground());
+        //return 1;//return Integer.parseInt(this.meta.get(0));
     }
 
     public void setId(String id) {

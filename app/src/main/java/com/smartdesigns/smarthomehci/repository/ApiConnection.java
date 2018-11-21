@@ -82,8 +82,14 @@ public class ApiConnection {
         return uuid;
     }
 
-    public String getRoutines(){
-        return null;
+    public String getRoutines(Response.Listener<List<Routine>> listener, Response.ErrorListener errorListener){
+        String url = apiUrl + "routines/";
+        GsonRequest<Object, List<Routine>> request =
+                new GsonRequest<>(Request.Method.GET, url, null, "routines", new TypeToken<List<Routine>>(){}, null, listener, errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+        return uuid;
     }
 
     public String getRoomDevices(Room room, Response.Listener<List<Device>> listener, Response.ErrorListener errorListener){
