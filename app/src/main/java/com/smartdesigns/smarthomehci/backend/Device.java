@@ -15,19 +15,17 @@ public class Device implements RecyclerInterface, Serializable {
     protected String id;
     private String name;
     private String typeId;
-    private List<String> meta;
+    private String meta;
     //private int background = -1;
 
 
-    public Device(String name, String typeId,List<String> meta){
+    public Device(String name, String typeId,String meta){
         this.name = name;
         this.typeId = typeId;
         this.meta = meta;
-        if(meta.size()==1)
-            meta.add(Integer.toString(-1));
     }
 
-    public Device(String name, String typeId, List<String> meta, String id){
+    public Device(String name, String typeId, String meta, String id){
         this(name, typeId, meta);
         this.id=id;
     }
@@ -35,7 +33,7 @@ public class Device implements RecyclerInterface, Serializable {
 
     @Override
     public void setBackground(int background) {
-        this.meta.add(Integer.toString(background));
+        //this.meta.add(Integer.toString(background));
     }
 
     @Override
@@ -61,11 +59,11 @@ public class Device implements RecyclerInterface, Serializable {
         this.name = name;
     }
 
-    public void setMeta(List<String> meta) {
+    public void setMeta(String meta) {
         this.meta = meta;
     }
 
-    public List<String> getMeta() {
+    public String getMeta() {
         return this.meta;
     }
 

@@ -14,15 +14,15 @@ import java.util.List;
 public class Room implements RecyclerInterface, Serializable {
     private String id;
     private String name;
-    private List<String> meta;
+    private String meta;
     //private int background = -1;
 
-    public Room(String name, List<String> meta) {
+    public Room(String name, String meta) {
         this.name = name;
         this.meta = meta;
     }
 
-    public Room(String id, String name, List<String> meta) {
+    public Room(String id, String name,String meta) {
         this.id = id;
         this.name = name;
         this.meta = meta;
@@ -30,12 +30,12 @@ public class Room implements RecyclerInterface, Serializable {
 
     @Override
     public void setBackground(int background) {
-        this.meta.add(Integer.toString(background));
+        //this.meta.add(Integer.toString(background));
     }
 
     @Override
     public int getBackground() {
-        return Integer.parseInt(this.meta.get(0));
+        return 1;//return Integer.parseInt(this.meta.get(0));
     }
 
     public void setId(String id) {
@@ -54,11 +54,11 @@ public class Room implements RecyclerInterface, Serializable {
         return this.name;
     }
 
-    public void setMeta(List<String> meta) {
+    public void setMeta(String meta) {
         this.meta = meta;
     }
 
-    public List<String> getMeta() {
+    public String getMeta() {
         return this.meta;
     }
 
