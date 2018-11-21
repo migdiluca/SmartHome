@@ -334,6 +334,19 @@ public class ApiConnection {
         return uuid;
     }
 
+    public String getDeviceEvents(Device device, Response.Listener<String> listener, Response.ErrorListener errorListener){
+        String url = apiUrl+"devices/"+device.getId()+"/events";
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        GsonRequest<Object, String> request =
+                new GsonRequest<>(Request.Method.GET, url, null, "events", new TypeToken<String>(){}, null, listener, errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+
+        return uuid;
+    }
+
     public String assignDeviceToRoom(Device device, Room room, Response.Listener<Boolean> listener, Response.ErrorListener errorListener){
         String url = apiUrl + "devices/"+ device.getId() +"/rooms/"+ room.getId();
         Map<String, String> headers = new HashMap<String, String>();
