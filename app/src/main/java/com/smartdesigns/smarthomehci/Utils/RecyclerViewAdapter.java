@@ -42,6 +42,10 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
     private static List<Integer> colors = new ArrayList<>();
     private static final int IMAGE_SIZE = 90;
 
+    public static List<Integer> getColors(){
+        return colors;
+    }
+
     public RecyclerViewAdapter(Context mContext, List<T> mData) {
         this.mContext = mContext;
         this.mData = mData;
@@ -116,9 +120,9 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
         holder.title.setText(mData.get(position).getName());
         //holder.img_thumbnail.setImageResource(Integer.parseInt(mData.get(position).getMeta()));
 
-        if(true){
+        /*if(true){
             mData.get(position).setBackground(colors.get(ThreadLocalRandom.current().nextInt(0,colors.size())));
-        }
+        }*/
 
         holder.cardView.setBackgroundColor(mData.get(position).getBackground());
         holder.cardView.setCardElevation(20);

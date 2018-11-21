@@ -113,6 +113,20 @@ public class RoutinesFragment extends Fragment {
                 for(Routine routine: response) {
                     if(!routineList.contains(routine))
                         routineList.add(routine);
+                    if(routine.getMeta().matches("\"background\"") == false){
+                        int aux = routine.getBackground();
+                        ApiConnection.getInstance(getContext()).updateRoutine(routine, new Response.Listener<Boolean>() {
+                            @Override
+                            public void onResponse(Boolean response) {
+
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        });
+                    }
                     addCards();
                 }
             }

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import com.google.gson.Gson;
 import com.smartdesigns.smarthomehci.DevicesFragment;
 import com.smartdesigns.smarthomehci.Home;
+import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
 import java.io.Serializable;
@@ -48,12 +49,11 @@ public class Room implements RecyclerInterface, Serializable {
 
             Random rand = new Random();
 
-            int n = rand.nextInt(50) + 1;
-            this.setBackground(rand.nextInt(16777214));
+            List<Integer> colors = RecyclerViewAdapter.getColors();
+            this.setBackground(colors.get(rand.nextInt(colors.size())));
             return getBackground();
         }
         return Integer.parseInt(aux.getBackground());
-        //return 1;//return Integer.parseInt(this.meta.get(0));
     }
 
     public void setId(String id) {
