@@ -63,7 +63,6 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     private void getAllowedDevices() {
         List<String> auxList = new ArrayList<>();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-
         boolean ac = sharedPreferences.getBoolean("ac_preference", false);
         boolean blind = sharedPreferences.getBoolean("blinds_preference", false);
         boolean door = sharedPreferences.getBoolean("door_preference", false);
@@ -100,13 +99,13 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         this.deviceTypes = auxList;
     }
 
-    private void getDevicesForType(String type) {
+    private void getDevicesForType(final String type) {
         String url = api +"devices/devicetypes/" + type;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    parseResponse(response);
+                    parseResponse(response,type);
                 }catch (JSONException e){
                     e.printStackTrace();
                 }
@@ -121,18 +120,20 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    private void parseResponse(JSONObject response) throws JSONException{
+    private void parseResponse(JSONObject response, final String type) throws JSONException{
         JSONArray jsonArray = response.getJSONArray("devices");
         for(int i = 0; i < jsonArray.length(); i++){
             JSONObject device = jsonArray.getJSONObject(i);
             final String name = device.getString("name");
             final String id = device.getString("id");
+            Log.d("Getting Device", name + " " + id);
             StringRequest request = new StringRequest(Request.Method.GET, api + "devices/" + id + "/events",  new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+                    Log.d("GETTING RESPONSE", response);
                     if (response != null) {
                         Log.d("Response", response);
-                        sendNotification(response, name, id);
+                        sendNotification(response, name, type);
                     }
                 }
             }, new Response.ErrorListener() {
@@ -147,7 +148,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     }
 
 
-    private void sendNotification(String response, String name, String id) {
+    private void sendNotification(String response, String name, String type) {
         String[] events = response.split("event");
 
         if(events.length > 1){
@@ -174,7 +175,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                     .setContentTitle("A device has been changed!")
                     .setContentText(name + " " + event )
                     .setSmallIcon(R.drawable.ic_smarthome).setColor(ContextCompat.getColor(context,R.color.blue))
-//                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ac))
+                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), getDrawable(type)))
                     .setSound(defaultSoundUri)
                     .setContentIntent(contentIntent)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -190,36 +191,25 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
-    private void handleError(VolleyError error) {
-        Error response = null;
-        if(error instanceof NoConnectionError || error instanceof TimeoutError){
-            String text = context.getResources().getString(R.string.error_request);
-            Toast.makeText(context, text , Toast.LENGTH_LONG).show();
+    private int getDrawable(String type){
+        if(type.equals("ac")){
+            return R.drawable.ac;
+        }else if(type.equals("blind")){
+            return R.drawable.blind;
+        }else if(type.equals("door")){
+            return R.drawable.door;
+        }else if(type.equals("lamp")){
+            return R.drawable.lamp;
+        }else if(type.equals("oven")){
+            return R.drawable.oven;
+        }else if(type.equals("refrigerator")){
+            return R.drawable.refrigerator;
+        }else if(type.equals("alarm")){
+            return R.drawable.alarm;
+        }else if(type.equals("oven")){
+            return R.drawable.oven;
+        }else{
+            return R.drawable.notfound;
         }
-        else {
-            NetworkResponse networkResponse = error.networkResponse;
-            if ((networkResponse != null) && (error.networkResponse.data != null)) {
-                try {
-                    String json = new String(
-                            error.networkResponse.data,
-                            HttpHeaderParser.parseCharset(networkResponse.headers));
-
-                    JSONObject jsonObject = new JSONObject(json);
-                    json = jsonObject.getJSONObject("error").toString();
-
-                    Gson gson = new Gson();
-                    response = gson.fromJson(json, Error.class);
-                } catch (JSONException e) {
-                } catch (UnsupportedEncodingException e) {
-                }
-            }
-
-            Log.e("tag", error.toString());
-            String text = context.getResources().getString(R.string.error_request);
-//        if (response != null)
-//            text += " " + response.getDescription().get(0);
-
-            Toast.makeText(context, text, Toast.LENGTH_LONG).show();
-        }
-}
+    }
 }
