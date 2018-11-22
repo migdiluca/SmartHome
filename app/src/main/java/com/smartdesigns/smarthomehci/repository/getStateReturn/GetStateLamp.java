@@ -1,4 +1,4 @@
-package com.smartdesigns.smarthomehci.repository.GetStateReturn;
+package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
 public class GetStateLamp {
     private String status;

@@ -10,14 +10,14 @@ import com.smartdesigns.smarthomehci.backend.Action;
 import com.smartdesigns.smarthomehci.backend.Device;
 import com.smartdesigns.smarthomehci.backend.Room;
 import com.smartdesigns.smarthomehci.backend.Routine;
-import com.smartdesigns.smarthomehci.repository.GetStateReturn.GetStateAc;
-import com.smartdesigns.smarthomehci.repository.GetStateReturn.GetStateAlarm;
-import com.smartdesigns.smarthomehci.repository.GetStateReturn.GetStateBlinds;
-import com.smartdesigns.smarthomehci.repository.GetStateReturn.GetStateDoor;
-import com.smartdesigns.smarthomehci.repository.GetStateReturn.GetStateLamp;
-import com.smartdesigns.smarthomehci.repository.GetStateReturn.GetStateOven;
-import com.smartdesigns.smarthomehci.repository.GetStateReturn.GetStateRefrigerator;
-import com.smartdesigns.smarthomehci.repository.GetStateReturn.GetStateTimer;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateAc;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateAlarm;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateBlinds;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateDoor;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateLamp;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateOven;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateRefrigerator;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateTimer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,8 +29,8 @@ public class ApiConnection {
 
     //private static final String apiUrl = "http://181.28.198.15:8080/api/";
     //private static final String apiUrl = "http://192.168.1.137:8080/api/";
-    //private static final String apiUrl = "http://190.210.157.78:8080/api/";
-    private static final String apiUrl = "http://127.0.0.1:8080/api/";
+    private static final String apiUrl = "http://190.210.157.78:8080/api/";
+    //private static final String apiUrl = "http://127.0.0.1:8080/api/";
 
 
     private static ApiConnection instance;

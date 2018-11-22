@@ -16,12 +16,16 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -66,6 +70,7 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
         addColors();
 
         View view ;
+
         LayoutInflater mInflater = LayoutInflater.from(mContext);
         view = mInflater.inflate(R.layout.card_view_item,parent,false);
         GridLayoutManager.LayoutParams lp = (GridLayoutManager.LayoutParams) view.getLayoutParams();
@@ -74,13 +79,24 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
 
         ViewGroup.MarginLayoutParams marginParam =  (ViewGroup.MarginLayoutParams) view.findViewById(R.id.card_view).getLayoutParams();
 
-        lp.width = ((parent.getMeasuredWidth()) / columns) - marginParam.bottomMargin * 2;
+        WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+
+        if ((mContext.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE) {
+            lp.width = ((display.getWidth()/2)/ columns) - marginParam.bottomMargin * 2;
+
+        } else {
+            lp.width = ((display.getWidth())/ columns) - marginParam.bottomMargin * 2;
+        }
 
         tv.getLayoutParams().width = lp.width;
         tv.getLayoutParams().height = lp.width* 25 / 100;
         tv.setTextSize((float) (tv.getTextSize() / (columns /((columns*2.1+10)/10))));
 
         lp.height = lp.width + tv.getLayoutParams().height;
+        Log.d("ALTURA",Integer.toString(lp.height));
+        Log.d("ALTURAANCHO",Integer.toString(lp.width));
+
 
         ImageView iv = (ImageView) view.findViewById(R.id.card_view_img);
         iv.getLayoutParams().height = (lp.width) * IMAGE_SIZE / 100;

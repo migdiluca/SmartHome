@@ -71,8 +71,8 @@ public class RoomFragment extends Fragment {
     private void addCards() {
 
         //roomList.add(new Room("nmasd",""));
-        RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), roomList);
-        roomRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), getColumns()));
+        RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(Home.getInstance(), roomList);
+        roomRecycler.setLayoutManager(new GridLayoutManager(Home.getInstance(), getColumns()));
         roomRecycler.setAdapter(roomRecyclerAdapter);
     }
 
