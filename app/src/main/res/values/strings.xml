@@ -198,7 +198,7 @@
     <string name="Short" >1 min</string>
     <string name="Medium">30 min</string>
     <string name="Long">60 min</string>
-    <string name="Interval">Notification Interval (Restart Required)</string>
+    <string name="Interval">Notification interval (Restart Required)</string>
 
     <string name="error_request">Error getting the JSON Request</string>
     <string name="activate_dev_not">Activate Device Notifications</string>
