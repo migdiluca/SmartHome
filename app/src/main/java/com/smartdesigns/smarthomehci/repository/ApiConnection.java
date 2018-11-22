@@ -42,7 +42,7 @@ import java.util.UUID;
 public class ApiConnection {
 
     //private static final String apiUrl = "http://190.210.157.78:8080/api/";
-    private static final String apiUrl = "http://192.168.1.137:8080/api/";
+    private static final String apiUrl = "http://192.168.1.17:8080/api/";
 
 
     private static ApiConnection instance;
