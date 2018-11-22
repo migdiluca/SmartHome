@@ -219,6 +219,34 @@ public class Devices extends Fragment {
                     }
                 });
 
+                vSwing.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDialogueVSwing(v);
+                    }
+                });
+
+                hSwing.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDialogueHSwing(v);
+                    }
+                });
+
+                fanSpeed.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDialogueFanSpeed(v);
+                    }
+                });
+
+                acMode.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDialogueAcMode(v);
+                    }
+                });
+
             } else {
                 onOffAc.setEnabled(false);
                 temperatureAc.setEnabled(false);
@@ -459,6 +487,27 @@ public class Devices extends Fragment {
                     }
                 });
 
+                grillMode.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDialogueGrillMode(v);
+                    }
+                });
+                convectionMode.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDialogueConvectionMode(v);
+                    }
+                });
+
+                heatMode.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDialogueHeatMode(v);
+                    }
+                });
+
+
             } else {
                 onOffOven.setEnabled(false);
                 temperatureOven.setEnabled(false);
@@ -473,9 +522,9 @@ public class Devices extends Fragment {
             v = inflater.inflate(R.layout.refrigerator, container, false);
             view = v;
 
-            freezerTemperature = (SeekBar) view.findViewById(R.id.FreezerTempSeekBar);
-            fridgeTemperature = (SeekBar) view.findViewById(R.id.FridgeTempSeekBar);
-            fridgeMode = (TextView) view.findViewById(R.id.FridgeMode);
+            freezerTemperature = view.findViewById(R.id.FreezerTempSeekBar);
+            fridgeTemperature = view.findViewById(R.id.FridgeTempSeekBar);
+            fridgeMode = view.findViewById(R.id.FridgeMode);
 
             if (Home.getInstance().getCurrentMode() != 1) {
 
@@ -556,6 +605,13 @@ public class Devices extends Fragment {
                                 toast.show();
                             }
                         });
+                    }
+                });
+
+                fridgeMode.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDialogueFridgeMode(v);
                     }
                 });
 
@@ -1043,6 +1099,8 @@ public class Devices extends Fragment {
         // display dialog
         dialog.show();
     }
+
+    //public void showDialogueLampColor(View view) {}
 
     public Drawable getThumb(int progress) {
         ((TextView) view.findViewById(R.id.tvProgress)).setText(progress + "");
