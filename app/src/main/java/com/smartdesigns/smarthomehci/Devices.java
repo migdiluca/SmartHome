@@ -1067,12 +1067,12 @@ public class Devices extends Fragment {
                 public void onResponse(GetStateTimer response) {
                     responseTimer = response;
 
-                    int value = response.getInterval();
+                    int value = Integer.parseInt(response.getInterval());
                     hour.setValue(value / 3600);
                     minute.setValue((value % 3600) / 60);
                     second.setValue(((value % 3600) % 60) / 60);
 
-                    if(response.getNewStatus().equals("active")) {
+                    if(response.getStatus().equals("active")) {
                         int rem = response.getRemaining();
 
                         String hms = String.format("%02d:%02d:%02d", rem/3600, (rem % 3600) / 60, ((rem % 3600) % 60) / 60);
