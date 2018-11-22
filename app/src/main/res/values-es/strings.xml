@@ -71,7 +71,7 @@
     <string name="FreezerTemperature">Temperatura congelador</string>
     <string name="Party">Fiesta</string>
     <string name="Vacations">Vacaciones</string>
-    <string name="SuccessFMode">Se ha cambiado el Modo de la Heladora.</string>
+    <string name="SuccessFMode">Se ha cambiado el Modo de la heladera.</string>
     <string name="Default">Estándar</string>
 
     <string name="Timer">Temporizador</string>
@@ -103,7 +103,7 @@
     <string name="title_activity_device">Actividad del dispositivo</string>
 
 
-    <string name="empty_room">La habitacion esta vacia</string>
+    <string name="empty_room">La habitación esta vacia</string>
     <string name="no_rooms_available">No hay habitaciones</string>
     <string name="no_rooms_error">Las habitaciones no pudieron ser cargadas debido a problemas de conectividad, comprobá tu conexión e intenta de nuevo.</string>
     <string name="no_favorites_available">No hay dispositivos en favoritos.</string>
