@@ -11,7 +11,6 @@ import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +20,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
+import com.smartdesigns.smarthomehci.backend.Device;
 
 import java.util.Stack;
 
@@ -81,6 +81,24 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         BottomNavigationView navigation = (BottomNavigationView) homeInstance.findViewById(R.id.navigation);
         navigation.setBackgroundColor(homeInstance.getResources().getColor(color));
 
+    }
+
+    public void setDeviceFragment( Device device){
+
+        if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE) {
+            Devices fragment = new Devices();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            Bundle arguments = new Bundle();
+            arguments.putSerializable("Device", device);
+            fragment.setArguments(arguments);
+            fragmentTransaction.replace(R.id.device_frame, fragment);
+            fragmentTransaction.commit();
+        } else {
+            Intent intent = new Intent(getBaseContext(), DeviceActivity.class);
+            intent.putExtra("Device",device);
+            startActivity(intent);
+        }
     }
 
     public void setFragment(Fragment fragment){

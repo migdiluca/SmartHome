@@ -92,6 +92,8 @@ public class DevicesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Home.getInstance().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Home.getInstance().getSupportActionBar().setHomeButtonEnabled(true);
+
         if (Home.getInstance().getCurrentMode() == 0) {
             room = (Room) getArguments().getSerializable("Object");
             getActivity().setTitle(room.getName());
@@ -113,7 +115,6 @@ public class DevicesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_devices, container, false);
         setBackgroundColor(view);
-        Home.getInstance().getSupportActionBar().setHomeButtonEnabled(true);
 
         if (room != null)
             toolbar.setTitle(room.getName());
