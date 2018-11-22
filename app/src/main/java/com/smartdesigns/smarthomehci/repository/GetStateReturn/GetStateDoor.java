@@ -1,10 +1,10 @@
-package com.smartdesigns.smarthomehci.repository.getStateReturn;
+package com.smartdesigns.smarthomehci.repository.GetStateReturn;
 
-public class getStateDoor {
+public class GetStateDoor {
     private String status;
     private String lock;
 
-    public getStateDoor(String status, String lock){
+    public GetStateDoor(String status, String lock){
         this.status = status;
         this.lock = lock;
     }

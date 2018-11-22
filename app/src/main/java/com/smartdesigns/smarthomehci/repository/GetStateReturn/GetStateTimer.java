@@ -1,11 +1,11 @@
-package com.smartdesigns.smarthomehci.repository.getStateReturn;
+package com.smartdesigns.smarthomehci.repository.GetStateReturn;
 
-public class getStateTimer {
+public class GetStateTimer {
     private String newStatus;
     private int interval;
     private int remaining;
 
-    public getStateTimer(String newStatus, int interval, int remaining){
+    public GetStateTimer(String newStatus, int interval, int remaining){
         this.newStatus = newStatus;
         this.interval = interval;
         this.remaining = remaining;

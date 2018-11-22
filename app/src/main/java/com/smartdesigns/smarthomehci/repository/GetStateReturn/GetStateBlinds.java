@@ -1,10 +1,10 @@
-package com.smartdesigns.smarthomehci.repository.getStateReturn;
+package com.smartdesigns.smarthomehci.repository.GetStateReturn;
 
-public class getStateBlinds {
+public class GetStateBlinds {
     private String status;
     private int level;
 
-    public getStateBlinds(String status, int level){
+    public GetStateBlinds(String status, int level){
         this.status = status;
         this.level = level;
     }

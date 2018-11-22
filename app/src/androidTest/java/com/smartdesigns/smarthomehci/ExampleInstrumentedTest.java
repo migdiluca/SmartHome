@@ -11,7 +11,7 @@
 //import com.smartdesigns.smarthomehci.backend.Room;
 //import com.smartdesigns.smarthomehci.backend.TypeId;
 //import com.smartdesigns.smarthomehci.repository.ApiConnection;
-//import com.smartdesigns.smarthomehci.repository.getStateReturn.getStateLamp;
+//import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateLamp;
 //
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
@@ -458,9 +458,9 @@
 //
 //    }
 //
-//    api.getStateLamp(device1, new Response.Listener<getStateLamp>() {
+//    api.GetStateLamp(device1, new Response.Listener<GetStateLamp>() {
 //        @Override
-//        public void onResponse(getStateLamp response) {
+//        public void onResponse(GetStateLamp response) {
 //            assertTrue(response.getStatus().equals("closing") || response.getStatus().equals("closed"));
 //        }
 //    }, new Response.ErrorListener() {
