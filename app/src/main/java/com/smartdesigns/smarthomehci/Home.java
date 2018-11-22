@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
+import com.smartdesigns.smarthomehci.Utils.RefreshFragment;
 import com.smartdesigns.smarthomehci.backend.Device;
 
 import java.util.Stack;
@@ -33,7 +34,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 
     private FrameLayout mMainFrame;
 
-    private static Stack<Fragment> bottomStacks[] = new Stack[3];
+    private static Stack<RefreshFragment> bottomStacks[] = new Stack[3];
 
     private static int currentMode = 0;
     static private Home homeInstance = null;
@@ -106,8 +107,8 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         }
     }
 
-    public void setFragment(Fragment fragment){
-        bottomStacks[currentMode].push((Fragment)fragment);
+    public void setFragment(RefreshFragment fragment){
+        bottomStacks[currentMode].push(fragment);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -223,7 +224,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
             @Override
             public void onRefresh() {
 
-
+                (bottomStacks[currentMode].peek()).refresh();
                 sr.setRefreshing(false);
             }
         });
@@ -245,7 +246,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         }
         else {
             bottomStacks[currentMode].pop();
-            Fragment back = bottomStacks[currentMode].pop();
+            RefreshFragment back = bottomStacks[currentMode].pop();
             setFragment(back);
         }
     }

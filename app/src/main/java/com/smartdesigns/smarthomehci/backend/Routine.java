@@ -9,6 +9,7 @@ import com.smartdesigns.smarthomehci.DevicesFragment;
 import com.smartdesigns.smarthomehci.Home;
 import com.smartdesigns.smarthomehci.RoutinesFragment;
 import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
+import com.smartdesigns.smarthomehci.Utils.RefreshFragment;
 
 import java.io.Serializable;
 import java.util.List;
@@ -64,7 +65,7 @@ public class Routine implements RecyclerInterface, Serializable{
     public void onClickAction(Serializable arg, Context context){
         RoutinesFragment.setCurrentRoutine(this);
 
-        Fragment fragment = new DevicesFragment();
+        RefreshFragment fragment = new DevicesFragment();
         Bundle arguments = new Bundle();
         arguments.putSerializable("Object", this);
         fragment.setArguments(arguments);

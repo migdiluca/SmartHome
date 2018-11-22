@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
 import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
+import com.smartdesigns.smarthomehci.Utils.RefreshFragment;
 import com.smartdesigns.smarthomehci.backend.Room;
 import com.smartdesigns.smarthomehci.backend.Routine;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
@@ -37,7 +38,7 @@ import java.util.List;
  * Use the {@link RoutinesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RoutinesFragment extends Fragment {
+public class RoutinesFragment extends RefreshFragment {
 
     private List<Routine> routineList = new ArrayList<>();
     private RecyclerView routineRecycler;
@@ -62,18 +63,17 @@ public class RoutinesFragment extends Fragment {
 
     private int getColumns() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_potrait","2").charAt(0) - '0');
-        }
-        else {
-            RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_landscape","5").charAt(0) - '0');
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_potrait", "2").charAt(0) - '0');
+        } else {
+            RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_landscape", "5").charAt(0) - '0');
         }
         return RecyclerViewAdapter.getColumns();
     }
 
     private void addCards() {
         RecyclerViewAdapter routineRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), routineList);
-        routineRecycler.setLayoutManager(new GridLayoutManager(this.getContext(),getColumns()));
+        routineRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), getColumns()));
         routineRecycler.setAdapter(routineRecyclerAdapter);
     }
 
@@ -103,34 +103,33 @@ public class RoutinesFragment extends Fragment {
         routineRecycler = view.findViewById(R.id.recyclerview);
         toolbar.setTitle(R.string.title_routines);
 
-        routineList = new ArrayList<>();
-        loadRoutines();
+        refresh();
         return view;
     }
 
-    public void loadRoutines(){
+    public void refresh() {
+        routineList = new ArrayList<>();
         ApiConnection api = ApiConnection.getInstance(getContext());
         api.getRoutines(new Response.Listener<List<Routine>>() {
             @Override
             public void onResponse(List<Routine> response) {
-                for(Routine routine: response) {
-                    if (!routineList.contains(routine)) {
-                        routineList.add(routine);
-                        if (routine.getMeta().matches("\"background\"") == false) {
-                            int aux = routine.getBackground();
-                            ApiConnection.getInstance(getContext()).updateRoutine(routine, new Response.Listener<Boolean>() {
-                                @Override
-                                public void onResponse(Boolean response) {
+                for (Routine routine : response) {
+                    routineList.add(routine);
+                    if (routine.getMeta().matches("\"background\"") == false) {
+                        int aux = routine.getBackground();
+                        ApiConnection.getInstance(getContext()).updateRoutine(routine, new Response.Listener<Boolean>() {
+                            @Override
+                            public void onResponse(Boolean response) {
 
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
 
-                                }
-                            });
-                        }
+                            }
+                        });
                     }
+
                 }
                 addCards();
             }
@@ -147,7 +146,6 @@ public class RoutinesFragment extends Fragment {
         super.onResume();
         addCards();
     }
-
 
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -29,6 +29,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
 import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
+import com.smartdesigns.smarthomehci.Utils.RefreshFragment;
 import com.smartdesigns.smarthomehci.backend.Room;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
@@ -40,11 +41,11 @@ import java.util.concurrent.locks.ReentrantLock;
 import static java.lang.Thread.sleep;
 
 
-public class RoomFragment extends Fragment {
+public class RoomFragment extends RefreshFragment {
 
     private static List<Room> roomList = new ArrayList<>();
     private static Room currentRoom;
-    
+
     private ActionBar toolbar;
     private OnFragmentInteractionListener mListener;
     RecyclerView roomRecycler;
@@ -59,11 +60,10 @@ public class RoomFragment extends Fragment {
 
     private int getColumns() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_potrait","2").charAt(0) - '0');
-        }
-        else {
-            RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_landscape","5").charAt(0) - '0');
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_potrait", "2").charAt(0) - '0');
+        } else {
+            RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_landscape", "5").charAt(0) - '0');
         }
         return RecyclerViewAdapter.getColumns();
     }
@@ -77,36 +77,36 @@ public class RoomFragment extends Fragment {
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         toolbar = Home.getMainActionBar();
     }
 
-    public void loadRooms() {
+    public void refresh() {
+        roomList = new ArrayList<>();
         ApiConnection api = ApiConnection.getInstance(getContext());
         api.getRooms(new Response.Listener<List<Room>>() {
             @Override
             public void onResponse(List<Room> response) {
-                for(Room room: response) {
-                    if(!roomList.contains(room)) {
-                        roomList.add(room);
-                        if (room.getMeta().matches("\"background\"") == false) {
-                            int aux = room.getBackground();
-                            ApiConnection.getInstance(getContext()).updateRoom(room, new Response.Listener<Boolean>() {
-                                @Override
-                                public void onResponse(Boolean response) {
+                for (Room room : response) {
 
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
+                    roomList.add(room);
+                    if (room.getMeta().matches("\"background\"") == false) {
+                        int aux = room.getBackground();
+                        ApiConnection.getInstance(getContext()).updateRoom(room, new Response.Listener<Boolean>() {
+                            @Override
+                            public void onResponse(Boolean response) {
 
-                                }
-                            });
-                        }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        });
                     }
+
                 }
                 addCards();
             }
@@ -125,8 +125,7 @@ public class RoomFragment extends Fragment {
         roomRecycler = view.findViewById(R.id.recyclerview);
         toolbar.setTitle(R.string.title_rooms);
 
-        roomList = new ArrayList<>();
-        loadRooms();
+        refresh();
         return view;
     }
 
@@ -137,7 +136,6 @@ public class RoomFragment extends Fragment {
         }
 
     }
-
 
 
     @Override
@@ -165,7 +163,6 @@ public class RoomFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
 
 
 }
