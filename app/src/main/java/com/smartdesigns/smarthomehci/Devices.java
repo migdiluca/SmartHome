@@ -40,6 +40,7 @@ import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateBlinds;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateDoor;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateOven;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateRefrigerator;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateTimer;
 
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
@@ -150,8 +151,6 @@ public class Devices extends Fragment {
         thumbView = inflater.inflate(R.layout.layout_seekbar_thumb, null, false);
         Home.getInstance().getSupportActionBar().setHomeButtonEnabled(true);
 
-        image.setImageResource(context.getResources().getIdentifier(device.getImage().split(".png$")[0], "drawable", context.getPackageName()));
-
         //Empiezo con los devices
 
         if (device.getTypeId().equals(TypeId.Ac.getTypeId())) {
@@ -183,16 +182,19 @@ public class Devices extends Fragment {
                     hSwingStat.setText(response.getHorizontalSwing());
                     fanSpeedStat.setText(response.getFanSpeed());
 
-                    if(response.getMode().equals("cool")) {
-                        acModeStat.setText(R.string.Cool);
-                    }else if(response.getMode().equals("heat")) {
-                        acModeStat.setText(R.string.Heat);
-                    }else {
-                        acModeStat.setText(R.string.Fan);
+                    switch (response.getMode()) {
+                        case "cool":
+                            acModeStat.setText(R.string.Cool);
+                            break;
+                        case "heat":
+                            acModeStat.setText(R.string.Heat);
+                            break;
+                        default:
+                            acModeStat.setText(R.string.Fan);
+                            break;
                     }
                 //    temperatureAc.setProgress(response.getTemperature() - 18);
 
-                    temperatureAc.setProgress(response.getTemperature() - 18);
                 }
 
             }, new Response.ErrorListener() {
@@ -834,6 +836,21 @@ public class Devices extends Fragment {
             minute.setWrapSelectorWheel(true);
             second.setWrapSelectorWheel(true);
 
+            api.getStateTimer(device, new Response.Listener<GetStateTimer>() {
+                @Override
+                public void onResponse(GetStateTimer response) {
+
+                    //int value = response.
+
+
+                }
+
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
 
             if (Home.getInstance().getCurrentMode() != 1) {
 
@@ -922,6 +939,8 @@ public class Devices extends Fragment {
         } else {
             Toast.makeText(context, "Not valid deviceType", Toast.LENGTH_LONG).show();
         }
+
+        image.setImageResource(context.getResources().getIdentifier(device.getImg().split(".png$")[0], "drawable", context.getPackageName()));
 
         return v;
 
@@ -1298,7 +1317,5 @@ public class Devices extends Fragment {
 
         return new BitmapDrawable(getResources(), bitmap);
     }
-
-
 
 }
