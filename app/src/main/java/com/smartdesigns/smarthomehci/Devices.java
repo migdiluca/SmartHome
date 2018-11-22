@@ -595,9 +595,9 @@ public class Devices extends Fragment {
 
                     switch (response.getConvection()) {
                         case "normal":
-                            convectionModeStats.setText(R.string.Large);
+                            convectionModeStats.setText(R.string.Normal);
                             break;
-                        case "Normal":
+                        case "eco":
                             convectionModeStats.setText(R.string.Eco);
                             break;
                         default:
