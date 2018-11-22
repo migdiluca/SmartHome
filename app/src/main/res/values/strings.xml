@@ -56,6 +56,8 @@
     <string name="Lamp">Lamp</string>
     <string name="Brightness">Brightness</string>
     <string name="ColorPicker">Color Picker</string>
+    <string name="SuccessMsgBright">Success! Brightness has successfully changed.</string>
+    <string name="SuccessMsgCol">Success! The lamp color has successfully changed.</string>
 
     <string name="Oven">Oven</string>
     <string name="Eco" translatable="false">Eco</string>

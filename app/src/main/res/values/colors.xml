@@ -33,6 +33,8 @@
     <color name="timerColorPrimary">#ef23d7</color>
     <color name="timerColorPrimaryDark">#931787</color>
 
+    <color name="lampColorChange"></color>
+
     <color name ="black">#ff000000</color>
     <color name ="red">#f0453d</color>
     <color name ="pink">#e52564</color>
