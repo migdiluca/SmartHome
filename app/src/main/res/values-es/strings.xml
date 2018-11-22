@@ -53,6 +53,9 @@
     <string name="Lamp">Lámpara</string>
     <string name="Brightness">Brillo</string>
     <string name="ColorPicker">Paleta</string>
+    <string name="SuccessMsgBright">Se ha cambiado el brillo.</string>
+    <string name="SuccessMsgCol">Se ha cambiado el color.</string>
+
 
     <string name="Oven">Horno</string>
     <string name="Normal">Normal</string>

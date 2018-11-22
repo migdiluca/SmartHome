@@ -6,9 +6,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -29,9 +31,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.pes.androidmaterialcolorpickerdialog.ColorPickerCallback;
 import com.smartdesigns.smarthomehci.backend.Action;
 import com.smartdesigns.smarthomehci.backend.Device;
 import com.smartdesigns.smarthomehci.backend.TypeId;
@@ -61,7 +64,7 @@ public class Devices extends Fragment {
 
     /**
      * Buttons
-     *
+     * <p>
      * Ac
      */
     Switch onOffAc;
@@ -111,6 +114,7 @@ public class Devices extends Fragment {
     SeekBar lampBrightness;
     TextView lampBrightnessStats;
     View colorPickerView;
+    int col;
 
     /**
      * Refrigerator
@@ -186,7 +190,7 @@ public class Devices extends Fragment {
             api.getStateAc(device, new Response.Listener<GetStateAc>() {
                 @Override
                 public void onResponse(GetStateAc response) {
-                    if(response.getStatus().equals("on"))
+                    if (response.getStatus().equals("on"))
                         onOffAc.setChecked(true);
                     else
                         onOffAc.setChecked(false);
@@ -234,7 +238,7 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                if(ft) {
+                                if (ft) {
                                     Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) + " " + sPrint
                                             , Toast.LENGTH_LONG);
                                     toast.show();
@@ -344,10 +348,9 @@ public class Devices extends Fragment {
             api.getStateBlinds(device, new Response.Listener<GetStateBlinds>() {
                 @Override
                 public void onResponse(GetStateBlinds response) {
-                    if(response.getStatus().equals("open") || response.getStatus().equals("opening")) {
+                    if (response.getStatus().equals("open") || response.getStatus().equals("opening")) {
                         up.toggle();
-                    }
-                    else {
+                    } else {
                         down.toggle();
                     }
                 }
@@ -424,16 +427,14 @@ public class Devices extends Fragment {
             api.getStateDoor(device, new Response.Listener<GetStateDoor>() {
                 @Override
                 public void onResponse(GetStateDoor response) {
-                    if(response.getStatus().equals("closed")) {
+                    if (response.getStatus().equals("closed")) {
                         openBut.setChecked(false);
-                    }
-                    else {
+                    } else {
                         openBut.setChecked(true);
                     }
-                    if(response.getStatus().equals("locked")) {
+                    if (response.getStatus().equals("locked")) {
                         lockBut.setChecked(true);
-                    }
-                    else {
+                    } else {
                         lockBut.setChecked(false);
                     }
                 }
@@ -533,13 +534,17 @@ public class Devices extends Fragment {
             api.getStateLamp(device, new Response.Listener<GetStateLamp>() {
                 @Override
                 public void onResponse(GetStateLamp response) {
-                    if(response.getStatus().equals("on"))
+                    if (response.getStatus().equals("on"))
                         onOffLamp.setChecked(true);
                     else
                         onOffLamp.setChecked(false);
 
                     lampBrightness.setProgress(response.getBrightness());
+                    lampBrightnessStats.setText(Integer.toString(response.getBrightness()));
 
+
+                    col = Color.parseColor(response.getColor());
+                    colorPickerView.setBackgroundColor(col);
 
                 }
             }, new Response.ErrorListener() {
@@ -549,8 +554,126 @@ public class Devices extends Fragment {
                 }
             });
 
+            if (Home.getInstance().getCurrentMode() != 1) {
+
+                onOffLamp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        String s;
+                        final String sPrint;
+                        if (isChecked) {
+                            s = "turnOn";
+                            sPrint = getResources().getString(R.string.OnM);
+                        } else {
+                            s = "turnOff";
+                            sPrint = getResources().getString(R.string.OffM);
+                        }
+                        Action action = new Action(device.getId(), s, null);
+                        api.runAction(action, new Response.Listener<Object>() {
+                            @Override
+                            public void onResponse(Object response) {
+                                if (ft) {
+                                    Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) + " " + sPrint
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                                ft = true;
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("ERROR", error.toString());
+                                Toast toast = Toast.makeText(context, getResources().getString(R.string.ActionFail)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        });
+                    }
+                });
+
+                lampBrightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                        // You can have your own calculation for progress
 
 
+                        lampBrightnessStats.setText(Integer.toString(progress));
+
+                        //seekBar.setThumb(getThumb(aux));
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        int value = seekBar.getProgress();
+                        LinkedList<String> l = new LinkedList<>();
+                        l.add(Integer.toString(value));
+                        Action action = new Action(device.getId(), "setBrightness", l);
+                        api.runAction(action, new Response.Listener<Object>() {
+                            @Override
+                            public void onResponse(Object response) {
+                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgBright)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast toast = Toast.makeText(context, getResources().getString(R.string.ActionFail)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        });
+                    }
+                });
+
+
+
+                final ColorPicker cp = new ColorPicker(getActivity(), (col >> 16) & 0xff, (col >> 8) & 0xff, (col) & 0xff);
+
+                cp.show();
+
+                cp.enableAutoClose(); // Enable auto-dismiss for the dialog
+
+                /* Set a new Listener called when user click "select" */
+                cp.setCallback(new ColorPickerCallback() {
+                    @Override
+                    public void onColorChosen(@ColorInt int color) {
+
+                        col = (Color.red(color) & 0xff) << 16 | (Color.green(color) & 0xff) << 8 | (Color.blue(color) & 0xff);
+                        colorPickerView.setBackgroundColor(col);
+                        String s = String.format("#%06X", (0xFFFFFF & col));
+                        LinkedList<String> ll = new LinkedList<>();
+                        ll.add(s);
+                        Action action = new Action(device.getId(), "setColor", ll);
+                        api.runAction(action, new Response.Listener<Object>() {
+                            @Override
+                            public void onResponse(Object response) {
+                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgCol)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast toast = Toast.makeText(context, getResources().getString(R.string.ActionFail)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        });
+                    }
+                });
+
+
+            } else {
+                lampBrightness.setEnabled(false);
+                onOffLamp.setEnabled(false);
+                lampColor.setClickable(false);
+            }
 
 
         } else if (device.getTypeId().equals(TypeId.Oven.getTypeId())) {
@@ -572,7 +695,7 @@ public class Devices extends Fragment {
             api.getStateOven(device, new Response.Listener<GetStateOven>() {
                 @Override
                 public void onResponse(GetStateOven response) {
-                    if(response.getStatus().equals("on"))
+                    if (response.getStatus().equals("on"))
                         onOffOven.setChecked(true);
                     else
                         onOffOven.setChecked(false);
@@ -643,7 +766,7 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) +" "+ sPrint
+                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) + " " + sPrint
                                         , Toast.LENGTH_LONG);
                                 toast.show();
                                 Home.changedHere = true;
@@ -755,7 +878,6 @@ public class Devices extends Fragment {
 
                     fridgeTemperature.setProgress(response.getTemperature() - 2);
                     freezerTemperature.setProgress(response.getFreezerTemperature() + 20);
-
 
 
                     switch (response.getMode()) {
@@ -912,9 +1034,9 @@ public class Devices extends Fragment {
                 public void onResponse(GetStateTimer response) {
 
                     int value = response.getInterval();
-                    hour.setValue(value/3600);
-                    minute.setValue((value%3600)/60);
-                    second.setValue(((value%3600)%60)/60);
+                    hour.setValue(value / 3600);
+                    minute.setValue((value % 3600) / 60);
+                    second.setValue(((value % 3600) % 60) / 60);
 
                     String hms = String.format("%02d:%02d:%02d", hour.getValue(), minute.getValue(), second.getValue());
                     timer.setText(hms);//set text
@@ -998,7 +1120,7 @@ public class Devices extends Fragment {
                 setButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int time = hour.getValue()*3600 + minute.getValue()*60+second.getValue();
+                        int time = hour.getValue() * 3600 + minute.getValue() * 60 + second.getValue();
                         LinkedList<String> ll = new LinkedList<>();
                         ll.add(Integer.toString(time));
                         Action action = new Action(device.getId(), "setInterval", ll);
@@ -1052,7 +1174,7 @@ public class Devices extends Fragment {
     }
 
     private void startTimer(int h, int m, int s) {
-        int totalTime = 1000*(h*3600 + m*60+s);
+        int totalTime = 1000 * (h * 3600 + m * 60 + s);
         countDownTimer = new CountDownTimer(totalTime, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -1088,8 +1210,7 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                switch (getResources().getStringArray(R.array.ConvectionMode)[numberDialogue])
-                                {
+                                switch (getResources().getStringArray(R.array.ConvectionMode)[numberDialogue]) {
                                     case "normal":
                                         convectionModeStats.setText(R.string.Normal);
                                         break;
@@ -1142,8 +1263,7 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                switch (getResources().getStringArray(R.array.HeatMode2)[numberDialogue])
-                                {
+                                switch (getResources().getStringArray(R.array.HeatMode2)[numberDialogue]) {
                                     case "conventional":
                                         heatModeStats.setText(R.string.Conventional);
                                         break;
@@ -1198,8 +1318,7 @@ public class Devices extends Fragment {
                             @Override
                             public void onResponse(Object response) {
 
-                                switch (getResources().getStringArray(R.array.GrillMode2)[numberDialogue])
-                                {
+                                switch (getResources().getStringArray(R.array.GrillMode2)[numberDialogue]) {
                                     case "large":
                                         grillModeStats.setText(R.string.Large);
                                         break;
@@ -1385,8 +1504,7 @@ public class Devices extends Fragment {
                             @Override
                             public void onResponse(Object response) {
 
-                                switch (getResources().getStringArray(R.array.AcMode2)[numberDialogue])
-                                {
+                                switch (getResources().getStringArray(R.array.AcMode2)[numberDialogue]) {
                                     case "cool":
                                         acModeStat.setText(R.string.Cool);
                                         break;
@@ -1442,8 +1560,7 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                switch (getResources().getStringArray(R.array.FridgeMode2)[numberDialogue])
-                                {
+                                switch (getResources().getStringArray(R.array.FridgeMode2)[numberDialogue]) {
                                     case "default":
                                         fridgeModeStats.setText(R.string.Default);
                                         break;
