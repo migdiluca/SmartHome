@@ -223,7 +223,7 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) + sPrint
+                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) +" "+ sPrint
                                         , Toast.LENGTH_LONG);
                                 toast.show();
                             }
@@ -592,7 +592,7 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) + sPrint
+                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) +" "+ sPrint
                                         , Toast.LENGTH_LONG);
                                 toast.show();
                             }

@@ -99,4 +99,14 @@
     <string name="title_activity_device">Actividad del dispositivo</string>
 
 
+    <string name="empty_room">La habitacion esta vacia</string>
+    <string name="no_rooms_available">No hay habitaciones</string>
+    <string name="no_rooms_error">Las habitaciones no pudieron ser cargadas debido a problemas de conectividad, comprobá tu conexión e intenta de nuevo.</string>
+    <string name="no_favorites_available">No hay dispositivos en favoritos.</string>
+    <string name="connection_error">Hay problemas de conectividad, comprobá tu conexión y arrastrá hacia abajo para reintentar.</string>
+    <string name="apply_routine_error">No se pudo aplicar la rutina por problemas de conectividad, comprobá tu conexión e intenta de nuevo.</string>
+    <string name="no_routines_error">No se cargaron las rutinas por problemas de conectividad, comprobá tu conexión e intenta de nuevo.</string>
+    <string name="loading">Cargando</string>
+
+
 </resources>

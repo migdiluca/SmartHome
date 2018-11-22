@@ -136,13 +136,11 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
             holder.title.setText(mData.get(position).getName());
-            int id = mContext.getResources().getIdentifier(mData.get(position).getImg().split(".png$")[0], "drawable", mContext.getPackageName());
-            holder.img_thumbnail.setImageResource(id);
 
-
-        /*if(true){
-            mData.get(position).setBackground(colors.get(ThreadLocalRandom.current().nextInt(0,colors.size())));
-        }*/
+            if(mData.get(position).getImg() != null) {
+                int id = mContext.getResources().getIdentifier(mData.get(position).getImg().split(".png$")[0], "drawable", mContext.getPackageName());
+                holder.img_thumbnail.setImageResource(id);
+            }
 
         holder.cardView.setBackgroundColor(mData.get(position).getBackground());
         holder.cardView.setCardElevation(20);
