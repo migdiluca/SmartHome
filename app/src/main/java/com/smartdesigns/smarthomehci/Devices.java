@@ -134,7 +134,6 @@ public class Devices extends Fragment {
     private GetStateRefrigerator responseRefrigerator;
 
 
-
     /**
      * Timer
      */
@@ -147,7 +146,6 @@ public class Devices extends Fragment {
     TextView timer;
     CountDownTimer countDownTimer;
     private GetStateTimer responseTimer;
-
 
 
     View thumbView;
@@ -793,10 +791,13 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) + " " + sPrint
-                                        , Toast.LENGTH_LONG);
-                                toast.show();
-                                Home.changedHere = true;
+                                if (ft) {
+                                    Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) + " " + sPrint
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                    Home.changedHere = true;
+                                }
+                                ft = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -1065,18 +1066,12 @@ public class Devices extends Fragment {
                     int value = Integer.parseInt(response.getInterval());
                     hour.setValue(value / 3600);
                     value = value - hour.getValue() * 3600;
-                    minute.setValue(value/60);
+                    minute.setValue(value / 60);
 
                     second.setValue(value - minute.getValue() * 60);
-                    hour.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-                    minute.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-                    second.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
 
-
-
-
-                    if(response.getStatus().equals("active")) {
+                    if (response.getStatus().equals("active")) {
                         int rem = response.getRemaining();
                         int h, m, s;
                         h = rem / 3600;
@@ -1084,10 +1079,10 @@ public class Devices extends Fragment {
                         m = rem / 60;
                         s = rem - m * 60;
 
-                        String hms = String.format("%02d:%02d:%02d", h,m,s);
+                        String hms = String.format("%02d:%02d:%02d", h, m, s);
 
 
-                        startTimer(h,m,s);
+                        startTimer(h, m, s);
                         timer.setText(hms);//set text
                         startButton.setClickable(false);
                         stopButton.setClickable(true);
@@ -1095,8 +1090,7 @@ public class Devices extends Fragment {
                         stopButton.setBackgroundColor(getResources().getColor(R.color.buttonColor));
                         setButton.setBackgroundColor(getResources().getColor(R.color.buttonColorOff));
                         startButton.setBackgroundColor(getResources().getColor(R.color.buttonColorOff));
-                    }
-                    else {
+                    } else {
                         String hms = String.format("%02d:%02d:%02d", hour.getValue(), minute.getValue(), second.getValue());
                         timer.setText(hms);//set text
 
@@ -1142,7 +1136,7 @@ public class Devices extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-                        if(hour.getValue() == 0 && minute.getValue() == 0 && second.getValue() == 0)
+                        if (hour.getValue() == 0 && minute.getValue() == 0 && second.getValue() == 0)
                             return;
 
                         Action action = new Action(device.getId(), "start", null);
@@ -1278,9 +1272,9 @@ public class Devices extends Fragment {
 
     public int numberDialogue;
 
-    public int findString(String[] array, String str){
-        for(int i=0; i < array.length; i++){
-            if(array[i].equals(str)) {
+    public int findString(String[] array, String str) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equals(str)) {
                 return i;
             }
         }
@@ -1291,7 +1285,7 @@ public class Devices extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(R.string.ConvectionMode);
 
-        int aux = findString(getResources().getStringArray(R.array.ConvectionMode), (String)convectionModeStats.getText());
+        int aux = findString(getResources().getStringArray(R.array.ConvectionMode), (String) convectionModeStats.getText());
 
         //list of items
         String[] items = getResources().getStringArray(R.array.ConvectionMode);
@@ -1346,7 +1340,7 @@ public class Devices extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(R.string.HeatMode);
 
-        int aux = findString(getResources().getStringArray(R.array.HeatMode), (String)heatModeStats.getText());
+        int aux = findString(getResources().getStringArray(R.array.HeatMode), (String) heatModeStats.getText());
 
         //list of items
         String[] items = getResources().getStringArray(R.array.HeatMode);
@@ -1403,7 +1397,7 @@ public class Devices extends Fragment {
         builder.setTitle(R.string.GrillMode);
 
 
-        int aux = findString(getResources().getStringArray(R.array.GrillMode), (String)grillModeStats.getText());
+        int aux = findString(getResources().getStringArray(R.array.GrillMode), (String) grillModeStats.getText());
 
         //list of items
         String[] items = getResources().getStringArray(R.array.GrillMode);
@@ -1460,7 +1454,7 @@ public class Devices extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(R.string.VerticalSwing);
 
-        int aux = findString(getResources().getStringArray(R.array.VSwing), (String)vSwingStat.getText());
+        int aux = findString(getResources().getStringArray(R.array.VSwing), (String) vSwingStat.getText());
 
         //list of items
         String[] items = getResources().getStringArray(R.array.VSwing);
@@ -1506,7 +1500,7 @@ public class Devices extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(R.string.HSwingSuccess);
 
-        int aux = findString(getResources().getStringArray(R.array.HSwing), (String)hSwingStat.getText());
+        int aux = findString(getResources().getStringArray(R.array.HSwing), (String) hSwingStat.getText());
 
         //list of items
         String[] items = getResources().getStringArray(R.array.HSwing);
@@ -1551,7 +1545,7 @@ public class Devices extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(R.string.FanSpeed);
 
-        int aux = findString(getResources().getStringArray(R.array.FanSpeed), (String)fanSpeedStat.getText());
+        int aux = findString(getResources().getStringArray(R.array.FanSpeed), (String) fanSpeedStat.getText());
 
         //list of items
         String[] items = getResources().getStringArray(R.array.FanSpeed);
@@ -1596,7 +1590,7 @@ public class Devices extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(R.string.AcMode);
 
-        int aux = findString(getResources().getStringArray(R.array.AcMode), (String)acModeStat.getText());
+        int aux = findString(getResources().getStringArray(R.array.AcMode), (String) acModeStat.getText());
 
         //list of items
         String[] items = getResources().getStringArray(R.array.AcMode);
@@ -1655,7 +1649,7 @@ public class Devices extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(R.string.AcMode);
 
-        int aux = findString(getResources().getStringArray(R.array.FridgeMode), (String)fridgeModeStats.getText());
+        int aux = findString(getResources().getStringArray(R.array.FridgeMode), (String) fridgeModeStats.getText());
 
         //list of items
         String[] items = getResources().getStringArray(R.array.FridgeMode);
