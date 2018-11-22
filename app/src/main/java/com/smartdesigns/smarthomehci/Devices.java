@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
@@ -36,6 +37,8 @@ import com.smartdesigns.smarthomehci.repository.ApiConnection;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateAc;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateBlinds;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateDoor;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateOven;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateRefrigerator;
 
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
@@ -49,6 +52,8 @@ public class Devices extends Fragment {
     private Context context;
 
     private ApiConnection api = ApiConnection.getInstance(getActivity());
+
+    ImageView image = view.findViewById(R.id.DeviceLogo);
 
     /**
      * Buttons
@@ -81,6 +86,9 @@ public class Devices extends Fragment {
     LinearLayout grillMode;
     LinearLayout heatMode;
     LinearLayout convectionMode;
+    TextView grillModeStats;
+    TextView heatModeStats;
+    TextView convectionModeStats;
 
     /**
      * Door
@@ -102,6 +110,7 @@ public class Devices extends Fragment {
     SeekBar freezerTemperature;
     SeekBar fridgeTemperature;
     LinearLayout fridgeMode;
+    TextView fridgeModeStats;
 
     /**
      * Timer
@@ -140,6 +149,8 @@ public class Devices extends Fragment {
         thumbView = inflater.inflate(R.layout.layout_seekbar_thumb, null, false);
         Home.getInstance().getSupportActionBar().setHomeButtonEnabled(true);
 
+        image.setImageResource(context.getResources().getIdentifier(device.getImage().split(".png$")[0], "drawable", context.getPackageName()));
+
         //Empiezo con los devices
 
         if (device.getTypeId().equals(TypeId.Ac.getTypeId())) {
@@ -165,6 +176,8 @@ public class Devices extends Fragment {
                 public void onResponse(GetStateAc response) {
                     if(response.getStatus().equals("on"))
                         onOffAc.setChecked(true);
+                    else
+                        onOffAc.setChecked(false);
                     vSwingStat.setText(response.getVerticalSwing());
                     hSwingStat.setText(response.getHorizontalSwing());
                     fanSpeedStat.setText(response.getFanSpeed());
@@ -494,6 +507,64 @@ public class Devices extends Fragment {
             grillMode = view.findViewById(R.id.GrillMode);
             heatMode = view.findViewById(R.id.HeatMode);
             convectionMode = view.findViewById(R.id.ConvectionMode);
+            grillModeStats = view.findViewById(R.id.GrillModeStats);
+            heatModeStats = view.findViewById(R.id.HeatModeStats);
+            convectionModeStats = view.findViewById(R.id.ConvectionModeStats);
+
+            api.getStateOven(device, new Response.Listener<GetStateOven>() {
+                @Override
+                public void onResponse(GetStateOven response) {
+                    if(response.getStatus().equals("on"))
+                        onOffOven.setChecked(true);
+                    else
+                        onOffOven.setChecked(false);
+
+                    //temperatureOven.setProgress(response.getTemperature() - 90);
+
+                    switch (response.getGrill()) {
+                        case "large":
+                            grillModeStats.setText(R.string.Large);
+                            break;
+                        case "eco":
+                            grillModeStats.setText(R.string.Eco);
+                            break;
+                        default:
+                            grillModeStats.setText(R.string.Off);
+                            break;
+                    }
+
+                    switch (response.getConvection()) {
+                        case "normal":
+                            convectionModeStats.setText(R.string.Large);
+                            break;
+                        case "Normal":
+                            convectionModeStats.setText(R.string.Eco);
+                            break;
+                        default:
+                            convectionModeStats.setText(R.string.Off);
+                            break;
+                    }
+
+                    switch (response.getHeat()) {
+                        case "conventional":
+                            heatModeStats.setText(R.string.Conventional);
+                            break;
+                        case "bottom":
+                            heatModeStats.setText(R.string.Bottom);
+                            break;
+                        default:
+                            heatModeStats.setText(R.string.Top);
+                            break;
+                    }
+
+                }
+
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
 
             if (Home.getInstance().getCurrentMode() != 1) {
 
@@ -605,6 +676,33 @@ public class Devices extends Fragment {
             freezerTemperature = view.findViewById(R.id.FreezerTempSeekBar);
             fridgeTemperature = view.findViewById(R.id.FridgeTempSeekBar);
             fridgeMode = view.findViewById(R.id.FridgeMode);
+            fridgeModeStats = view.findViewById(R.id.FridgeModeStatus);
+
+            api.getStateRefrigerator(device, new Response.Listener<GetStateRefrigerator>() {
+                @Override
+                public void onResponse(GetStateRefrigerator response) {
+                    //fridgeTemperature.setProgress(response.getTemperature() - 2);
+                    //freezerTemperature.setProgress(response.getFreezerTemperature() + 20);
+
+                    switch (response.getMode()) {
+                        case "default":
+                            heatModeStats.setText(R.string.Default);
+                            break;
+                        case "vacation":
+                            heatModeStats.setText(R.string.Vacations);
+                            break;
+                        default:
+                            heatModeStats.setText(R.string.Party);
+                            break;
+                    }
+                }
+
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
 
             if (Home.getInstance().getCurrentMode() != 1) {
 
