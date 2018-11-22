@@ -14,6 +14,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -646,7 +647,7 @@ public class Devices extends Fragment {
                             @Override
                             public void onColorChosen(@ColorInt int color) {
 
-                                col = (Color.red(color) & 0xff) << 16 | (Color.green(color) & 0xff) << 8 | (Color.blue(color) & 0xff);
+                                col = color;
                                 colorPickerView.setBackgroundColor(col);
                                 String s = String.format("#%06X", (0xFFFFFF & col));
                                 LinkedList<String> ll = new LinkedList<>();
@@ -1042,10 +1043,19 @@ public class Devices extends Fragment {
                     minute.setValue((value % 3600) / 60);
                     second.setValue(((value % 3600) % 60) / 60);
 
-                    String hms = String.format("%02d:%02d:%02d", hour.getValue(), minute.getValue(), second.getValue());
-                    timer.setText(hms);//set text
+                    if(response.getNewStatus().equals("active")) {
+                        int rem = response.getRemaining();
 
-
+                        String hms = String.format("%02d:%02d:%02d", rem/3600, (rem % 3600) / 60, ((rem % 3600) % 60) / 60);
+                        startTimer(rem/3600, (rem % 3600) / 60, ((rem % 3600) % 60) / 60);
+                        timer.setText(hms);//set text
+                        startButton.setClickable(false);
+                    }
+                    else {
+                        String hms = String.format("%02d:%02d:%02d", hour.getValue(), minute.getValue(), second.getValue());
+                        timer.setText(hms);//set text
+                        stopButton.setClickable(false);
+                    }
                 }
 
             }, new Response.ErrorListener() {
@@ -1080,11 +1090,16 @@ public class Devices extends Fragment {
                     @Override
                     public void onClick(View view) {
 
+                        if(hour.getValue() == 0 && minute.getValue() == 0 && second.getValue() == 0)
+                            return;
+
                         Action action = new Action(device.getId(), "start", null);
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
                                 startTimer(hour.getValue(), minute.getValue(), second.getValue());
+                                startButton.setClickable(false);
+                                setButton.setClickable(false);
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -1098,7 +1113,6 @@ public class Devices extends Fragment {
                     }
                 });
 
-                //TODO stop!!
                 stopButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -1109,6 +1123,9 @@ public class Devices extends Fragment {
                                 countDownTimer.cancel();
                                 String hms = String.format("%02d:%02d:%02d", hour.getValue(), minute.getValue(), second.getValue());
                                 timer.setText(hms);//set text
+                                stopButton.setClickable(false);
+                                startButton.setClickable(true);
+                                setButton.setClickable(true);
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -1172,11 +1189,6 @@ public class Devices extends Fragment {
         this.context = context;
     }
 
-    private void openColorPicker() {
-        //final ColorPicker colorPicker = new ColorPicker(this);
-
-    }
-
     private void startTimer(int h, int m, int s) {
         int totalTime = 1000 * (h * 3600 + m * 60 + s);
         countDownTimer = new CountDownTimer(totalTime, 1000) {
@@ -1189,6 +1201,9 @@ public class Devices extends Fragment {
 
             public void onFinish() {
                 Toast.makeText(context, getResources().getString(R.string.TimerFinished), Toast.LENGTH_LONG).show();
+                setButton.setClickable(true);
+                stopButton.setClickable(false);
+                startButton.setClickable(true);
             }
         }.start();
     }
@@ -1200,7 +1215,7 @@ public class Devices extends Fragment {
         builder.setTitle(R.string.ConvectionMode);
 
         //list of items
-        String[] items = getResources().getStringArray(R.array.ConvectionMode2);
+        String[] items = getResources().getStringArray(R.array.ConvectionMode);
         builder.setSingleChoiceItems(items, 0,
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -1214,7 +1229,7 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                switch (getResources().getStringArray(R.array.ConvectionMode)[numberDialogue]) {
+                                switch (getResources().getStringArray(R.array.ConvectionMode2)[numberDialogue]) {
                                     case "normal":
                                         convectionModeStats.setText(R.string.Normal);
                                         break;
@@ -1598,20 +1613,6 @@ public class Devices extends Fragment {
         dialog.show();
     }
 
-    //public void showDialogueLampColor(View view) {}
-
-    public Drawable getThumb(int progress) {
-        String str = progress + "";
-        ((TextView) view.findViewById(R.id.tvProgress)).setText(str);
-
-        thumbView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        Bitmap bitmap = Bitmap.createBitmap(thumbView.getMeasuredWidth(), thumbView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        thumbView.layout(0, 0, thumbView.getMeasuredWidth(), thumbView.getMeasuredHeight());
-        thumbView.draw(canvas);
-
-        return new BitmapDrawable(getResources(), bitmap);
-    }
 
     @Override
     public void onResume() {
