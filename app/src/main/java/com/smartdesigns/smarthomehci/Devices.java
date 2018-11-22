@@ -31,10 +31,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.smartdesigns.smarthomehci.backend.Action;
 import com.smartdesigns.smarthomehci.backend.Device;
-import com.smartdesigns.smarthomehci.backend.Room;
-import com.smartdesigns.smarthomehci.backend.Routine;
 import com.smartdesigns.smarthomehci.backend.TypeId;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateAc;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateBlinds;
 
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
@@ -60,6 +60,11 @@ public class Devices extends Fragment {
     LinearLayout hSwing;
     LinearLayout fanSpeed;
     LinearLayout acMode;
+    TextView vSwingStat;
+    TextView hSwingStat;
+    TextView fanSpeedStat;
+    TextView acModeStat;
+
 
     /**
      * Blinds
@@ -140,8 +145,6 @@ public class Devices extends Fragment {
 
             getActivity().setTheme(R.style.acStyle);
 
-
-
             v = inflater.inflate(R.layout.ac, container, false);
             view = v;
 
@@ -151,6 +154,36 @@ public class Devices extends Fragment {
             hSwing = view.findViewById(R.id.HSwing);
             fanSpeed = view.findViewById(R.id.FanSpeed);
             acMode = view.findViewById(R.id.AcMode);
+            vSwingStat = view.findViewById(R.id.VSwingStatus);
+            hSwingStat = view.findViewById(R.id.HSwingStatus);
+            fanSpeedStat = view.findViewById(R.id.FanSpeedStatus);
+            acModeStat = view.findViewById(R.id.AcModeStatus);
+
+            api.getStateAc(device, new Response.Listener<GetStateAc>() {
+                @Override
+                public void onResponse(GetStateAc response) {
+                    if(response.getStatus().equals("on"))
+                        onOffAc.setChecked(true);
+                    vSwingStat.setText(response.getVerticalSwing());
+                    hSwingStat.setText(response.getHorizontalSwing());
+                    fanSpeedStat.setText(response.getFanSpeed());
+
+                    if(response.getMode().equals("cool")) {
+                        acModeStat.setText(R.string.Cool);
+                    }else if(response.getMode().equals("heat")) {
+                        acModeStat.setText(R.string.Heat);
+                    }else {
+                        acModeStat.setText(R.string.Fan);
+                    }
+                    temperatureAc.setProgress(response.getTemperature() - 18);
+                }
+
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
 
             if (Home.getInstance().getCurrentMode() != 1) {
 
@@ -187,7 +220,6 @@ public class Devices extends Fragment {
                 temperatureAc.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
                         // You can have your own calculation for progress
 
                         int aux = 18 + progress;
@@ -270,6 +302,24 @@ public class Devices extends Fragment {
 
             up = view.findViewById(R.id.UpBut);
             down = view.findViewById(R.id.DownBut);
+
+            api.getStateBlinds(device, new Response.Listener<GetStateBlinds>() {
+                @Override
+                public void onResponse(GetStateBlinds response) {
+                    if(response.getStatus().equals("open") || response.getStatus().equals("opening")) {
+                        up.toggle();
+                    }
+                    else {
+                        down.toggle();
+                    }
+                }
+
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
 
             if (Home.getInstance().getCurrentMode() != 1) {
 
