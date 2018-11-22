@@ -29,6 +29,10 @@
     <string name="Cool">Cool</string>
     <string name="Heat">Heat</string>
     <string name="Fan">Fan</string>
+    <string name="VSwingSuccess">Success! Vertical Swing has changed.</string>
+    <string name="HSwingSuccess">Success! Horizontal Swing has changed.</string>
+    <string name="FanSpeedSuccess">Success! Fan Speed has changed.</string>
+    <string name="AcModeSuccess">Success! Ac Mode has changed.</string>
 
     <string name="SuccessMsgOnOff">Success! Device is now </string>
     <string name="OnM">On</string>
@@ -185,7 +189,7 @@
     <string name="empty_room">This room is empty!</string>
     <string name="no_rooms_available">There are no rooms yet!</string>
     <string name="no_rooms_error">The rooms could not be loaded because there are some connection issues, check your connection and try again.</string>
-    <string name="no_favorites_available">There are no favourites device, access a device to add one to your favourites!</string>
+    <string name="no_favorites_available">There are no favourite devices, access your most used devices to add them to your favourites!</string>
     <string name="connection_error">There are some connection issues, check your connection and swipe down to refresh.</string>
     <string name="apply_routine_error">The routine could not be applied because there are some connection issues, check your connection and try again.</string>
     <string name="no_routines_error">The routines could not be loaded because there are some connection issues, check your connection and try again.</string>
