@@ -61,7 +61,6 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     private void getAllowedDevices() {
         List<String> auxList = new ArrayList<>();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-
         boolean ac = sharedPreferences.getBoolean("ac_preference", false);
         boolean blind = sharedPreferences.getBoolean("blinds_preference", false);
         boolean door = sharedPreferences.getBoolean("door_preference", false);
@@ -118,7 +117,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                                 @Override
                                 public void onResponse(String response) {
                                     Log.d("NOTIF", response);
-                                    sendNotification(response, device.getName(), device.getId());
+                                    sendNotification(response, device.getName(), device.getTypeId());
                                 }
                             }
                             StringRequest stringRequest = new StringRequest(Request.Method.GET, api.getApiUrl() + "devices/" + device.getId() + "/events",
@@ -168,7 +167,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                     .setContentTitle("A device has been changed!")
                     .setContentText(name + " " + event )
                     .setSmallIcon(R.drawable.ic_smarthome).setColor(ContextCompat.getColor(context,R.color.blue))
-//                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ac))
+                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), getDrawable(id)))
                     .setSound(defaultSoundUri)
                     .setContentIntent(contentIntent)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -184,36 +183,25 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
-    private void handleError(VolleyError error) {
-        Error response = null;
-        if(error instanceof NoConnectionError || error instanceof TimeoutError){
-            String text = context.getResources().getString(R.string.error_request);
-            Toast.makeText(context, text , Toast.LENGTH_LONG).show();
+    private int getDrawable(String id){
+        if(id.equals("li6cbv5sdlatti0j")){
+            return R.drawable.ac;
+        }else if(id.equals("eu0v2xgprrhhg41g")){
+            return R.drawable.blind;
+        }else if(id.equals("lsf78ly0eqrjbz91")){
+            return R.drawable.door;
+        }else if(id.equals("go46xmbqeomjrsjr")){
+            return R.drawable.lamp;
+        }else if(id.equals("im77xxyulpegfmv8")){
+            return R.drawable.oven;
+        }else if(id.equals("rnizejqr2di0okho")){
+            return R.drawable.refrigerator;
+        }else if(id.equals("mxztsyjzsrq7iaqc")){
+            return R.drawable.alarm;
+        }else if(id.equals("ofglvd9gqX8yfl3l")){
+            return R.drawable.timer;
+        } else{
+            return R.drawable.notfound;
         }
-        else {
-            NetworkResponse networkResponse = error.networkResponse;
-            if ((networkResponse != null) && (error.networkResponse.data != null)) {
-                try {
-                    String json = new String(
-                            error.networkResponse.data,
-                            HttpHeaderParser.parseCharset(networkResponse.headers));
-
-                    JSONObject jsonObject = new JSONObject(json);
-                    json = jsonObject.getJSONObject("error").toString();
-
-                    Gson gson = new Gson();
-                    response = gson.fromJson(json, Error.class);
-                } catch (JSONException e) {
-                } catch (UnsupportedEncodingException e) {
-                }
-            }
-
-            Log.e("tag", error.toString());
-            String text = context.getResources().getString(R.string.error_request);
-//        if (response != null)
-//            text += " " + response.getDescription().get(0);
-
-            Toast.makeText(context, text, Toast.LENGTH_LONG).show();
-        }
-}
+    }
 }
