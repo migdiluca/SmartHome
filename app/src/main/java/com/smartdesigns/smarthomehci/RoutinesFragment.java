@@ -102,10 +102,14 @@ public class RoutinesFragment extends Fragment {
 
         routineRecycler = view.findViewById(R.id.recyclerview);
         toolbar.setTitle(R.string.title_routines);
-        Context appContext = getContext();
-        ApiConnection api = ApiConnection.getInstance(appContext);
 
         routineList = new ArrayList<>();
+        loadRoutines();
+        return view;
+    }
+
+    public void loadRoutines(){
+        ApiConnection api = ApiConnection.getInstance(getContext());
         api.getRoutines(new Response.Listener<List<Routine>>() {
             @Override
             public void onResponse(List<Routine> response) {
@@ -136,8 +140,6 @@ public class RoutinesFragment extends Fragment {
                 Log.d("LOADINGROUTINES", error.toString());
             }
         });
-        addCards();
-        return view;
     }
 
     @Override

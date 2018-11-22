@@ -34,6 +34,7 @@ import com.smartdesigns.smarthomehci.backend.Device;
 import com.smartdesigns.smarthomehci.backend.TypeId;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateAc;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateBlinds;
 
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
@@ -175,9 +176,8 @@ public class Devices extends Fragment {
                         acModeStat.setText(R.string.Fan);
                     }
                     temperatureAc.setProgress(response.getTemperature() - 18);
-
-
                 }
+
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
@@ -220,7 +220,6 @@ public class Devices extends Fragment {
                 temperatureAc.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
                         // You can have your own calculation for progress
 
                         int aux = 18 + progress;
@@ -303,6 +302,24 @@ public class Devices extends Fragment {
 
             up = view.findViewById(R.id.UpBut);
             down = view.findViewById(R.id.DownBut);
+
+            api.getStateBlinds(device, new Response.Listener<GetStateBlinds>() {
+                @Override
+                public void onResponse(GetStateBlinds response) {
+                    if(response.getStatus().equals("open") || response.getStatus().equals("opening")) {
+                        up.toggle();
+                    }
+                    else {
+                        down.toggle();
+                    }
+                }
+
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
 
             if (Home.getInstance().getCurrentMode() != 1) {
 
