@@ -184,7 +184,7 @@ public class DevicesFragment extends RefreshFragment {
                             ApiConnection.getInstance(getContext()).updateDevice(device, new Response.Listener<Boolean>() {
                                 @Override
                                 public void onResponse(Boolean response) {
-
+                                    text.setText("");
                                 }
                             }, new Response.ErrorListener() {
                                 @Override
@@ -205,7 +205,7 @@ public class DevicesFragment extends RefreshFragment {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-
+                    text.setText(R.string.connection_error);
                 }
             });
         } else if (Home.getInstance().getCurrentMode() == 1) {
@@ -221,12 +221,12 @@ public class DevicesFragment extends RefreshFragment {
                                 ApiConnection.getInstance(getContext()).updateDevice(device, new Response.Listener<Boolean>() {
                                     @Override
                                     public void onResponse(Boolean response) {
-
+                                        text.setText("");
                                     }
                                 }, new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-
+                                        text.setText(R.string.connection_error);
                                     }
                                 });
                             }
