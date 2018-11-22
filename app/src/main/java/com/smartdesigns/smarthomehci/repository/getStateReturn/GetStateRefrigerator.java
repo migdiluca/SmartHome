@@ -1,11 +1,11 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class getStateRefrigerator {
+public class GetStateRefrigerator {
     private int freezerTemperature;
     private int temperature;
     private String mode;
 
-    public getStateRefrigerator(int freezerTemperature, int temperature, String mode){
+    public GetStateRefrigerator(int freezerTemperature, int temperature, String mode){
         this.freezerTemperature = freezerTemperature;
         this.temperature = temperature;
         this.mode = mode;

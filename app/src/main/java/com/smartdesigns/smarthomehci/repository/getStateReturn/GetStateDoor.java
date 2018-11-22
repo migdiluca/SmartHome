@@ -1,19 +1,19 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class getStateBlinds {
+public class GetStateDoor {
     private String status;
-    private int level;
+    private String lock;
 
-    public getStateBlinds(String status, int level){
+    public GetStateDoor(String status, String lock){
         this.status = status;
-        this.level = level;
+        this.lock = lock;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public int getLevel() {
-        return level;
+    public String getLock() {
+        return lock;
     }
 }

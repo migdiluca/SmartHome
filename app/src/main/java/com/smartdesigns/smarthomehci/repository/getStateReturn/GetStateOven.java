@@ -1,13 +1,13 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class getStateOven {
+public class GetStateOven {
     private String status;
     private int temperature;
     private String heat;
     private String grill;
     private String convection;
 
-    public getStateOven(String status, int temperature, String heat, String grill, String convection){
+    public GetStateOven(String status, int temperature, String heat, String grill, String convection){
         this.status = status;
         this.temperature = temperature;
         this.heat = heat;
