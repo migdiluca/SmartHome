@@ -110,23 +110,25 @@ public class RoutinesFragment extends Fragment {
             @Override
             public void onResponse(List<Routine> response) {
                 for(Routine routine: response) {
-                    routineList.add(routine);
-                    if(routine.getMeta().matches("\"background\"") == false){
-                        int aux = routine.getBackground();
-                        ApiConnection.getInstance(getContext()).updateRoutine(routine, new Response.Listener<Boolean>() {
-                            @Override
-                            public void onResponse(Boolean response) {
+                    if (!routineList.contains(routine)) {
+                        routineList.add(routine);
+                        if (routine.getMeta().matches("\"background\"") == false) {
+                            int aux = routine.getBackground();
+                            ApiConnection.getInstance(getContext()).updateRoutine(routine, new Response.Listener<Boolean>() {
+                                @Override
+                                public void onResponse(Boolean response) {
 
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
 
-                            }
-                        });
+                                }
+                            });
+                        }
                     }
-                    addCards();
                 }
+                addCards();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -141,7 +143,7 @@ public class RoutinesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //addCards(routineList);
+        addCards();
     }
 
 

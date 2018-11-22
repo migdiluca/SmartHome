@@ -165,25 +165,24 @@ public class DevicesFragment extends Fragment {
                 @Override
                 public void onResponse(List<Device> response) {
                     for (Device device : response) {
-                        if (!devicesList.contains(device))
+                        if (!devicesList.contains(device)) {
                             devicesList.add(device);
-                        if (device.getMeta().matches("\"background\"") == false) {
-                            int aux = device.getBackground();
-                            ApiConnection.getInstance(getContext()).updateDevice(device, new Response.Listener<Boolean>() {
-                                @Override
-                                public void onResponse(Boolean response) {
+                            if (device.getMeta().matches("\"background\"") == false) {
+                                int aux = device.getBackground();
+                                ApiConnection.getInstance(getContext()).updateDevice(device, new Response.Listener<Boolean>() {
+                                    @Override
+                                    public void onResponse(Boolean response) {
 
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.d("LOADINGDEVICES", error.toString());
-                                }
-                            });
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Log.d("LOADINGDEVICES", error.toString());
+                                    }
+                                });
+                            }
                         }
-
                     }
-
                     addCards();
                 }
             }, new Response.ErrorListener() {
