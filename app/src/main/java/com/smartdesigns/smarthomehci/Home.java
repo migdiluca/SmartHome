@@ -1,10 +1,15 @@
 package com.smartdesigns.smarthomehci;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.bottomnavigation.LabelVisibilityMode;
@@ -18,6 +23,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
 import com.smartdesigns.smarthomehci.backend.Device;
@@ -28,7 +34,6 @@ import java.util.Stack;
 public class Home extends AppCompatActivity implements OnFragmentInteractionListener {
 
     private FrameLayout mMainFrame;
-
 
     private static Stack<Fragment> bottomStacks[] = new Stack[3];
 
@@ -190,6 +195,22 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 
             setFragment(bottomStacks[currentMode].pop());
         }
+        Intent intent = new Intent(Home.this, NotificationBroadcastReceiver.class);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+
+        long interval;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String intervalPreference = sharedPreferences.getString("interval_preference","1 min");
+
+        if(intervalPreference.equals("1 min") ){
+            interval = 1;
+        }else if(intervalPreference.equals("30 min")){
+            interval = AlarmManager.INTERVAL_HALF_HOUR;
+        }else{
+            interval = AlarmManager.INTERVAL_HOUR;
+        }
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime()+ interval,interval, alarmIntent);
     }
 
     private void endApp() {
@@ -257,4 +278,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 //
 //        return super.onOptionsItemSelected(item);
 //    }
+
+
+
 }

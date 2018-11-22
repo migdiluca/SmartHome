@@ -162,6 +162,20 @@
         <item>@string/Fan</item>
     </string-array>
 
+    <string-array name="ArrayInterval">
+        <item>@string/Short</item>
+        <item>@string/Medium</item>
+        <item>@string/Long</item>
+    </string-array>
+
+    <string name="Short" >1 min</string>
+    <string name="Medium">30 min</string>
+    <string name="Long">60 min</string>
+    <string name="Interval">Notification Interval (Restart Required)</string>
+
+    <string name="error_request">Error getting the JSON Request</string>
+    <string name="activate_dev_not">Activate Device Notifications</string>
+    
     <string-array name="FridgeMode">
         <item>@string/Normal</item>
         <item>@string/Party</item>

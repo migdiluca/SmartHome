@@ -5,11 +5,12 @@ import android.util.Log;
 import com.smartdesigns.smarthomehci.FavouritesFragment;
 import com.smartdesigns.smarthomehci.backend.Device;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class FavouritesList {
+public class FavouritesList implements Serializable {
 
     private class DeviceFavorite{
         private Device device;

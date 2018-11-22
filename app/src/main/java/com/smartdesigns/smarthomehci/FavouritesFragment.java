@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.smartdesigns.smarthomehci.Utils.FavouritesList;
 import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
 import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
@@ -28,6 +29,7 @@ import com.smartdesigns.smarthomehci.backend.Device;
 import com.smartdesigns.smarthomehci.backend.Room;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,42 +48,38 @@ public class FavouritesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         toolbar = Home.getMainActionBar();
-        if(favouritesList == null) {
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-            Gson gson = new Gson();
-            String json = preferences.getString("FavouriteList", null);
-            if(json == null) {
-                favouritesList = new FavouritesList();
-                saveList();
-            }
-            else
-                favouritesList=gson.fromJson(json, FavouritesList.class);
-        }
+        toolbar.setTitle(R.string.title_favourites);
+        loadList();
     }
 
     public static void access(Device device){
-        if(favouritesList == null) {
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Home.getInstance());
-            Gson gson = new Gson();
-            String json = preferences.getString("FavouriteList", null);
-            if(json == null) {
-                favouritesList = new FavouritesList();
-                saveList();
-            }
-            else
-                favouritesList=gson.fromJson(json, FavouritesList.class);
-        }
+        loadList();
         favouritesList.access(device);
         saveList();
     }
 
-    @SuppressLint({"CommitPrefEdits", "ApplySharedPref"})
+    private static void loadList() {
+        if(favouritesList == null) {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Home.getInstance());
+            Gson gson = new Gson();
+            String json = preferences.getString("FavouriteList", null);
+            Type type = new TypeToken<FavouritesList>() {}.getType();
+            favouritesList=gson.fromJson(json, type);
+            if(favouritesList == null) {
+                Log.d("QWERTY","ASD");
+                favouritesList = new FavouritesList();
+                saveList();
+            }
+
+        }
+    }
+
     private static void saveList() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Home.getInstance().getApplicationContext());
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Home.getInstance());
         Gson gson = new Gson();
         String json = gson.toJson(favouritesList);
         preferences.edit().putString("FavouriteList", json);
-        preferences.edit().commit();
+        preferences.edit().apply();
     }
 
     private int getColumns() {
