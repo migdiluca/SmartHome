@@ -561,8 +561,10 @@ public class Devices extends Fragment {
                     lampBrightness.setProgress(response.getBrightness());
                     lampBrightnessStats.setText(Integer.toString(response.getBrightness()));
 
-
-                    col = Color.parseColor(response.getColor());
+                    if(response.getColor().charAt(0) != '#')
+                        col = Color.parseColor("#"+response.getColor());
+                    else
+                        col = Color.parseColor(response.getColor());
                     colorPickerView.setBackgroundColor(col);
 
                 }
@@ -668,7 +670,7 @@ public class Devices extends Fragment {
                             public void onColorChosen(@ColorInt int color) {
                                 col = color;
                                 colorPickerView.setBackgroundColor(color);
-                                String s = String.format("#%06X", (0xFFFFFF & color));
+                                String s = String.format("%06X", (0xFFFFFF & color));
                                 LinkedList<String> ll = new LinkedList<>();
                                 ll.add(s);
                                 Action action = new Action(device.getId(), "setColor", ll);
