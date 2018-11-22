@@ -54,6 +54,14 @@ public class SettingsActivity extends AppCompatActivity {
                 super.onCreate(savedInstanceState);
                 addPreferencesFromResource(R.xml.preferences);
                 Log.d("IM HERE!", Boolean.toString(PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("dark_theme_checkbox",false)));
+                Log.d("Preferece added",Boolean.toString(PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("alarm_preference", false)));
+                Log.d("Preferece added",Boolean.toString(PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("ac_preference", false)));
+                Log.d("Preferece added",Boolean.toString(PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("blinds_preference", false)));
+                Log.d("Preferece added",Boolean.toString(PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("door_preference", false)));
+                Log.d("Preferece added",Boolean.toString(PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("lamp_preference", false)));
+                Log.d("Preferece added",Boolean.toString(PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("oven_preference", false)));
+                Log.d("Preferece added",Boolean.toString(PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("refrigerator_preference", false)));
+                Log.d("Preferece added",Boolean.toString(PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("timer_preference", false)));
             }
 
     }
