@@ -90,11 +90,12 @@ public class FavouritesFragment extends RefreshFragment {
     }
 
     private void addCards(){
-        if(favouritesList.getFavouritesDevices(AMOUNT_TO_SHOW).isEmpty())
+        List<Device> favListAux = favouritesList.getFavouritesDevices(AMOUNT_TO_SHOW, getContext());
+        if(favListAux.isEmpty())
             text.setText(R.string.no_favorites_available);
         else
             text.setText("");
-        RecyclerViewAdapter favouritesRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), favouritesList.getFavouritesDevices(AMOUNT_TO_SHOW));
+        RecyclerViewAdapter favouritesRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), favListAux);
         favouritesRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), getColumns()));
         favouritesRecycler.setAdapter(favouritesRecyclerAdapter);
     }
@@ -142,7 +143,6 @@ public class FavouritesFragment extends RefreshFragment {
     @Override
     public void onResume() {
         super.onResume();
-        favouritesList.getFavouritesDevices(AMOUNT_TO_SHOW);
         addCards();
     }
 

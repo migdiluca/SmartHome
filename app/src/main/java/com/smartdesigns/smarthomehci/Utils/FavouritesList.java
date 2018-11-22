@@ -1,5 +1,6 @@
 package com.smartdesigns.smarthomehci.Utils;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Response;
@@ -35,11 +36,20 @@ public class FavouritesList implements Serializable {
         public Device getDevice() {
             return device;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == null || !(o instanceof DeviceFavorite)) {
+                return false;
+            }
+
+            DeviceFavorite d = (DeviceFavorite) o;
+            return this.device.equals(d.device);
+        }
     }
 
     private ArrayList<DeviceFavorite> list = new ArrayList<>();
 
-    List<Room> roomList = new ArrayList<>();
     List<Device> devicesList = new ArrayList<>();
 
     int errorFlag = 0;
@@ -61,97 +71,15 @@ public class FavouritesList implements Serializable {
         return null;
     }
 
-    private void getRooms() {
-        roomList = new ArrayList<>();
-
-        ApiConnection api = ApiConnection.getInstance(Home.getInstance());
-        api.getRooms(new Response.Listener<List<Room>>() {
-            @Override
-            public void onResponse(List<Room> response) {
-
-                for (Room room : response) {
-
-                    roomList.add(room);
-
-                    if (room.getMeta().matches("\"background\"") == false) {
-                        int aux = room.getBackground();
-                        ApiConnection.getInstance(Home.getInstance()).updateRoom(room, new Response.Listener<Boolean>() {
-                            @Override
-                            public void onResponse(Boolean response) {
-
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
-                            }
-                        });
-                    }
-
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
-    }
-
-    private void getDevices() {
-        devicesList = new ArrayList<>();
-        ApiConnection api = ApiConnection.getInstance(Home.getInstance());
-        for (Room room : roomList) {
-            api.getRoomDevices(room, new Response.Listener<List<Device>>() {
-                @Override
-                public void onResponse(List<Device> response) {
-                    for (Device device : response) {
-                        devicesList.add(device);
-                        if (device.getMeta().matches("\"background\"") == false) {
-                            int aux = device.getBackground();
-                            ApiConnection.getInstance(Home.getInstance()).updateDevice(device, new Response.Listener<Boolean>() {
-                                @Override
-                                public void onResponse(Boolean response) {
-
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    errorFlag = 1;
-                                }
-                            });
-                        }
-
-                    }
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    errorFlag = 1;
-                }
-            });
-        }
-    }
-
-    private void eraseNotExistingDevices() {
-        if (devicesList.size() == list.size())
-            return;
-
-        List<DeviceFavorite> auxDeviceList = new ArrayList<>();
-
-        for (Device device : devicesList) {
-            auxDeviceList.add(new DeviceFavorite(device));
-        }
-
-        Log.d("AUXLISTSIZE", Integer.toString(roomList.size()));
+    private void remove(Device device) {
         for (int i = 0; i < list.size(); i++) {
-            if (!auxDeviceList.contains(list.get(i)))
+            if (list.get(i).getDevice().equals(device))
                 list.remove(i);
         }
     }
 
-    public ArrayList<Device> getFavouritesDevices(int amount) {
+
+    public ArrayList<Device> getFavouritesDevices(int amount, final Context context) {
         Collections.sort(list, new Comparator<DeviceFavorite>() {
             @Override
             public int compare(DeviceFavorite d1, DeviceFavorite d2) {
@@ -160,16 +88,31 @@ public class FavouritesList implements Serializable {
         });
 
 
-        getRooms();
-        Log.d("ROOMSIZE", Integer.toString(roomList.size()));
-        getDevices();
+        devicesList = new ArrayList<>();
 
-        if (errorFlag == 1) {
-            errorFlag = 0;
-            return null;
-        }
+        ApiConnection api = ApiConnection.getInstance(context);
+        api.getDevices(new Response.Listener<List<Device>>() {
+            @Override
+            public void onResponse(List<Device> response) {
+                for (Device device : response) {
 
-        eraseNotExistingDevices();
+                    devicesList.add(device);
+
+
+                }
+                for(int i = 0; i < list.size(); i++) {
+                    if(!devicesList.contains(list.get(i).getDevice()))
+                        list.remove(i);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+
 
         ArrayList<Device> resp = new ArrayList<>();
         for (int i = 0; i < amount && i < list.size(); i++) {
