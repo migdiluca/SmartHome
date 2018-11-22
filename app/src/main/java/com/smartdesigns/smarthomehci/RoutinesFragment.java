@@ -112,6 +112,8 @@ public class RoutinesFragment extends RefreshFragment {
 
     public void refresh() {
         routineList = new ArrayList<>();
+        addCards();
+        text.setText(R.string.loading);
         ApiConnection api = ApiConnection.getInstance(getContext());
         api.getRoutines(new Response.Listener<List<Routine>>() {
             @Override

@@ -70,6 +70,8 @@ public class RoomFragment extends RefreshFragment {
 
     public void refresh() {
         roomList = new ArrayList<>();
+        addCards();
+        text.setText(R.string.loading);
 
         ApiConnection api = ApiConnection.getInstance(getContext());
         api.getRooms(new Response.Listener<List<Room>>() {
