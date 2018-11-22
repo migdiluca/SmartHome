@@ -89,7 +89,7 @@ public class Device implements RecyclerInterface, Serializable {
 
     public void onClickAction(Serializable arg, Context context) {
 
-        //FavouritesFragment.access(this);
+        FavouritesFragment.access(this);
 
         Home.getInstance().setDeviceFragment(this);
      /*

@@ -72,8 +72,6 @@ public class RoutinesFragment extends Fragment {
     }
 
     private void addCards() {
-
-
         RecyclerViewAdapter routineRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), routineList);
         routineRecycler.setLayoutManager(new GridLayoutManager(this.getContext(),getColumns()));
         routineRecycler.setAdapter(routineRecyclerAdapter);
@@ -111,10 +109,8 @@ public class RoutinesFragment extends Fragment {
         api.getRoutines(new Response.Listener<List<Routine>>() {
             @Override
             public void onResponse(List<Routine> response) {
-                Log.d("ROOMSIZEASD", Integer.toString(response.size()));
                 for(Routine routine: response) {
-                    if(!routineList.contains(routine))
-                        routineList.add(routine);
+                    routineList.add(routine);
                     if(routine.getMeta().matches("\"background\"") == false){
                         int aux = routine.getBackground();
                         ApiConnection.getInstance(getContext()).updateRoutine(routine, new Response.Listener<Boolean>() {
@@ -135,7 +131,7 @@ public class RoutinesFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ERRORLOADINGROOMS", error.toString());
+                Log.d("LOADINGROUTINES", error.toString());
             }
         });
         addCards();

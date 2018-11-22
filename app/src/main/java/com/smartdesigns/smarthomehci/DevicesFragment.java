@@ -100,12 +100,19 @@ public class DevicesFragment extends Fragment {
         } else if (Home.getInstance().getCurrentMode() == 1) {
             routine = (Routine) getArguments().getSerializable("Object");
             getActivity().setTitle(routine.getName());
+            getActivity().setTitle(routine.getName());
         }
     }
 
     @Override
     public void onPause(){
         super.onPause();
+        //Home.getInstance().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
         Home.getInstance().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
@@ -113,8 +120,10 @@ public class DevicesFragment extends Fragment {
     @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Context appContext = getContext();
+        ApiConnection api = ApiConnection.getInstance(appContext);
+
         View view = inflater.inflate(R.layout.fragment_devices, container, false);
-        setBackgroundColor(view);
 
         if (room != null)
             toolbar.setTitle(room.getName());
@@ -126,29 +135,39 @@ public class DevicesFragment extends Fragment {
         FloatingActionButton playRoutineButton = (FloatingActionButton) view.findViewById(R.id.play_routine_button);
         playRoutineButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //ACTIVAR RUTINA API
-                Log.d("hola", "hola");
-                //SI anda bien
-                Toast.makeText(getActivity(), getResources().getString(R.string.apply_routine), Toast.LENGTH_LONG).show();
+
+                Context appContext = getContext();
+                ApiConnection api = ApiConnection.getInstance(appContext);
+
+                api.executeRoutine(routine, new Response.Listener<Object>() {
+                    @Override
+                    public void onResponse(Object response) {
+                        Toast.makeText(getActivity(), getResources().getString(R.string.apply_routine), Toast.LENGTH_LONG).show();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
             }
         });
 
-        if (Home.getInstance().getCurrentMode() != 1)
+        if (Home.getInstance().getCurrentMode() != 1) {
             playRoutineButton.setVisibility(View.GONE);
 
+        }
 
-        Context appContext = getContext();
-        ApiConnection api = ApiConnection.getInstance(appContext);
 
-        if (Home.getInstance().getCurrentMode() == 0)
+        if (Home.getInstance().getCurrentMode() == 0){
             api.getRoomDevices(room, new Response.Listener<List<Device>>() {
                 @Override
                 public void onResponse(List<Device> response) {
-                    Log.d("ROOMSIZEASD", Integer.toString(response.size()));
-                    for(Device device: response) {
-                        if(!devicesList.contains(device))
+                    for (Device device : response) {
+                        if (!devicesList.contains(device))
                             devicesList.add(device);
-                        if(device.getMeta().matches("\"background\"") == false){
+                        if (device.getMeta().matches("\"background\"") == false) {
                             int aux = device.getBackground();
                             ApiConnection.getInstance(getContext()).updateDevice(device, new Response.Listener<Boolean>() {
                                 @Override
@@ -158,12 +177,14 @@ public class DevicesFragment extends Fragment {
                             }, new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-
+                                    Log.d("LOADINGDEVICES", error.toString());
                                 }
                             });
                         }
-                        addCards();
+
                     }
+
+                    addCards();
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -171,8 +192,39 @@ public class DevicesFragment extends Fragment {
 
                 }
             });
-        else if (Home.getInstance().getCurrentMode() == 1) {
-        //getRoutineDevices();
+        }else if (Home.getInstance().getCurrentMode() == 1) {
+            devicesList = new ArrayList<>();
+            api.getDevices(new Response.Listener<List<Device>>() {
+                @Override
+                public void onResponse(List<Device> response) {
+                    for(Device device: response) {
+                        if(routine.containsDevice(device)) {
+                            devicesList.add(device);
+                            if (device.getMeta().matches("\"background\"") == false) {
+                                int aux = device.getBackground();
+                                ApiConnection.getInstance(getContext()).updateDevice(device, new Response.Listener<Boolean>() {
+                                    @Override
+                                    public void onResponse(Boolean response) {
+
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+
+                                    }
+                                });
+                            }
+                        }
+                    }
+
+                    addCards();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("LOADINGDEVICES", error.toString());
+                }
+            });
         }
 
         return view;
@@ -182,26 +234,6 @@ public class DevicesFragment extends Fragment {
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    private void setBackgroundColor(View view) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        Boolean darkTheme = preferences.getBoolean("dark_theme_checkbox",false);
-        if(darkTheme == true) {
-            Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_YES);
-            view.setBackgroundColor(getResources().getColor(R.color.black));
-            Home.setNavColor(R.color.dark_grey);
-            toolbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_grey)));
-            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey_navbar));
-        } else if(getView() != null) {
-            Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_NO);
-            view.setBackgroundColor(getResources().getColor(R.color.white));
-            Home.setNavColor(R.color.colorPrimary);
-            toolbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey));
-            toolbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
     }
 
@@ -225,11 +257,11 @@ public class DevicesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Home.getInstance().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (room != null)
-            getActivity().setTitle(room.getName());
+            Home.getMainActionBar().setTitle(room.getName());
         else
-            getActivity().setTitle(routine.getName());
-        setBackgroundColor(getView());
+            Home.getMainActionBar().setTitle(routine.getName());
         addCards();
     }
 

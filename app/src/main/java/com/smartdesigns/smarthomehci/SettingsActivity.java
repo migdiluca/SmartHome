@@ -53,7 +53,6 @@ public class SettingsActivity extends AppCompatActivity {
             public void onCreate(Bundle savedInstanceState){
                 super.onCreate(savedInstanceState);
                 addPreferencesFromResource(R.xml.preferences);
-                Log.d("IM HERE!", Boolean.toString(PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("dark_theme_checkbox",false)));
             }
 
     }

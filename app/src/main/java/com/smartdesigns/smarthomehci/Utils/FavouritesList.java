@@ -1,5 +1,7 @@
 package com.smartdesigns.smarthomehci.Utils;
 
+import android.util.Log;
+
 import com.smartdesigns.smarthomehci.FavouritesFragment;
 import com.smartdesigns.smarthomehci.backend.Device;
 
@@ -15,6 +17,7 @@ public class FavouritesList {
 
         public DeviceFavorite(Device device) {
             this.device = device;
+            this.access = 1;
         }
 
         public void access() {
@@ -47,12 +50,15 @@ public class FavouritesList {
         Collections.sort(list,new Comparator<DeviceFavorite>(){
             @Override
             public int compare(DeviceFavorite d1,DeviceFavorite d2) {
-                return d1.access - d2.access;
+                return d2.access - d1.access;
             }
         });
         ArrayList<Device> resp = new ArrayList<>();
+
         for(int i = 0; i < amount && i < list.size(); i++) {
             resp.add(list.get(i).getDevice());
+            Log.d("FAVORITO", list.get(i).getDevice().getName());
+            Log.d("VALOR:", Integer.toString(list.get(i).access));
         }
         return resp;
     }
