@@ -19,6 +19,20 @@ import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateOven;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateRefrigerator;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateTimer;
 
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,10 +41,8 @@ import java.util.UUID;
 
 public class ApiConnection {
 
-    //private static final String apiUrl = "http://181.28.198.15:8080/api/";
+    private static final String apiUrl = "http://190.210.157.78:8080/api/";
     //private static final String apiUrl = "http://192.168.1.137:8080/api/";
-    //private static final String apiUrl = "http://190.210.157.78:8080/api/";
-    private static final String apiUrl = "http://127.0.0.1:8080/api/";
 
 
     private static ApiConnection instance;
@@ -45,6 +57,10 @@ public class ApiConnection {
             instance = new ApiConnection(context);
         }
         return instance;
+    }
+
+    public static String getApiUrl() {
+        return apiUrl;
     }
 
     public String getDevices(Response.Listener<List<Device>> listener, Response.ErrorListener errorListener){
@@ -327,7 +343,7 @@ public class ApiConnection {
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Content-Type", "application/json");
         GsonRequest<Object, String> request =
-                new GsonRequest<>(Request.Method.GET, url, null, "events", new TypeToken<String>(){}, null, listener, errorListener);
+                new GsonRequest<>(Request.Method.GET, url, null, "String", new TypeToken<String>(){}, null, listener, errorListener);
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
         requestQueue.add(request);

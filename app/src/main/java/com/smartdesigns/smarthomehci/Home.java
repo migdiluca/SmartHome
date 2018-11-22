@@ -99,6 +99,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
             fragment.setArguments(arguments);
             fragmentTransaction.replace(R.id.device_frame, fragment);
             fragmentTransaction.commit();
+            deviceToolbar.setTitle(device.getName());
         } else {
             Intent intent = new Intent(getBaseContext(), DeviceActivity.class);
             intent.putExtra("Device",device);

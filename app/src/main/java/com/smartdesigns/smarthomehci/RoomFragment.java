@@ -71,8 +71,8 @@ public class RoomFragment extends Fragment {
     private void addCards() {
 
         //roomList.add(new Room("nmasd",""));
-        RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), roomList);
-        roomRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), getColumns()));
+        RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(Home.getInstance(), roomList);
+        roomRecycler.setLayoutManager(new GridLayoutManager(Home.getInstance(), getColumns()));
         roomRecycler.setAdapter(roomRecyclerAdapter);
     }
 
@@ -99,22 +99,23 @@ public class RoomFragment extends Fragment {
             @Override
             public void onResponse(List<Room> response) {
                 for(Room room: response) {
-                    roomList.add(room);
-                    if(room.getMeta().matches("\"background\"") == false){
-                        int aux = room.getBackground();
-                        ApiConnection.getInstance(getContext()).updateRoom(room, new Response.Listener<Boolean>() {
-                            @Override
-                            public void onResponse(Boolean response) {
+                    if(!roomList.contains(room)) {
+                        roomList.add(room);
+                        if (room.getMeta().matches("\"background\"") == false) {
+                            int aux = room.getBackground();
+                            ApiConnection.getInstance(getContext()).updateRoom(room, new Response.Listener<Boolean>() {
+                                @Override
+                                public void onResponse(Boolean response) {
 
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
 
-                            }
-                        });
+                                }
+                            });
+                        }
                     }
-
                 }
                 addCards();
             }
