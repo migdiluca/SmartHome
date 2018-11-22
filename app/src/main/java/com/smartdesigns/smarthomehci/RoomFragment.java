@@ -63,8 +63,6 @@ public class RoomFragment extends RefreshFragment {
     }
 
     private void addCards() {
-
-        //roomList.add(new Room("nmasd",""));
         RecyclerViewAdapter roomRecyclerAdapter = new RecyclerViewAdapter(Home.getInstance(), roomList);
         roomRecycler.setLayoutManager(new GridLayoutManager(Home.getInstance(), getColumns()));
         roomRecycler.setAdapter(roomRecyclerAdapter);
@@ -73,7 +71,6 @@ public class RoomFragment extends RefreshFragment {
     public void refresh() {
         roomList = new ArrayList<>();
 
-        Log.d("SIZEOFROOMS","asdasdasd");
         ApiConnection api = ApiConnection.getInstance(getContext());
         api.getRooms(new Response.Listener<List<Room>>() {
             @Override
@@ -128,6 +125,7 @@ public class RoomFragment extends RefreshFragment {
         View view = inflater.inflate(R.layout.fragment_recycler, container, false);
 
         text = view.findViewById(R.id.fragment_text);
+        text.setText(R.string.loading);
         roomRecycler = view.findViewById(R.id.recyclerview);
         toolbar.setTitle(R.string.title_rooms);
 

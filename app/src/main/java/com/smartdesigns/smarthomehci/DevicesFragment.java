@@ -132,6 +132,7 @@ public class DevicesFragment extends RefreshFragment {
             toolbar.setTitle(routine.getName());
 
         text = view.findViewById(R.id.fragment_text);
+        text.setText(R.string.loading);
         devicesRecycler = view.findViewById(R.id.devices_recyclerview);
 
         FloatingActionButton playRoutineButton = (FloatingActionButton) view.findViewById(R.id.play_routine_button);
@@ -183,7 +184,7 @@ public class DevicesFragment extends RefreshFragment {
                             ApiConnection.getInstance(getContext()).updateDevice(device, new Response.Listener<Boolean>() {
                                 @Override
                                 public void onResponse(Boolean response) {
-
+                                    text.setText("");
                                 }
                             }, new Response.ErrorListener() {
                                 @Override
@@ -204,7 +205,7 @@ public class DevicesFragment extends RefreshFragment {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-
+                    text.setText(R.string.connection_error);
                 }
             });
         } else if (Home.getInstance().getCurrentMode() == 1) {
@@ -220,12 +221,12 @@ public class DevicesFragment extends RefreshFragment {
                                 ApiConnection.getInstance(getContext()).updateDevice(device, new Response.Listener<Boolean>() {
                                     @Override
                                     public void onResponse(Boolean response) {
-
+                                        text.setText("");
                                     }
                                 }, new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-
+                                        text.setText(R.string.connection_error);
                                     }
                                 });
                             }

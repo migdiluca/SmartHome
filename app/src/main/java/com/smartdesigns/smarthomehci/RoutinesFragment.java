@@ -102,6 +102,7 @@ public class RoutinesFragment extends RefreshFragment {
         View view = inflater.inflate(R.layout.fragment_recycler, container, false);
 
         text = view.findViewById(R.id.fragment_text);
+        text.setText(R.string.loading);
         routineRecycler = view.findViewById(R.id.recyclerview);
         toolbar.setTitle(R.string.title_routines);
 

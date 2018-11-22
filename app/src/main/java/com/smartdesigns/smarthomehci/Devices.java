@@ -1,6 +1,5 @@
 package com.smartdesigns.smarthomehci;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 
 import android.content.Context;
@@ -73,6 +72,7 @@ public class Devices extends Fragment {
     TextView hSwingStat;
     TextView fanSpeedStat;
     TextView acModeStat;
+    TextView acTempStats;
 
 
     /**
@@ -92,6 +92,7 @@ public class Devices extends Fragment {
     TextView grillModeStats;
     TextView heatModeStats;
     TextView convectionModeStats;
+    TextView ovenTempStats;
 
     /**
      * Door
@@ -106,6 +107,7 @@ public class Devices extends Fragment {
     Switch onOffLamp;
     LinearLayout lampColor;
     SeekBar lampBrightness;
+    TextView lampBrightnessStats;
 
     /**
      * Refrigerator
@@ -114,6 +116,9 @@ public class Devices extends Fragment {
     SeekBar fridgeTemperature;
     LinearLayout fridgeMode;
     TextView fridgeModeStats;
+    TextView freezerTempStats;
+    TextView fridgeTempStats;
+
 
     /**
      * Timer
@@ -129,6 +134,7 @@ public class Devices extends Fragment {
 
 
     View thumbView;
+    Boolean ft = false;
 
     public Devices() {
 
@@ -172,6 +178,7 @@ public class Devices extends Fragment {
             hSwingStat = view.findViewById(R.id.HSwingStatus);
             fanSpeedStat = view.findViewById(R.id.FanSpeedStatus);
             acModeStat = view.findViewById(R.id.AcModeStatus);
+            acTempStats = view.findViewById(R.id.AcTempStat);
 
             api.getStateAc(device, new Response.Listener<GetStateAc>() {
                 @Override
@@ -183,6 +190,7 @@ public class Devices extends Fragment {
                     vSwingStat.setText(response.getVerticalSwing());
                     hSwingStat.setText(response.getHorizontalSwing());
                     fanSpeedStat.setText(response.getFanSpeed());
+                    acTempStats.setText(Integer.toString(response.getTemperature()) + " C");
 
                     switch (response.getMode()) {
                         case "cool":
@@ -195,7 +203,7 @@ public class Devices extends Fragment {
                             acModeStat.setText(R.string.Fan);
                             break;
                     }
-                //    temperatureAc.setProgress(response.getTemperature() - 18);
+                    temperatureAc.setProgress(response.getTemperature() - 18);
 
                 }
 
@@ -223,9 +231,12 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) + sPrint
-                                        , Toast.LENGTH_LONG);
-                                toast.show();
+                                if(ft) {
+                                    Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) + " " + sPrint
+                                            , Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                                ft = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -245,8 +256,8 @@ public class Devices extends Fragment {
                         // You can have your own calculation for progress
 
                         int aux = 18 + progress;
+                        acTempStats.setText(Integer.toString(aux) + " C");
 
-                        seekBar.setThumb(getThumb(aux));
                     }
 
                     @Override
@@ -519,6 +530,7 @@ public class Devices extends Fragment {
             grillModeStats = view.findViewById(R.id.GrillModeStats);
             heatModeStats = view.findViewById(R.id.HeatModeStats);
             convectionModeStats = view.findViewById(R.id.ConvectionModeStats);
+            ovenTempStats = view.findViewById(R.id.OvenTempStat);
 
             api.getStateOven(device, new Response.Listener<GetStateOven>() {
                 @Override
@@ -528,7 +540,9 @@ public class Devices extends Fragment {
                     else
                         onOffOven.setChecked(false);
 
-                    //temperatureOven.setProgress(response.getTemperature() - 90);
+                    ovenTempStats.setText(Integer.toString(response.getTemperature()) + " C");
+
+                    temperatureOven.setProgress(response.getTemperature() - 90);
 
                     switch (response.getGrill()) {
                         case "large":
@@ -592,7 +606,7 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) + sPrint
+                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) +" "+ sPrint
                                         , Toast.LENGTH_LONG);
                                 toast.show();
                             }
@@ -615,7 +629,9 @@ public class Devices extends Fragment {
 
                         int aux = 90 + progress;
 
-                        seekBar.setThumb(getThumb(aux));
+                        ovenTempStats.setText(Integer.toString(aux) + " C");
+
+                        //seekBar.setThumb(getThumb(aux));
                     }
 
                     @Override
@@ -686,12 +702,22 @@ public class Devices extends Fragment {
             fridgeTemperature = view.findViewById(R.id.FridgeTempSeekBar);
             fridgeMode = view.findViewById(R.id.FridgeMode);
             fridgeModeStats = view.findViewById(R.id.FridgeModeStatus);
+            fridgeTempStats = view.findViewById(R.id.FridgeTempStat);
+            freezerTempStats = view.findViewById(R.id.FreezerTempStat);
+
 
             api.getStateRefrigerator(device, new Response.Listener<GetStateRefrigerator>() {
                 @Override
                 public void onResponse(GetStateRefrigerator response) {
-                    //fridgeTemperature.setProgress(response.getTemperature() - 2);
-                    //freezerTemperature.setProgress(response.getFreezerTemperature() + 20);
+
+                    fridgeTempStats.setText(Integer.toString(response.getTemperature()) + " C");
+                    freezerTempStats.setText(Integer.toString(response.getTemperature()) + " C");
+
+
+                    fridgeTemperature.setProgress(response.getTemperature() - 2);
+                    freezerTemperature.setProgress(response.getFreezerTemperature() + 20);
+
+
 
                     switch (response.getMode()) {
                         case "default":
@@ -722,8 +748,8 @@ public class Devices extends Fragment {
                         // You can have your own calculation for progress
 
                         int aux = 2 + progress;
-
-                        seekBar.setThumb(getThumb(aux));
+                        fridgeTempStats.setText(Integer.toString(aux) + " C");
+                        //seekBar.setThumb(getThumb(aux));
                     }
 
                     @Override
@@ -763,7 +789,9 @@ public class Devices extends Fragment {
 
                         int aux = -20 + progress;
 
-                        seekBar.setThumb(getThumb(aux));
+                        freezerTempStats.setText(Integer.toString(aux) + " C");
+
+                        //seekBar.setThumb(getThumb(aux));
                     }
 
                     @Override
@@ -962,7 +990,7 @@ public class Devices extends Fragment {
         } else {
             Toast.makeText(context, "Not valid deviceType", Toast.LENGTH_LONG).show();
         }
-        if(view != null) {
+        if (view != null) {
             image = view.findViewById(R.id.DeviceLogo);
             image.setImageResource(context.getResources().getIdentifier(device.getImg().split(".png$")[0], "drawable", context.getPackageName()));
         }
@@ -997,25 +1025,39 @@ public class Devices extends Fragment {
         }.start();
     }
 
+    public int numberDialogue;
+
     public void showDialogueConvectionMode(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(R.string.ConvectionMode);
 
         //list of items
-        String[] items = getResources().getStringArray(R.array.ConvectionMode);
+        String[] items = getResources().getStringArray(R.array.ConvectionMode2);
         builder.setSingleChoiceItems(items, 0,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // item selected logic
-
+                        numberDialogue = which;
                         LinkedList<String> l = new LinkedList<>();
-                        l.add(getResources().getStringArray(R.array.ConvectionMode)[which]);
+                        l.add(getResources().getStringArray(R.array.ConvectionMode2)[which]);
 
                         Action action = new Action(device.getId(), "setConvection", l);
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
+                                switch (getResources().getStringArray(R.array.ConvectionMode)[numberDialogue])
+                                {
+                                    case "normal":
+                                        convectionModeStats.setText(R.string.Normal);
+                                        break;
+                                    case "eco":
+                                        convectionModeStats.setText(R.string.Eco);
+                                        break;
+                                    case "off":
+                                        convectionModeStats.setText(R.string.Off);
+                                        break;
+                                }
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessCMode)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -1040,7 +1082,7 @@ public class Devices extends Fragment {
 
     public void showDialogueHeatMode(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-        builder.setTitle(R.string.ConvectionMode);
+        builder.setTitle(R.string.HeatMode);
 
         //list of items
         String[] items = getResources().getStringArray(R.array.HeatMode);
@@ -1049,14 +1091,26 @@ public class Devices extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // item selected logic
-
+                        numberDialogue = which;
                         LinkedList<String> l = new LinkedList<>();
-                        l.add(getResources().getStringArray(R.array.ConvectionMode)[which]);
+                        l.add(getResources().getStringArray(R.array.HeatMode2)[which]);
 
                         Action action = new Action(device.getId(), "setHeat", l);
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
+                                switch (getResources().getStringArray(R.array.HeatMode2)[numberDialogue])
+                                {
+                                    case "conventional":
+                                        heatModeStats.setText(R.string.Conventional);
+                                        break;
+                                    case "bottom":
+                                        heatModeStats.setText(R.string.Bottom);
+                                        break;
+                                    case "top":
+                                        heatModeStats.setText(R.string.Top);
+                                        break;
+                                }
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessHMode)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -1082,7 +1136,7 @@ public class Devices extends Fragment {
 
     public void showDialogueGrillMode(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-        builder.setTitle(R.string.ConvectionMode);
+        builder.setTitle(R.string.GrillMode);
 
         //list of items
         String[] items = getResources().getStringArray(R.array.GrillMode);
@@ -1091,14 +1145,28 @@ public class Devices extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // item selected logic
-
+                        numberDialogue = which;
                         LinkedList<String> l = new LinkedList<>();
-                        l.add(getResources().getStringArray(R.array.ConvectionMode)[which]);
+                        l.add(getResources().getStringArray(R.array.GrillMode2)[which]);
 
                         Action action = new Action(device.getId(), "setGrill", l);
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
+
+                                switch (getResources().getStringArray(R.array.GrillMode2)[numberDialogue])
+                                {
+                                    case "large":
+                                        grillModeStats.setText(R.string.Large);
+                                        break;
+                                    case "eco":
+                                        grillModeStats.setText(R.string.Eco);
+                                        break;
+                                    case "off":
+                                        grillModeStats.setText(R.string.Off);
+                                        break;
+                                }
+
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessGMode)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -1123,7 +1191,7 @@ public class Devices extends Fragment {
 
     public void showDialogueVSwing(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-        builder.setTitle(R.string.ConvectionMode);
+        builder.setTitle(R.string.VerticalSwing);
 
         //list of items
         String[] items = getResources().getStringArray(R.array.VSwing);
@@ -1132,7 +1200,7 @@ public class Devices extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // item selected logic
-
+                        numberDialogue = which;
                         LinkedList<String> l = new LinkedList<>();
                         l.add(getResources().getStringArray(R.array.VSwing)[which]);
 
@@ -1140,7 +1208,8 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessGMode)
+                                vSwingStat.setText(getResources().getStringArray(R.array.VSwing)[numberDialogue]);
+                                Toast toast = Toast.makeText(context, getResources().getString(R.string.VSwingSuccess)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
                             }
@@ -1165,7 +1234,7 @@ public class Devices extends Fragment {
 
     public void showDialogueHSwing(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-        builder.setTitle(R.string.ConvectionMode);
+        builder.setTitle(R.string.HSwingSuccess);
 
         //list of items
         String[] items = getResources().getStringArray(R.array.HSwing);
@@ -1174,7 +1243,7 @@ public class Devices extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // item selected logic
-
+                        numberDialogue = which;
                         LinkedList<String> l = new LinkedList<>();
                         l.add(getResources().getStringArray(R.array.HSwing)[which]);
 
@@ -1182,7 +1251,8 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessGMode)
+                                hSwingStat.setText(getResources().getStringArray(R.array.HSwing)[numberDialogue]);
+                                Toast toast = Toast.makeText(context, getResources().getString(R.string.HSwingSuccess)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
                             }
@@ -1206,7 +1276,7 @@ public class Devices extends Fragment {
 
     public void showDialogueFanSpeed(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-        builder.setTitle(R.string.ConvectionMode);
+        builder.setTitle(R.string.FanSpeed);
 
         //list of items
         String[] items = getResources().getStringArray(R.array.FanSpeed);
@@ -1215,7 +1285,7 @@ public class Devices extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // item selected logic
-
+                        numberDialogue = which;
                         LinkedList<String> l = new LinkedList<>();
                         l.add(getResources().getStringArray(R.array.FanSpeed)[which]);
 
@@ -1223,7 +1293,8 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessGMode)
+                                fanSpeedStat.setText(getResources().getStringArray(R.array.FanSpeed)[numberDialogue]);
+                                Toast toast = Toast.makeText(context, getResources().getString(R.string.FanSpeedSuccess)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
                             }
@@ -1247,7 +1318,7 @@ public class Devices extends Fragment {
 
     public void showDialogueAcMode(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-        builder.setTitle(R.string.ConvectionMode);
+        builder.setTitle(R.string.AcMode);
 
         //list of items
         String[] items = getResources().getStringArray(R.array.AcMode);
@@ -1256,15 +1327,31 @@ public class Devices extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // item selected logic
+                        numberDialogue = which;
 
                         LinkedList<String> l = new LinkedList<>();
-                        l.add(getResources().getStringArray(R.array.AcMode)[which]);
+                        l.add(getResources().getStringArray(R.array.AcMode2)[which]);
 
                         Action action = new Action(device.getId(), "setMode", l);
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessGMode)
+
+                                switch (getResources().getStringArray(R.array.AcMode2)[numberDialogue])
+                                {
+                                    case "cool":
+                                        acModeStat.setText(R.string.Cool);
+                                        break;
+                                    case "heat":
+                                        acModeStat.setText(R.string.Heat);
+                                        break;
+                                    case "fan":
+                                        acModeStat.setText(R.string.Fan);
+                                        break;
+                                }
+
+
+                                Toast toast = Toast.makeText(context, getResources().getString(R.string.AcModeSuccess)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
                             }
@@ -1297,14 +1384,27 @@ public class Devices extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // item selected logic
+                        numberDialogue = which;
 
                         LinkedList<String> l = new LinkedList<>();
-                        l.add(getResources().getStringArray(R.array.AcMode)[which]);
+                        l.add(getResources().getStringArray(R.array.FridgeMode2)[which]);
 
                         Action action = new Action(device.getId(), "setMode", l);
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
+                                switch (getResources().getStringArray(R.array.FridgeMode2)[numberDialogue])
+                                {
+                                    case "default":
+                                        fridgeModeStats.setText(R.string.Default);
+                                        break;
+                                    case "vacation":
+                                        fridgeModeStats.setText(R.string.Vacations);
+                                        break;
+                                    case "party":
+                                        fridgeModeStats.setText(R.string.Party);
+                                        break;
+                                }
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessFMode)
                                         , Toast.LENGTH_LONG);
                                 toast.show();

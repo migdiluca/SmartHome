@@ -34,6 +34,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
     private FrameLayout mMainFrame;
     public static boolean activityVisible;
     public static Class currentClass;
+    public static boolean changedHere;
 
     private static Stack<RefreshFragment> bottomStacks[] = new Stack[3];
 

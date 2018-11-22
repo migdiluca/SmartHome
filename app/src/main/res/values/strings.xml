@@ -29,6 +29,10 @@
     <string name="Cool">Cool</string>
     <string name="Heat">Heat</string>
     <string name="Fan">Fan</string>
+    <string name="VSwingSuccess">Success! Vertical Swing has changed.</string>
+    <string name="HSwingSuccess">Success! Horizontal Swing has changed.</string>
+    <string name="FanSpeedSuccess">Success! Fan Speed has changed.</string>
+    <string name="AcModeSuccess">Success! Ac Mode has changed.</string>
 
     <string name="SuccessMsgOnOff">Success! Device is now </string>
     <string name="OnM">On</string>
@@ -115,16 +119,34 @@
         <item>@string/Off</item>
     </string-array>
 
+    <string-array name="ConvectionMode2">
+        <item>normal</item>
+        <item>eco</item>
+        <item>off</item>
+    </string-array>
+
     <string-array name="GrillMode">
         <item>@string/Large</item>
         <item>@string/Eco</item>
         <item>@string/Off</item>
     </string-array>
 
+    <string-array name="GrillMode2">
+        <item>large</item>
+        <item>eco</item>
+        <item>off</item>
+    </string-array>
+
     <string-array name="HeatMode">
         <item>@string/Conventional</item>
         <item>@string/Bottom</item>
         <item>@string/Top</item>
+    </string-array>
+
+    <string-array name="HeatMode2">
+        <item>conventional</item>
+        <item>bottom</item>
+        <item>top</item>
     </string-array>
 
     <string name="title_favourites">Favourites</string>
@@ -161,6 +183,12 @@
         <item>@string/Fan</item>
     </string-array>
 
+    <string-array name="AcMode2">
+        <item>cool</item>
+        <item>heat</item>
+        <item>fan</item>
+    </string-array>
+
     <string-array name="ArrayInterval">
         <item>@string/Short</item>
         <item>@string/Medium</item>
@@ -181,13 +209,20 @@
         <item>@string/Vacations</item>
     </string-array>
 
+    <string-array name="FridgeMode2">
+        <item>default</item>
+        <item>party</item>
+        <item>vacations</item>
+    </string-array>
+
     <string name="ChangeMessage">A device has been changed!</string>
     <string name="empty_room">This room is empty!</string>
     <string name="no_rooms_available">There are no rooms yet!</string>
     <string name="no_rooms_error">The rooms could not be loaded because there are some connection issues, check your connection and try again.</string>
-    <string name="no_favorites_available">There are no favourites device, access a device to add one to your favourites!</string>
+    <string name="no_favorites_available">There are no favourite devices, access your most used devices to add them to your favourites!</string>
     <string name="connection_error">There are some connection issues, check your connection and swipe down to refresh.</string>
     <string name="apply_routine_error">The routine could not be applied because there are some connection issues, check your connection and try again.</string>
     <string name="no_routines_error">The routines could not be loaded because there are some connection issues, check your connection and try again.</string>
+    <string name="loading">Loading</string>
 
 </resources>
