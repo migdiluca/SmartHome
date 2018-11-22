@@ -632,37 +632,41 @@ public class Devices extends Fragment {
                 });
 
 
-
-                final ColorPicker cp = new ColorPicker(getActivity(), (col >> 16) & 0xff, (col >> 8) & 0xff, (col) & 0xff);
-
-                cp.show();
-
-                cp.enableAutoClose(); // Enable auto-dismiss for the dialog
-
-                /* Set a new Listener called when user click "select" */
-                cp.setCallback(new ColorPickerCallback() {
+                lampColor.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onColorChosen(@ColorInt int color) {
+                    public void onClick(View v) {
+                        final ColorPicker cp = new ColorPicker(getActivity(), (col >> 16) & 0xff, (col >> 8) & 0xff, (col) & 0xff);
 
-                        col = (Color.red(color) & 0xff) << 16 | (Color.green(color) & 0xff) << 8 | (Color.blue(color) & 0xff);
-                        colorPickerView.setBackgroundColor(col);
-                        String s = String.format("#%06X", (0xFFFFFF & col));
-                        LinkedList<String> ll = new LinkedList<>();
-                        ll.add(s);
-                        Action action = new Action(device.getId(), "setColor", ll);
-                        api.runAction(action, new Response.Listener<Object>() {
+                        cp.show();
+
+                        cp.enableAutoClose(); // Enable auto-dismiss for the dialog
+
+                        /* Set a new Listener called when user click "select" */
+                        cp.setCallback(new ColorPickerCallback() {
                             @Override
-                            public void onResponse(Object response) {
-                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgCol)
-                                        , Toast.LENGTH_LONG);
-                                toast.show();
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Toast toast = Toast.makeText(context, getResources().getString(R.string.ActionFail)
-                                        , Toast.LENGTH_LONG);
-                                toast.show();
+                            public void onColorChosen(@ColorInt int color) {
+
+                                col = (Color.red(color) & 0xff) << 16 | (Color.green(color) & 0xff) << 8 | (Color.blue(color) & 0xff);
+                                colorPickerView.setBackgroundColor(col);
+                                String s = String.format("#%06X", (0xFFFFFF & col));
+                                LinkedList<String> ll = new LinkedList<>();
+                                ll.add(s);
+                                Action action = new Action(device.getId(), "setColor", ll);
+                                api.runAction(action, new Response.Listener<Object>() {
+                                    @Override
+                                    public void onResponse(Object response) {
+                                        Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgCol)
+                                                , Toast.LENGTH_LONG);
+                                        toast.show();
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Toast toast = Toast.makeText(context, getResources().getString(R.string.ActionFail)
+                                                , Toast.LENGTH_LONG);
+                                        toast.show();
+                                    }
+                                });
                             }
                         });
                     }
