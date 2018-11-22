@@ -17,6 +17,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -1115,7 +1116,8 @@ public class Devices extends Fragment {
     //public void showDialogueLampColor(View view) {}
 
     public Drawable getThumb(int progress) {
-        ((TextView) view.findViewById(R.id.tvProgress)).setText(progress + "");
+        String str = progress + "";
+        ((TextView) view.findViewById(R.id.tvProgress)).setText(str);
 
         thumbView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         Bitmap bitmap = Bitmap.createBitmap(thumbView.getMeasuredWidth(), thumbView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
