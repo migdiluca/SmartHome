@@ -28,9 +28,9 @@
     <string name="Heat">Calefacción</string>
     <string name="Fan">Ventiladora</string>
 
-    <string name="SuccessMsgOnOff">El Dispositivo esta </string>
-    <string name="OnM">Prendido</string>
-    <string name="OffM">Apagado</string>
+    <string name="SuccessMsgOnOff">El dispositivo esta\ </string>
+    <string name="OnM">prendido</string>
+    <string name="OffM">apagado</string>
     <string name="SuccessMsgTemp">La temperatura ha cambiado.</string>
 
     <string name="Door">Puerta</string>

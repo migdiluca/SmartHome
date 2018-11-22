@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
@@ -54,10 +55,10 @@ public class Devices extends Fragment {
      */
     Switch onOffAc;
     SeekBar temperatureAc;
-    TextView vSwing;
-    TextView hSwing;
-    TextView fanSpeed;
-    TextView acMode;
+    LinearLayout vSwing;
+    LinearLayout hSwing;
+    LinearLayout fanSpeed;
+    LinearLayout acMode;
 
     /**
      * Blinds
@@ -70,9 +71,9 @@ public class Devices extends Fragment {
      */
     Switch onOffOven;
     SeekBar temperatureOven;
-    TextView grillMode;
-    TextView heatMode;
-    TextView convectionMode;
+    LinearLayout grillMode;
+    LinearLayout heatMode;
+    LinearLayout convectionMode;
 
     /**
      * Door
@@ -85,7 +86,7 @@ public class Devices extends Fragment {
      */
 
     Switch onOffLamp;
-    TextView lampColor;
+    LinearLayout lampColor;
     SeekBar lampBrightness;
 
     /**
@@ -93,7 +94,7 @@ public class Devices extends Fragment {
      */
     SeekBar freezerTemperature;
     SeekBar fridgeTemperature;
-    TextView fridgeMode;
+    LinearLayout fridgeMode;
 
     /**
      * Timer
