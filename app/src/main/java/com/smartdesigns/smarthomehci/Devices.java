@@ -1,5 +1,6 @@
 package com.smartdesigns.smarthomehci;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 
 import android.content.Context;
@@ -124,6 +125,7 @@ public class Devices extends Fragment {
     Button stopButton;
     Button setButton;
     TextView timer;
+    CountDownTimer countDownTimer;
 
 
     View thumbView;
@@ -693,13 +695,13 @@ public class Devices extends Fragment {
 
                     switch (response.getMode()) {
                         case "default":
-                            heatModeStats.setText(R.string.Default);
+                            fridgeModeStats.setText(R.string.Default);
                             break;
                         case "vacation":
-                            heatModeStats.setText(R.string.Vacations);
+                            fridgeModeStats.setText(R.string.Vacations);
                             break;
                         default:
-                            heatModeStats.setText(R.string.Party);
+                            fridgeModeStats.setText(R.string.Party);
                             break;
                     }
                 }
@@ -840,7 +842,13 @@ public class Devices extends Fragment {
                 @Override
                 public void onResponse(GetStateTimer response) {
 
-//                    int value = response.;
+                    int value = response.getInterval();
+                    hour.setValue(value/3600);
+                    minute.setValue((value%3600)/60);
+                    second.setValue(((value%3600)%60)/60);
+
+                    String hms = String.format("%02d:%02d:%02d", hour.getValue(), minute.getValue(), second.getValue());
+                    timer.setText(hms);//set text
 
 
                 }
@@ -899,7 +907,22 @@ public class Devices extends Fragment {
                 stopButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        Action action = new Action(device.getId(), "stop", null);
+                        api.runAction(action, new Response.Listener<Object>() {
+                            @Override
+                            public void onResponse(Object response) {
+                                countDownTimer.cancel();
+                                String hms = String.format("%02d:%02d:%02d", hour.getValue(), minute.getValue(), second.getValue());
+                                timer.setText(hms);//set text
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast toast = Toast.makeText(context, getResources().getString(R.string.ActionFail)
+                                        , Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        });
                     }
                 });
 
@@ -960,7 +983,7 @@ public class Devices extends Fragment {
 
     private void startTimer(int h, int m, int s) {
         int totalTime = 1000*(h*3600 + m*60+s);
-        CountDownTimer countDownTimer = new CountDownTimer(totalTime, 1000) {
+        countDownTimer = new CountDownTimer(totalTime, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 //Convert milliseconds into hour,minute and seconds
