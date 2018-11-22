@@ -21,9 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.Toolbar;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -35,17 +33,13 @@ import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
-import static java.lang.Thread.sleep;
-
 
 public class RoomFragment extends RefreshFragment {
 
     private static List<Room> roomList = new ArrayList<>();
     private static Room currentRoom;
 
+    private TextView text;
     private ActionBar toolbar;
     private OnFragmentInteractionListener mListener;
     RecyclerView roomRecycler;
@@ -76,13 +70,6 @@ public class RoomFragment extends RefreshFragment {
         roomRecycler.setAdapter(roomRecyclerAdapter);
     }
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        toolbar = Home.getMainActionBar();
-    }
-
     public void refresh() {
         roomList = new ArrayList<>();
         ApiConnection api = ApiConnection.getInstance(getContext());
@@ -108,6 +95,10 @@ public class RoomFragment extends RefreshFragment {
                     }
 
                 }
+                if(roomList.isEmpty())
+                    text.setText(R.string.no_rooms_available);
+                else
+                    text.setText("");
                 addCards();
             }
         }, new Response.ErrorListener() {
@@ -118,12 +109,21 @@ public class RoomFragment extends RefreshFragment {
         });
     }
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        toolbar = Home.getMainActionBar();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recycler, container, false);
 
+        text = view.findViewById(R.id.fragment_text);
         roomRecycler = view.findViewById(R.id.recyclerview);
         toolbar.setTitle(R.string.title_rooms);
+
 
         refresh();
         return view;
@@ -142,7 +142,6 @@ public class RoomFragment extends RefreshFragment {
     public void onResume() {
         toolbar.setTitle(R.string.title_rooms);
         super.onResume();
-        //setBackgroundColor(getView());
         addCards();
     }
 

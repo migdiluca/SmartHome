@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -42,6 +43,7 @@ public class FavouritesFragment extends RefreshFragment {
 
     private ActionBar toolbar;
 
+    private TextView text;
     RecyclerView favouritesRecycler;
     private OnFragmentInteractionListener mListener;
 
@@ -96,7 +98,11 @@ public class FavouritesFragment extends RefreshFragment {
         return RecyclerViewAdapter.getColumns();
     }
 
-    private void addCards() {
+    private void addCards(){
+        if(favouritesList.getFavouritesDevices(AMOUNT_TO_SHOW).isEmpty())
+            text.setText(R.string.no_favorites_available);
+        else
+            text.setText("");
         RecyclerViewAdapter favouritesRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), favouritesList.getFavouritesDevices(AMOUNT_TO_SHOW));
         favouritesRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), getColumns()));
         favouritesRecycler.setAdapter(favouritesRecyclerAdapter);
@@ -107,7 +113,7 @@ public class FavouritesFragment extends RefreshFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_recycler, container, false);
-
+        text = view.findViewById(R.id.fragment_text);
 
         ApiConnection api = ApiConnection.getInstance(getContext());
 

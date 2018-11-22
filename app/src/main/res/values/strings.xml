@@ -183,5 +183,8 @@
     </string-array>
 
     <string name="ChangeMessage">A device has been changed!</string>
+    <string name="empty_room">This room is empty!</string>
+    <string name="no_rooms_available">There are no rooms yet!</string>
+    <string name="no_favorites_available">There are no favourites device, access a device to add one to your favourites!</string>
 
 </resources>
