@@ -2,7 +2,6 @@ package com.smartdesigns.smarthomehci;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,16 +15,16 @@ import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
+import com.smartdesigns.smarthomehci.Utils.RefreshFragment;
 import com.smartdesigns.smarthomehci.backend.Device;
 
 import java.util.Stack;
@@ -35,11 +34,12 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 
     private FrameLayout mMainFrame;
 
-    private static Stack<Fragment> bottomStacks[] = new Stack[3];
+    private static Stack<RefreshFragment> bottomStacks[] = new Stack[3];
 
     private static int currentMode = 0;
     static private Home homeInstance = null;
 
+    private SwipeRefreshLayout sr;
     private static Toolbar mainToolbar;
     private static Toolbar deviceToolbar;
 
@@ -107,7 +107,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         }
     }
 
-    public void setFragment(Fragment fragment){
+    public void setFragment(RefreshFragment fragment){
         bottomStacks[currentMode].push(fragment);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -172,8 +172,28 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         navigation.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
 
         mMainFrame = (FrameLayout) findViewById(R.id.main_frame);
+        setEvents();
 
+        loadFragments();
+        Intent intent = new Intent(Home.this, NotificationBroadcastReceiver.class);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
 
+        long interval;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String intervalPreference = sharedPreferences.getString("interval_preference","1 min");
+
+        if(intervalPreference.equals("1 min") ){
+            interval = 1;
+        }else if(intervalPreference.equals("30 min")){
+            interval = AlarmManager.INTERVAL_HALF_HOUR;
+        }else{
+            interval = AlarmManager.INTERVAL_HOUR;
+        }
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime()+ interval,interval, alarmIntent);
+    }
+
+    private void loadFragments() {
         RoomFragment roomFragment = new RoomFragment();
         RoutinesFragment routinesFragment = new RoutinesFragment();
         FavouritesFragment favouritesFragment = new FavouritesFragment();
@@ -196,22 +216,18 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 
             setFragment(bottomStacks[currentMode].pop());
         }
-        Intent intent = new Intent(Home.this, NotificationBroadcastReceiver.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+    }
 
-        long interval;
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String intervalPreference = sharedPreferences.getString("interval_preference","1 min");
+    private void setEvents() {
+        sr = findViewById(R.id.swiperefresh);
+        sr.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
 
-        if(intervalPreference.equals("1 min") ){
-            interval = 1;
-        }else if(intervalPreference.equals("30 min")){
-            interval = AlarmManager.INTERVAL_HALF_HOUR;
-        }else{
-            interval = AlarmManager.INTERVAL_HOUR;
-        }
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime()+ interval,interval, alarmIntent);
+                (bottomStacks[currentMode].peek()).refresh();
+                sr.setRefreshing(false);
+            }
+        });
     }
 
     private void endApp() {
@@ -230,7 +246,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         }
         else {
             bottomStacks[currentMode].pop();
-            Fragment back = bottomStacks[currentMode].pop();
+            RefreshFragment back = bottomStacks[currentMode].pop();
             setFragment(back);
         }
     }
