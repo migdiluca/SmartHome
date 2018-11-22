@@ -119,16 +119,34 @@
         <item>@string/Off</item>
     </string-array>
 
+    <string-array name="ConvectionMode2">
+        <item>normal</item>
+        <item>eco</item>
+        <item>off</item>
+    </string-array>
+
     <string-array name="GrillMode">
         <item>@string/Large</item>
         <item>@string/Eco</item>
         <item>@string/Off</item>
     </string-array>
 
+    <string-array name="GrillMode2">
+        <item>large</item>
+        <item>eco</item>
+        <item>off</item>
+    </string-array>
+
     <string-array name="HeatMode">
         <item>@string/Conventional</item>
         <item>@string/Bottom</item>
         <item>@string/Top</item>
+    </string-array>
+
+    <string-array name="HeatMode2">
+        <item>conventional</item>
+        <item>bottom</item>
+        <item>top</item>
     </string-array>
 
     <string name="title_favourites">Favourites</string>
@@ -165,6 +183,12 @@
         <item>@string/Fan</item>
     </string-array>
 
+    <string-array name="AcMode2">
+        <item>cool</item>
+        <item>heat</item>
+        <item>fan</item>
+    </string-array>
+
     <string-array name="ArrayInterval">
         <item>@string/Short</item>
         <item>@string/Medium</item>
@@ -183,6 +207,12 @@
         <item>@string/Default</item>
         <item>@string/Party</item>
         <item>@string/Vacations</item>
+    </string-array>
+
+    <string-array name="FridgeMode2">
+        <item>default</item>
+        <item>party</item>
+        <item>vacations</item>
     </string-array>
 
     <string name="ChangeMessage">A device has been changed!</string>
