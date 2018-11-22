@@ -1069,6 +1069,13 @@ public class Devices extends Fragment {
 
                     second.setValue(value - minute.getValue() * 60);
 
+                    hour.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+                    minute.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+                    second.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+
+
+
+
                     if(response.getNewStatus().equals("active")) {
                         int rem = response.getRemaining();
                         int h, m, s;
@@ -1224,6 +1231,10 @@ public class Devices extends Fragment {
                 second.setEnabled(false);
                 startButton.setClickable(false);
                 stopButton.setClickable(false);
+                setButton.setClickable(false);
+                stopButton.setBackgroundColor(getResources().getColor(R.color.buttonColorOff));
+                setButton.setBackgroundColor(getResources().getColor(R.color.buttonColorOff));
+                startButton.setBackgroundColor(getResources().getColor(R.color.buttonColorOff));
             }
 
         } else {
