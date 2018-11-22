@@ -119,23 +119,7 @@ public class DevicesFragment extends RefreshFragment {
     }
 
 
-    @SuppressLint("RestrictedApi")
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-
-        View view = inflater.inflate(R.layout.fragment_devices, container, false);
-
-        if (room != null)
-            toolbar.setTitle(room.getName());
-        else
-            toolbar.setTitle(routine.getName());
-
-        text = view.findViewById(R.id.fragment_text);
-        text.setText(R.string.loading);
-        devicesRecycler = view.findViewById(R.id.devices_recyclerview);
-
-        FloatingActionButton playRoutineButton = (FloatingActionButton) view.findViewById(R.id.play_routine_button);
+    private void setFloatingOnClick(FloatingActionButton playRoutineButton){
         playRoutineButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -156,10 +140,29 @@ public class DevicesFragment extends RefreshFragment {
 
             }
         });
+    }
 
+    @SuppressLint("RestrictedApi")
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
+        View view = inflater.inflate(R.layout.fragment_devices, container, false);
+
+        if (room != null)
+            toolbar.setTitle(room.getName());
+        else
+            toolbar.setTitle(routine.getName());
+
+        text = view.findViewById(R.id.fragment_text);
+        text.setText(R.string.loading);
+        devicesRecycler = view.findViewById(R.id.devices_recyclerview);
+
+        FloatingActionButton playRoutineButton = (FloatingActionButton) view.findViewById(R.id.play_routine_button);
+
+        setFloatingOnClick(playRoutineButton);
         if (Home.getInstance().getCurrentMode() != 1) {
             playRoutineButton.setVisibility(View.GONE);
-
         }
 
         refresh();

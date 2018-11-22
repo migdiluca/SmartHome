@@ -476,6 +476,7 @@ public class Devices extends Fragment {
                             public void onErrorResponse(VolleyError error) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.ActionFail)
                                         , Toast.LENGTH_LONG);
+                                Home.changedHere = true;
                                 toast.show();
                             }
                         });
@@ -502,7 +503,6 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgDoor) + f
                                         , Toast.LENGTH_LONG);
                                 toast.show();
-                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -576,6 +576,7 @@ public class Devices extends Fragment {
                                     Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) + " " + sPrint
                                             , Toast.LENGTH_LONG);
                                     toast.show();
+                                    Home.changedHere = true;
                                 }
                                 ft = true;
                             }
@@ -619,6 +620,7 @@ public class Devices extends Fragment {
                             public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgBright)
                                         , Toast.LENGTH_LONG);
+                                Home.changedHere = true;
                                 toast.show();
                             }
                         }, new Response.ErrorListener() {
@@ -658,6 +660,7 @@ public class Devices extends Fragment {
                                     public void onResponse(Object response) {
                                         Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgCol)
                                                 , Toast.LENGTH_LONG);
+                                        Home.changedHere = true;
                                         toast.show();
                                     }
                                 }, new Response.ErrorListener() {

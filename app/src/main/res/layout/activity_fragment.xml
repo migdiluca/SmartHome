@@ -14,6 +14,8 @@
         android:minHeight="?attr/actionBarSize"
         app:titleTextColor="?attr/titleColor" />
 
+
+
     <FrameLayout
         android:id="@+id/activity_fragment_frame"
         style="@style/MyCheckBox"
