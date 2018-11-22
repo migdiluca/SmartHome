@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -44,7 +45,7 @@ public class RoutinesFragment extends RefreshFragment {
     private RecyclerView routineRecycler;
 
     private static Routine currentRoutine;
-
+    private TextView text;
     private ActionBar toolbar;
 
     private OnFragmentInteractionListener mListener;
@@ -100,6 +101,7 @@ public class RoutinesFragment extends RefreshFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recycler, container, false);
 
+        text = view.findViewById(R.id.fragment_text);
         routineRecycler = view.findViewById(R.id.recyclerview);
         toolbar.setTitle(R.string.title_routines);
 
@@ -131,12 +133,16 @@ public class RoutinesFragment extends RefreshFragment {
                     }
 
                 }
+                if(routineList.isEmpty())
+                    text.setText(R.string.no_rooms_available);
+                else
+                    text.setText("");
                 addCards();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("LOADINGROUTINES", error.toString());
+                text.setText(R.string.no_routines_error);
             }
         });
     }

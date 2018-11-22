@@ -76,11 +76,10 @@ public class DevicesFragment extends RefreshFragment {
 
     private int getColumns() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_potrait","2").charAt(0) - '0');
-        }
-        else {
-            RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_landscape","5").charAt(0) - '0');
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_potrait", "2").charAt(0) - '0');
+        } else {
+            RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_landscape", "5").charAt(0) - '0');
         }
         return RecyclerViewAdapter.getColumns();
     }
@@ -108,13 +107,13 @@ public class DevicesFragment extends RefreshFragment {
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         //Home.getInstance().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
         Home.getInstance().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
@@ -150,7 +149,7 @@ public class DevicesFragment extends RefreshFragment {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Toast.makeText(getActivity(), getResources().getString(R.string.apply_routine_error), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -170,31 +169,32 @@ public class DevicesFragment extends RefreshFragment {
 
     public void refresh() {
 
+        devicesList = new ArrayList<>();
         ApiConnection api = ApiConnection.getInstance(getContext());
-        if (Home.getInstance().getCurrentMode() == 0){
+        if (Home.getInstance().getCurrentMode() == 0) {
             api.getRoomDevices(room, new Response.Listener<List<Device>>() {
                 @Override
                 public void onResponse(List<Device> response) {
                     for (Device device : response) {
-                        if (!devicesList.contains(device)) {
-                            devicesList.add(device);
-                            if (device.getMeta().matches("\"background\"") == false) {
-                                int aux = device.getBackground();
-                                ApiConnection.getInstance(getContext()).updateDevice(device, new Response.Listener<Boolean>() {
-                                    @Override
-                                    public void onResponse(Boolean response) {
 
-                                    }
-                                }, new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        Log.d("LOADINGDEVICES", error.toString());
-                                    }
-                                });
-                            }
+                        devicesList.add(device);
+                        if (device.getMeta().matches("\"background\"") == false) {
+                            int aux = device.getBackground();
+                            ApiConnection.getInstance(getContext()).updateDevice(device, new Response.Listener<Boolean>() {
+                                @Override
+                                public void onResponse(Boolean response) {
+
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    text.setText(R.string.connection_error);
+                                }
+                            });
                         }
+
                     }
-                    if(devicesList.isEmpty())
+                    if (devicesList.isEmpty())
                         text.setText(R.string.empty_room);
                     else
                         text.setText("");
@@ -207,13 +207,13 @@ public class DevicesFragment extends RefreshFragment {
 
                 }
             });
-        }else if (Home.getInstance().getCurrentMode() == 1) {
+        } else if (Home.getInstance().getCurrentMode() == 1) {
             devicesList = new ArrayList<>();
             api.getDevices(new Response.Listener<List<Device>>() {
                 @Override
                 public void onResponse(List<Device> response) {
-                    for(Device device: response) {
-                        if(routine.containsDevice(device)) {
+                    for (Device device : response) {
+                        if (routine.containsDevice(device)) {
                             devicesList.add(device);
                             if (device.getMeta().matches("\"background\"") == false) {
                                 int aux = device.getBackground();

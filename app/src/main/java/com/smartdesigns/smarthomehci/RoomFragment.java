@@ -104,7 +104,7 @@ public class RoomFragment extends RefreshFragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("LOADINGROOMS", error.toString());
+                text.setText(R.string.no_rooms_error);
             }
         });
     }
