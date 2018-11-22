@@ -16,141 +16,53 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/DeviceLogo"
-                android:layout_width="174dp"
-                android:layout_height="99dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="78dp"
-                android:layout_marginTop="39dp"
-                android:layout_marginEnd="68dp"
-                android:layout_marginBottom="54dp"
-                android:contentDescription="@string/Ac"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.889"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.08"
-                app:srcCompat="@drawable/ac" />
-        </RelativeLayout>
-
-
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/TemperatureLL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dip"
-                    android:background="#eeeeeeee" />
-
                 <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:id="@+id/DeviceLogo"
+                        android:layout_width="174dp"
+                        android:layout_height="99dp"
                         android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/OnOff" />
-
-                    <Switch
-                        android:id="@+id/OnOffAc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:textOff="@string/Off"
-                        android:textOn="@string/On"
+                        android:layout_marginStart="78dp"
+                        android:layout_marginTop="39dp"
+                        android:layout_marginEnd="68dp"
+                        android:layout_marginBottom="54dp"
+                        android:contentDescription="@string/Ac"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.076"
+                        app:layout_constraintHorizontal_bias="0.889"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.365" />
-
+                        app:layout_constraintVertical_bias="0.08"
+                        app:srcCompat="@drawable/ac" />
                 </RelativeLayout>
 
 
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dip"
-                    android:background="#eeeeeeee" />
-
                 <LinearLayout
+                    android:id="@+id/TemperatureLL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/Temperature"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/Temperature"
-                        android:textColor="#000000"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/AcTempSeekBar"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="2dp"
-                        android:id="@+id/AcTempStat"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:textColor="@color/grey" />
-
-                    <SeekBar
-                        android:id="@+id/AcTempSeekBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:max="20" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dip"
-                    android:background="#eeeeeeee" />
-
-                <LinearLayout
-                    android:id="@+id/VSwing"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:orientation="horizontal">
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dip"
+                        android:background="#eeeeeeee" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -160,166 +72,258 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
                             android:layout_marginStart="8dp"
-                            android:text="@string/VerticalSwing"
-                            android:textColor="@color/black"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/OnOff" />
+
+                        <Switch
+                            android:id="@+id/OnOffAc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:textOff="@string/Off"
+                            android:textOn="@string/On"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.076"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.65" />
-
-                        <TextView
-                            android:id="@+id/VSwingStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginEnd="8dp"
-                            android:textColor="@color/grey" />
+                            app:layout_constraintVertical_bias="0.365" />
 
                     </RelativeLayout>
 
-                </LinearLayout>
 
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dip"
-                    android:background="#eeeeeeee" />
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dip"
+                        android:background="#eeeeeeee" />
 
-                <LinearLayout
-                    android:id="@+id/HSwing"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:orientation="horizontal">
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:layout_alignParentStart="true"
+                            android:id="@+id/Temperature"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="@string/HorizontalSwing"
-                            android:textColor="@color/black"
+                            android:text="@string/Temperature"
+                            android:textColor="#000000"
                             app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/AcTempSeekBar"
                             app:layout_constraintHorizontal_bias="1.0"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintVertical_bias="0.65" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/HSwingStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginEnd="8dp"
-                            android:textColor="@color/grey" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dip"
-                    android:background="#eeeeeeee" />
-
-                <LinearLayout
-                    android:id="@+id/FanSpeed"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:orientation="horizontal">
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_alignParentStart="true"
+                            android:id="@+id/AcTempStat"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="@string/FanSpeed"
-                            android:textColor="@color/black"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintHorizontal_bias="1.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintVertical_bias="0.65" />
-
-                        <TextView
-                            android:id="@+id/FanSpeedStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginEnd="8dp"
+                            android:layout_marginEnd="2dp"
                             android:textColor="@color/grey" />
 
-                    </RelativeLayout>
+                        <SeekBar
+                            android:id="@+id/AcTempSeekBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:max="20" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dip"
+                        android:background="#eeeeeeee" />
+
+                    <LinearLayout
+                        android:id="@+id/VSwing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginStart="8dp"
+                                android:text="@string/VerticalSwing"
+                                android:textColor="@color/black"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintHorizontal_bias="1.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.65" />
+
+                            <TextView
+                                android:id="@+id/VSwingStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="8dp"
+                                android:textColor="@color/grey" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dip"
+                        android:background="#eeeeeeee" />
+
+                    <LinearLayout
+                        android:id="@+id/HSwing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginStart="8dp"
+                                android:text="@string/HorizontalSwing"
+                                android:textColor="@color/black"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintHorizontal_bias="1.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintVertical_bias="0.65" />
+
+                            <TextView
+                                android:id="@+id/HSwingStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="8dp"
+                                android:textColor="@color/grey" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dip"
+                        android:background="#eeeeeeee" />
+
+                    <LinearLayout
+                        android:id="@+id/FanSpeed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginStart="8dp"
+                                android:text="@string/FanSpeed"
+                                android:textColor="@color/black"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintHorizontal_bias="1.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintVertical_bias="0.65" />
+
+                            <TextView
+                                android:id="@+id/FanSpeedStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="8dp"
+                                android:textColor="@color/grey" />
+
+                        </RelativeLayout>
 
 
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dip"
+                        android:background="#eeeeeeee" />
+
+                    <LinearLayout
+                        android:id="@+id/AcMode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:orientation="horizontal">
+
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginStart="8dp"
+                                android:text="@string/AcMode"
+                                android:textColor="@color/black"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintHorizontal_bias="1.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintVertical_bias="0.65" />
+
+                            <TextView
+                                android:id="@+id/AcModeStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="8dp"
+                                android:textColor="@color/grey" />
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dip"
+                        android:background="#eeeeeeee" />
 
                 </LinearLayout>
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dip"
-                    android:background="#eeeeeeee" />
-
-                <LinearLayout
-                    android:id="@+id/AcMode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:orientation="horizontal">
-
-
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_alignParentStart="true"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="@string/AcMode"
-                            android:textColor="@color/black"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintHorizontal_bias="1.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintVertical_bias="0.65" />
-
-                        <TextView
-                            android:id="@+id/AcModeStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginEnd="8dp"
-                            android:textColor="@color/grey" />
-
-                    </RelativeLayout>
-
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dip"
-                    android:background="#eeeeeeee" />
-
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
