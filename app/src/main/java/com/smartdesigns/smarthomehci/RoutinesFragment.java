@@ -72,8 +72,6 @@ public class RoutinesFragment extends Fragment {
     }
 
     private void addCards() {
-
-
         RecyclerViewAdapter routineRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), routineList);
         routineRecycler.setLayoutManager(new GridLayoutManager(this.getContext(),getColumns()));
         routineRecycler.setAdapter(routineRecyclerAdapter);
@@ -111,7 +109,6 @@ public class RoutinesFragment extends Fragment {
         api.getRoutines(new Response.Listener<List<Routine>>() {
             @Override
             public void onResponse(List<Routine> response) {
-                Log.d("ROOMSIZEASD", Integer.toString(response.size()));
                 for(Routine routine: response) {
                     if(!routineList.contains(routine))
                         routineList.add(routine);

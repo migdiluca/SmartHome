@@ -1,5 +1,6 @@
 package com.smartdesigns.smarthomehci;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -74,6 +75,7 @@ public class FavouritesFragment extends Fragment {
         saveList();
     }
 
+    @SuppressLint({"CommitPrefEdits", "ApplySharedPref"})
     private static void saveList() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Home.getInstance().getApplicationContext());
         Gson gson = new Gson();
@@ -95,7 +97,6 @@ public class FavouritesFragment extends Fragment {
 
     private void addCards() {
         RecyclerViewAdapter favouritesRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), favouritesList.getFavouritesDevices(AMOUNT_TO_SHOW));
-        Log.d("ELTAMAÑOES",Integer.toString(favouritesList.getFavouritesDevices(AMOUNT_TO_SHOW).size()));
         favouritesRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), getColumns()));
         favouritesRecycler.setAdapter(favouritesRecyclerAdapter);
     }
@@ -138,7 +139,8 @@ public class FavouritesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("On resume", "here");
+        favouritesList.getFavouritesDevices(AMOUNT_TO_SHOW);
+        addCards();
     }
 
 

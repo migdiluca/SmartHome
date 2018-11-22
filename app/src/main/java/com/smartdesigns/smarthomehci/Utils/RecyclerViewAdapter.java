@@ -3,6 +3,7 @@ package com.smartdesigns.smarthomehci.Utils;
 
 import android.content.Context;
 
+import com.smartdesigns.smarthomehci.Home;
 import com.smartdesigns.smarthomehci.R;
 import com.smartdesigns.smarthomehci.backend.RecyclerInterface;
 
@@ -43,6 +44,8 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
     private static final int IMAGE_SIZE = 90;
 
     public static List<Integer> getColors(){
+        if(colors.isEmpty())
+            addColors();
         return colors;
     }
 
@@ -89,27 +92,28 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
         return new MyViewHolder(view);
     }
 
-    private void addColors() {
+    private static void addColors() {
         if(colors.isEmpty()){
-            colors.add(ContextCompat.getColor(mContext,R.color.amber));
-            colors.add(ContextCompat.getColor(mContext,R.color.blue));
-            colors.add(ContextCompat.getColor(mContext,R.color.blue_grey));
-            colors.add(ContextCompat.getColor(mContext,R.color.yellow));
-            colors.add(ContextCompat.getColor(mContext,R.color.brown));
-            colors.add(ContextCompat.getColor(mContext,R.color.cyan));
-            colors.add(ContextCompat.getColor(mContext,R.color.deep_orange));
-            colors.add(ContextCompat.getColor(mContext,R.color.deep_purple));
-            colors.add(ContextCompat.getColor(mContext,R.color.green));
-            colors.add(ContextCompat.getColor(mContext,R.color.grey));
-            colors.add(ContextCompat.getColor(mContext,R.color.indigo));
-            colors.add(ContextCompat.getColor(mContext,R.color.light_blue));
-            colors.add(ContextCompat.getColor(mContext,R.color.light_green));
-            colors.add(ContextCompat.getColor(mContext,R.color.lime));
-            colors.add(ContextCompat.getColor(mContext,R.color.orange));
-            colors.add(ContextCompat.getColor(mContext,R.color.pink));
-            colors.add(ContextCompat.getColor(mContext,R.color.purple));
-            colors.add(ContextCompat.getColor(mContext,R.color.red));
-            colors.add(ContextCompat.getColor(mContext,R.color.teal));
+            Context context = Home.getInstance().getApplicationContext();
+            colors.add(ContextCompat.getColor(context,R.color.amber));
+            colors.add(ContextCompat.getColor(context,R.color.blue));
+            colors.add(ContextCompat.getColor(context,R.color.blue_grey));
+            colors.add(ContextCompat.getColor(context,R.color.yellow));
+            colors.add(ContextCompat.getColor(context,R.color.brown));
+            colors.add(ContextCompat.getColor(context,R.color.cyan));
+            colors.add(ContextCompat.getColor(context,R.color.deep_orange));
+            colors.add(ContextCompat.getColor(context,R.color.deep_purple));
+            colors.add(ContextCompat.getColor(context,R.color.green));
+            colors.add(ContextCompat.getColor(context,R.color.grey));
+            colors.add(ContextCompat.getColor(context,R.color.indigo));
+            colors.add(ContextCompat.getColor(context,R.color.light_blue));
+            colors.add(ContextCompat.getColor(context,R.color.light_green));
+            colors.add(ContextCompat.getColor(context,R.color.lime));
+            colors.add(ContextCompat.getColor(context,R.color.orange));
+            colors.add(ContextCompat.getColor(context,R.color.pink));
+            colors.add(ContextCompat.getColor(context,R.color.purple));
+            colors.add(ContextCompat.getColor(context,R.color.red));
+            colors.add(ContextCompat.getColor(context,R.color.teal));
         }
     }
 

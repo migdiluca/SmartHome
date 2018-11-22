@@ -94,12 +94,10 @@ public class RoomFragment extends Fragment {
 
 
         roomList = new ArrayList<>();
-        Log.d("ROOMSIZEASD", "asd");
         ApiConnection api = ApiConnection.getInstance(getContext());
         api.getRooms(new Response.Listener<List<Room>>() {
             @Override
             public void onResponse(List<Room> response) {
-                Log.d("ROOMSIZEASD", Integer.toString(response.size()));
                 for(Room room: response) {
                     if(!roomList.contains(room))
                         roomList.add(room);
@@ -123,7 +121,6 @@ public class RoomFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ERRORLOADINGROOMS", error.toString());
             }
         });
 
