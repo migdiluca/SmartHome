@@ -132,6 +132,7 @@ public class DevicesFragment extends RefreshFragment {
             toolbar.setTitle(routine.getName());
 
         text = view.findViewById(R.id.fragment_text);
+        text.setText(R.string.loading);
         devicesRecycler = view.findViewById(R.id.devices_recyclerview);
 
         FloatingActionButton playRoutineButton = (FloatingActionButton) view.findViewById(R.id.play_routine_button);
