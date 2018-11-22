@@ -35,6 +35,9 @@
 
     <color name="lampColorChange"></color>
 
+    <color name="buttonColor">#009688</color>
+    <color name="buttonColorOff">#8b8b8b</color>
+
     <color name ="black">#ff000000</color>
     <color name ="red">#f0453d</color>
     <color name ="pink">#e52564</color>
