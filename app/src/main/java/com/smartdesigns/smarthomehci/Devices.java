@@ -110,6 +110,10 @@ public class Devices extends Fragment {
 
     View thumbView;
 
+    public Devices() {
+
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -129,8 +133,6 @@ public class Devices extends Fragment {
 
         View v = null;
         thumbView = inflater.inflate(R.layout.layout_seekbar_thumb, null, false);
-
-        setBackgroundColor(view);
         Home.getInstance().getSupportActionBar().setHomeButtonEnabled(true);
 
         //Empiezo con los devices
@@ -1115,25 +1117,6 @@ public class Devices extends Fragment {
         return new BitmapDrawable(getResources(), bitmap);
     }
 
-    private void setBackgroundColor(View view) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Boolean darkTheme = preferences.getBoolean("dark_theme_checkbox", false);
-        if (darkTheme == true) {
-            Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_YES);
-            view.setBackgroundColor(getResources().getColor(R.color.black));
-            Home.setNavColor(R.color.dark_grey);
-            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_grey)));
-            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey_navbar));
-        } else if (getView() != null) {
-            Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_NO);
-            view.setBackgroundColor(getResources().getColor(R.color.white));
-            Home.setNavColor(R.color.colorPrimary);
-            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey));
-            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
-        }
-    }
 
 
 }

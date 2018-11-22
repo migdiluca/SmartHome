@@ -2,11 +2,13 @@ package com.smartdesigns.smarthomehci.backend;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.support.v4.app.FragmentTransaction;
 
 import com.google.gson.Gson;
 import com.smartdesigns.smarthomehci.Devices;
 import com.smartdesigns.smarthomehci.FavouritesFragment;
 import com.smartdesigns.smarthomehci.Home;
+import com.smartdesigns.smarthomehci.R;
 import com.smartdesigns.smarthomehci.RoutinesFragment;
 import com.smartdesigns.smarthomehci.Utils.FavouritesList;
 import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
@@ -87,8 +89,10 @@ public class Device implements RecyclerInterface, Serializable {
 
     public void onClickAction(Serializable arg, Context context) {
 
-        FavouritesFragment.access(this);
+        //FavouritesFragment.access(this);
 
+        Home.getInstance().setDeviceFragment(this);
+     /*
         Intent device = new Intent(context, Devices.class);
         if(Home.getInstance().getCurrentMode() == 0)
             device.putExtra("mode", 0);
@@ -98,7 +102,7 @@ public class Device implements RecyclerInterface, Serializable {
         }
 
         device.putExtra("device", this);
-        context.startActivity(device);
+        context.startActivity(device);*/
     }
 
     @Override
