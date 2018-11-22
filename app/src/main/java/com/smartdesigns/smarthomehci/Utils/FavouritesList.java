@@ -95,15 +95,13 @@ public class FavouritesList implements Serializable {
             @Override
             public void onResponse(List<Device> response) {
                 for (Device device : response) {
-
                     devicesList.add(device);
-
-
                 }
                 for(int i = 0; i < list.size(); i++) {
                     if(!devicesList.contains(list.get(i).getDevice()))
                         list.remove(i);
                 }
+                Log.d("FINISH:", "onResponse");
             }
         }, new Response.ErrorListener() {
             @Override
@@ -113,11 +111,12 @@ public class FavouritesList implements Serializable {
         });
 
 
-
+        Log.d("FINISH:", "creating resp");
         ArrayList<Device> resp = new ArrayList<>();
         for (int i = 0; i < amount && i < list.size(); i++) {
             resp.add(list.get(i).getDevice());
         }
+
         return resp;
     }
 
