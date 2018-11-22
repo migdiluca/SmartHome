@@ -135,8 +135,11 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
-        holder.title.setText(mData.get(position).getName());
-//        holder.img_thumbnail.setImageResource(Integer.parseInt(mData.get(position).getMeta()));
+            holder.title.setText(mData.get(position).getName());
+            int id = mContext.getResources().getIdentifier(mData.get(position).getImg().split(".png$")[0], "drawable", mContext.getPackageName());
+            holder.img_thumbnail.setImageResource(id);
+
+            Log.d("ACAAA", ""+id + " y "+mData.get(position).getImg());
 
         /*if(true){
             mData.get(position).setBackground(colors.get(ThreadLocalRandom.current().nextInt(0,colors.size())));

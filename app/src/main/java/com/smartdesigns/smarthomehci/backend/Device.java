@@ -87,6 +87,12 @@ public class Device implements RecyclerInterface, Serializable {
         return this.meta;
     }
 
+    public String getImg(){
+        Gson gson = new Gson();
+        Meta aux = gson.fromJson(this.meta, Meta.class);
+        return aux.getImg();
+    }
+
     public void onClickAction(Serializable arg, Context context) {
 
         FavouritesFragment.access(this);

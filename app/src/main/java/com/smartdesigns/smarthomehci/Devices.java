@@ -12,6 +12,7 @@ import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -175,6 +176,8 @@ public class Devices extends Fragment {
                     }else {
                         acModeStat.setText(R.string.Fan);
                     }
+                //    temperatureAc.setProgress(response.getTemperature() - 18);
+
                     temperatureAc.setProgress(response.getTemperature() - 18);
                 }
 
@@ -199,9 +202,9 @@ public class Devices extends Fragment {
                             sPrint = getResources().getString(R.string.OffM);
                         }
                         Action action = new Action(device.getId(), s, null);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) + sPrint
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -209,6 +212,7 @@ public class Devices extends Fragment {
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
+                                Log.d("ERROR", error.toString());
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.ActionFail)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -238,9 +242,9 @@ public class Devices extends Fragment {
                         LinkedList<String> l = new LinkedList<>();
                         l.add(Integer.toString(value));
                         Action action = new Action(device.getId(), "setTemperature", l);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgTemp)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -327,9 +331,9 @@ public class Devices extends Fragment {
                     @Override
                     public void onClick(View view) {
                         Action action = new Action(device.getId(), "up", null);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessBlindsDown)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -337,6 +341,7 @@ public class Devices extends Fragment {
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
+                                Log.d("ERROR", error.toString());
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.ActionFail)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -349,9 +354,9 @@ public class Devices extends Fragment {
                     @Override
                     public void onClick(View view) {
                         Action action = new Action(device.getId(), "down", null);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessBlindsDown)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -396,9 +401,9 @@ public class Devices extends Fragment {
                             f = getResources().getString(R.string.CloseMsg);
                         }
                         Action action = new Action(device.getId(), s, null);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgDoor) + f
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -428,9 +433,9 @@ public class Devices extends Fragment {
                             f = getResources().getString(R.string.UnlockMsg);
                         }
                         Action action = new Action(device.getId(), s, null);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgDoor) + f
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -484,9 +489,9 @@ public class Devices extends Fragment {
                             sPrint = getResources().getString(R.string.OffM);
                         }
                         Action action = new Action(device.getId(), s, null);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) + sPrint
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -524,9 +529,9 @@ public class Devices extends Fragment {
                         LinkedList<String> l = new LinkedList<>();
                         l.add(Integer.toString(value));
                         Action action = new Action(device.getId(), "setTemperature", l);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgTemp)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -605,9 +610,9 @@ public class Devices extends Fragment {
                         LinkedList<String> l = new LinkedList<>();
                         l.add(Integer.toString(value));
                         Action action = new Action(device.getId(), "setTemperature", l);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgTemp)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -645,9 +650,9 @@ public class Devices extends Fragment {
                         LinkedList<String> l = new LinkedList<>();
                         l.add(Integer.toString(value));
                         Action action = new Action(device.getId(), "setFreezerTemperature", l);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgTemp)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -733,9 +738,9 @@ public class Devices extends Fragment {
                     public void onClick(View view) {
 
                         Action action = new Action(device.getId(), "start", null);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 startTimer(hour.getValue(), minute.getValue(), second.getValue());
                             }
                         }, new Response.ErrorListener() {
@@ -765,9 +770,9 @@ public class Devices extends Fragment {
                         LinkedList<String> ll = new LinkedList<>();
                         ll.add(Integer.toString(time));
                         Action action = new Action(device.getId(), "setInterval", ll);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SetDone)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -842,9 +847,9 @@ public class Devices extends Fragment {
                         l.add(getResources().getStringArray(R.array.ConvectionMode)[which]);
 
                         Action action = new Action(device.getId(), "setConvection", l);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessCMode)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -883,9 +888,9 @@ public class Devices extends Fragment {
                         l.add(getResources().getStringArray(R.array.ConvectionMode)[which]);
 
                         Action action = new Action(device.getId(), "setHeat", l);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessHMode)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -925,9 +930,9 @@ public class Devices extends Fragment {
                         l.add(getResources().getStringArray(R.array.ConvectionMode)[which]);
 
                         Action action = new Action(device.getId(), "setGrill", l);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessGMode)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -966,9 +971,9 @@ public class Devices extends Fragment {
                         l.add(getResources().getStringArray(R.array.VSwing)[which]);
 
                         Action action = new Action(device.getId(), "setVerticalSwing", l);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessGMode)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -976,6 +981,7 @@ public class Devices extends Fragment {
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
+                                Log.d("ERROR", error.toString());
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.ActionFail)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -1007,9 +1013,9 @@ public class Devices extends Fragment {
                         l.add(getResources().getStringArray(R.array.HSwing)[which]);
 
                         Action action = new Action(device.getId(), "setHorizontalSwing", l);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessGMode)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -1048,9 +1054,9 @@ public class Devices extends Fragment {
                         l.add(getResources().getStringArray(R.array.FanSpeed)[which]);
 
                         Action action = new Action(device.getId(), "setFanSpeed", l);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessGMode)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -1089,9 +1095,9 @@ public class Devices extends Fragment {
                         l.add(getResources().getStringArray(R.array.AcMode)[which]);
 
                         Action action = new Action(device.getId(), "setMode", l);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessGMode)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -1130,9 +1136,9 @@ public class Devices extends Fragment {
                         l.add(getResources().getStringArray(R.array.AcMode)[which]);
 
                         Action action = new Action(device.getId(), "setMode", l);
-                        api.runAction(action, new Response.Listener<Boolean>() {
+                        api.runAction(action, new Response.Listener<Object>() {
                             @Override
-                            public void onResponse(Boolean response) {
+                            public void onResponse(Object response) {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessFMode)
                                         , Toast.LENGTH_LONG);
                                 toast.show();

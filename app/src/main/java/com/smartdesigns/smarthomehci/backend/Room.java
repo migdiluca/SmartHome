@@ -91,6 +91,12 @@ public class Room implements RecyclerInterface, Serializable {
         home.setFragment(fragment);
     }
 
+    public String getImg(){
+        Gson gson = new Gson();
+        Meta aux = gson.fromJson(this.meta, Meta.class);
+        return aux.getImg();
+    }
+
     @Override
     public String toString() {
         return (this.id == null) ?
