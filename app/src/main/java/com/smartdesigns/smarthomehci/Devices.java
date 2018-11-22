@@ -1064,14 +1064,23 @@ public class Devices extends Fragment {
 
                     int value = response.getInterval();
                     hour.setValue(value / 3600);
-                    minute.setValue((value % 3600) / 60);
-                    second.setValue(((value % 3600) % 60) / 60);
+                    value = value - hour.getValue() * 3600;
+                    minute.setValue(value/60);
+
+                    second.setValue(value - minute.getValue() * 60);
 
                     if(response.getNewStatus().equals("active")) {
                         int rem = response.getRemaining();
+                        int h, m, s;
+                        h = rem / 3600;
+                        rem = rem - h * 3600;
+                        m = rem / 60;
+                        s = rem - m * 60;
 
-                        String hms = String.format("%02d:%02d:%02d", rem/3600, (rem % 3600) / 60, ((rem % 3600) % 60) / 60);
-                        startTimer(rem/3600, (rem % 3600) / 60, ((rem % 3600) % 60) / 60);
+                        String hms = String.format("%02d:%02d:%02d", h,m,s);
+
+
+                        startTimer(h,m,s);
                         timer.setText(hms);//set text
                         startButton.setClickable(false);
                         stopButton.setClickable(true);
@@ -1697,15 +1706,9 @@ public class Devices extends Fragment {
 
     @Override
     public void onPause() {
-        Log.d("apalapapa","onPause");
         super.onPause();
         Home.activityPaused();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d("apalapapa", "onDestroy");
-    }
 
 }
