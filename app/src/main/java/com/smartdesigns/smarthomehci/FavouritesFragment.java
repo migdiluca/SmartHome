@@ -109,7 +109,6 @@ public class FavouritesFragment extends RefreshFragment {
                     if(!devicesList.contains(favListAux.get(i))) {
                         favouritesList.remove(favListAux.get(i));
                         favListAux.remove(i);
-
                     }
                 }
 
@@ -117,6 +116,7 @@ public class FavouritesFragment extends RefreshFragment {
                     text.setText(R.string.no_favorites_available);
                 else
                     text.setText("");
+                saveList();
                 RecyclerViewAdapter favouritesRecyclerAdapter = new RecyclerViewAdapter(getContext(), favListAux);
                 favouritesRecycler.setLayoutManager(new GridLayoutManager(getContext(), getColumns()));
                 favouritesRecycler.setAdapter(favouritesRecyclerAdapter);

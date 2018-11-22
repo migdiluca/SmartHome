@@ -263,9 +263,9 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 //        searchView.setSearchableInfo(
 //                searchManager.getSearchableInfo(getComponentName()));
 
-        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
+        /*MenuItem searchItem = menu.findItem(R.id.app_bar_search);
         SearchView searchView =
-                (SearchView) searchItem.getActionView();
+                (SearchView) searchItem.getActionView();*/
 
         // Configure the search info and add any event listeners...
 

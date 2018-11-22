@@ -125,19 +125,17 @@ public class RoutinesFragment extends RefreshFragment {
                         ApiConnection.getInstance(getContext()).updateRoutine(routine, new Response.Listener<Boolean>() {
                             @Override
                             public void onResponse(Boolean response) {
-
                             }
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-
                             }
                         });
                     }
 
                 }
                 if(routineList.isEmpty())
-                    text.setText(R.string.no_rooms_available);
+                    text.setText(R.string.no_routines_available);
                 else
                     text.setText("");
                 addCards();
