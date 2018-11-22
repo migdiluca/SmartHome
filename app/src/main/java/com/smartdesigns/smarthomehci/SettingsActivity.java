@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application activity_fragment. On
@@ -31,7 +32,12 @@ public class SettingsActivity extends AppCompatActivity {
         setTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
-        ((Toolbar)findViewById(R.id.activity_fragment_toolbar)).setTitle(R.string.title_activity_settings);
+        Toolbar toolbar = findViewById(R.id.activity_fragment_toolbar);
+        (toolbar).setTitle(R.string.title_activity_settings);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
 
         getFragmentManager().beginTransaction().replace(R.id.activity_fragment_frame, new MainSettingsFragment()).commit();
     }
@@ -46,6 +52,11 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        onBackPressed();
+        return true;
+    }
 
     public static class MainSettingsFragment extends PreferenceFragment {
 

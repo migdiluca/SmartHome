@@ -47,13 +47,6 @@ import java.util.concurrent.TimeUnit;
 
 public class Devices extends Fragment {
 
-    private BroadcastReceiver broadcastReceiver;
-    public static int MESSAGE_ID;
-
-
-
-    private Room room = null;
-    private Routine routine = null;
     private Device device = null;
     private View view;
     private Context context;
@@ -337,8 +330,8 @@ public class Devices extends Fragment {
             v = inflater.inflate(R.layout.door, container, false);
             view = v;
 
-            openBut = (CheckBox) view.findViewById(R.id.OpenButton);
-            lockBut = (CheckBox) view.findViewById(R.id.LockButton);
+            openBut = view.findViewById(R.id.OpenButton);
+            lockBut = view.findViewById(R.id.LockButton);
 
             if (Home.getInstance().getCurrentMode() != 1) {
 
