@@ -154,7 +154,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 event = event + aux[0] + " ";
             }
 
-            if (Home.isActivityVisible()) {
+            if (Home.isActivityVisible() && !Home.changedHere) {
                 if(Home.currentClass.equals(Home.class) || Home.currentClass.equals(SettingsActivity.class)) {
                     Toast.makeText(context, name + " has changed its state: " + event, Toast.LENGTH_LONG).show();
                 }
