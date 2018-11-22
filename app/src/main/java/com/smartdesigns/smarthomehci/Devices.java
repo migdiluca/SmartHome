@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ import com.smartdesigns.smarthomehci.repository.ApiConnection;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateAc;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateBlinds;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateDoor;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateLamp;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateOven;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateRefrigerator;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateTimer;
@@ -105,9 +107,10 @@ public class Devices extends Fragment {
      */
 
     Switch onOffLamp;
-    LinearLayout lampColor;
+    RelativeLayout lampColor;
     SeekBar lampBrightness;
     TextView lampBrightnessStats;
+    View colorPickerView;
 
     /**
      * Refrigerator
@@ -515,6 +518,34 @@ public class Devices extends Fragment {
             v = inflater.inflate(R.layout.lamp, container, false);
             view = v;
 
+            onOffLamp = view.findViewById(R.id.OnOffLamp);
+            lampColor = view.findViewById(R.id.ColorPicker);
+            lampBrightness = view.findViewById(R.id.BrightnessLamp);
+            lampBrightnessStats = view.findViewById(R.id.LampBrightStat);
+            colorPickerView = view.findViewById(R.id.ColorPickerView);
+
+            api.getStateLamp(device, new Response.Listener<GetStateLamp>() {
+                @Override
+                public void onResponse(GetStateLamp response) {
+                    if(response.getStatus().equals("on"))
+                        onOffLamp.setChecked(true);
+                    else
+                        onOffLamp.setChecked(false);
+
+                    lampBrightness.setProgress(response.getBrightness());
+
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
+
+
+
+
 
         } else if (device.getTypeId().equals(TypeId.Oven.getTypeId())) {
 
@@ -709,7 +740,7 @@ public class Devices extends Fragment {
             api.getStateRefrigerator(device, new Response.Listener<GetStateRefrigerator>() {
                 @Override
                 public void onResponse(GetStateRefrigerator response) {
-                    
+
                     fridgeTempStats.setText(Integer.toString(response.getTemperature()) + " C");
                     freezerTempStats.setText(Integer.toString(response.getTemperature()) + " C");
 
