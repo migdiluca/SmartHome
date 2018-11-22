@@ -15,31 +15,31 @@
     <string name="UpDown">Arriba/Abajo</string>
     <string name="Up">Arriba</string>
     <string name="Down">Abajo</string>
-    <string name="SuccessBlindsDown"> Se bajaron las Persianas!</string>
-    <string name="SuccessBlindsUp"> Se subieron las Persianas!</string>
+    <string name="SuccessBlindsDown"> Se bajaron las persianas!</string>
+    <string name="SuccessBlindsUp"> Se subieron las persianas!</string>
 
-    <string name="Ac">Aire Acondicionado</string>
+    <string name="Ac">Aire acondicionado</string>
     <string name="Temperature">Temperatura</string>
-    <string name="VerticalSwing">Oscilación Vertical</string>
-    <string name="HorizontalSwing">Oscilación Horizontal</string>
-    <string name="FanSpeed">Velocidad del Ventilador</string>
+    <string name="VerticalSwing">Oscilación vertical</string>
+    <string name="HorizontalSwing">Oscilación horizontal</string>
+    <string name="FanSpeed">Velocidad del ventilador</string>
     <string name="AcMode">Modo</string>
     <string name="Cool">Enfriar</string>
     <string name="Heat">Calefacción</string>
-    <string name="Fan">Ventiladora</string>
+    <string name="Fan">Ventilador</string>
 
-    <string name="SuccessMsgOnOff">El dispositivo esta\ </string>
+    <string name="SuccessMsgOnOff">El dispositivo esta </string>
     <string name="OnM">prendido</string>
     <string name="OffM">apagado</string>
     <string name="SuccessMsgTemp">La temperatura ha cambiado.</string>
 
     <string name="Door">Puerta</string>
-    <string name="OpenClose">Puerta Abierta</string>
+    <string name="OpenClose">Puerta abierta</string>
     <string name="Open">Abrir</string>
     <string name="Close">Cerrar</string>
     <string name="Lock">Bloquear</string>
     <string name="Unlock">Desbloquear</string>
-    <string name="LockUnlock">Bloquear la Puerta</string>
+    <string name="LockUnlock">Bloquear la puerta</string>
     <string name="SuccessMsgDoor">La puerta ahora esta </string>
     <string name="OpenMsg">Abierta.</string>
     <string name="CloseMsg">Cerrada.</string>
@@ -57,17 +57,17 @@
     <string name="Bottom">Fondo</string>
     <string name="Top">Arriba</string>
     <string name="Conventional">Convencional</string>
-    <string name="HeatMode">Modo Calor</string>
+    <string name="HeatMode">Modo calor</string>
 
-    <string name="SuccessCMode">Se ha cambiado la Convección.</string>
-    <string name="SuccessGMode">Se ha cambiado el Modo Grill.</string>
-    <string name="SuccessHMode">Se ha cambiado el Modo Calor.</string>
+    <string name="SuccessCMode">Se ha cambiado la convección.</string>
+    <string name="SuccessGMode">Se ha cambiado el modo grill.</string>
+    <string name="SuccessHMode">Se ha cambiado el modo calor.</string>
 
     <string name="Refrigerator">Heladera</string>
-    <string name="FreezerTemperature">Temperatura Congelador</string>
+    <string name="FreezerTemperature">Temperatura congelador</string>
     <string name="Party">Fiesta</string>
     <string name="Vacations">Vacaciones</string>
-    <string name="SuccessFMode">Se ha cambiado el Modo de la Heladora.</string>
+    <string name="SuccessFMode">Se ha cambiado el modo de la heladera.</string>
 
     <string name="Timer">Temporizador</string>
     <string name="enterMinutes">Minutos</string>
@@ -84,15 +84,15 @@
     <string name="title_activity_settings">Ajustes</string>
     <string name="pref_dark_theme">Tema oscuro</string>
     <string name="GrillMode">Modo Grill</string>
-    <string name="error_request">Error intentanto conseguir el request de JSON</string>
-    <string name="activate_dev_not">Activar Notificaciones de Dispositivo</string>
-    <string name="ColumnsAmountPotrait">Cantidad de Colunas(Modo Retrato)</string>
+    <string name="error_request">Error intentando conseguir el request de JSON</string>
+    <string name="activate_dev_not">Activar notificaciones de dispositivo</string>
+    <string name="ColumnsAmountPotrait">Cantidad de Columnas(Modo Retrato)</string>
     <string name="ColumnsAmountLandscape">Cantidad de Columnas(Modo Paisaje)</string>
-    <string name="Interval">Intervalo entre Notificaciones (Debe Reiniciar La App)</string>
+    <string name="Interval">Intervalo entre notificaciones (Debe reiniciar la app)</string>
     <string name="Long">60 min</string>
     <string name="Medium">30 min</string>
     <string name="Short">1 min</string>
-    <string name="title_favourites">Favortios</string>
+    <string name="title_favourites">Favoritos</string>
     <string name="ChangeMessage">Un dispositivo ha sido modificado!</string>
     <string name="title_device">Pantalla del dispostivo</string>
     <string name="title_activity_device">Actividad del dispositivo</string>

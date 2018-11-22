@@ -3,7 +3,7 @@
     <string name="title_rooms">Rooms</string>
     <string name="title_routines">Routines</string>
     <string name="title_cameras">Cameras</string>
-    <string name="apply_routine">Routine Applied!</string>
+    <string name="apply_routine">Routine applied!</string>
     <string name="Search">Search</string>
     <string name="Settings">Settings</string>
     <string name="About">About</string>
@@ -22,9 +22,9 @@
     <string name="On" translatable="false">On</string>
     <string name="Off" translatable="false">Off</string>
     <string name="Temperature">Temperature</string>
-    <string name="VerticalSwing">Vertical Swing</string>
-    <string name="HorizontalSwing">Horizontal Swing</string>
-    <string name="FanSpeed">Fan Speed</string>
+    <string name="VerticalSwing">Vertical swing</string>
+    <string name="HorizontalSwing">Horizontal swing</string>
+    <string name="FanSpeed">Fan speed</string>
     <string name="AcMode">Mode</string>
     <string name="Cool">Cool</string>
     <string name="Heat">Heat</string>
@@ -33,10 +33,10 @@
     <string name="SuccessMsgOnOff">Success! Device is now </string>
     <string name="OnM">On</string>
     <string name="OffM">Off</string>
-    <string name="SuccessMsgTemp">Success! Temperature has Changed.</string>
+    <string name="SuccessMsgTemp">Success! Temperature has changed.</string>
 
     <string name="Door">Door</string>
-    <string name="OpenClose">Open the Door</string>
+    <string name="OpenClose">Open the door</string>
     <string name="Open">Open</string>
     <string name="Close">Close</string>
     <string name="Lock">Lock</string>
@@ -57,23 +57,23 @@
     <string name="Eco" translatable="false">Eco</string>
     <string name="Normal">Normal</string>
     <string name="Large">Large</string>
-    <string name="ConvectionMode">Convection Mode</string>
+    <string name="ConvectionMode">Convection mode</string>
     <string name="Bottom">Bottom</string>
     <string name="Top">Top</string>
     <string name="Conventional">Conventional</string>
     <string name="HeatMode">Heat mode</string>
     <string name="GrillMode">Grill Mode</string>
 
-    <string name="SuccessCMode">Success! Convection Mode has successfully changed.</string>
-    <string name="SuccessGMode">Success! Grill Mode has successfully changed.</string>
-    <string name="SuccessHMode">Success! Heat Mode has successfully changed.</string>
+    <string name="SuccessCMode">Success! Convection mode has successfully changed.</string>
+    <string name="SuccessGMode">Success! Grill mode has successfully changed.</string>
+    <string name="SuccessHMode">Success! Heat mode has successfully changed.</string>
 
 
     <string name="Refrigerator">Refrigerator</string>
-    <string name="FreezerTemperature">Freezer Temperature</string>
+    <string name="FreezerTemperature">Freezer temperature</string>
     <string name="Party">Party</string>
     <string name="Vacations">Vacations</string>
-    <string name="SuccessFMode">Success! Fridge Mode has successfully changed.</string>
+    <string name="SuccessFMode">Success! Fridge mode has successfully changed.</string>
 
     <string name="Timer">Timer</string>
     <string name="enterMinutes">Minutes!</string>
@@ -81,11 +81,11 @@
     <string name="Stop">Stop</string>
     <string name="timer" translatable="false">00:00:00</string>
     <string name="Set">Set</string>
-    <string name="TimerFinished">Timer Finished!</string>
+    <string name="TimerFinished">Timer finished!</string>
     <string name="SetDone">Success! The time has changed.</string>
 
     <string name="Alarm">Alarm</string>
-
+    <string name="ColumnsAmount">Columns amount</string>
     <string name="ColumnsAmountPotrait">Columns amount (Potrait mode)</string>
     <string name="ColumnsAmountLandscape">Columns amount (Landscape mode)</string>
     <string name="title_activity_settings">Settings</string>

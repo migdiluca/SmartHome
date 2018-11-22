@@ -139,7 +139,6 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
             int id = mContext.getResources().getIdentifier(mData.get(position).getImg().split(".png$")[0], "drawable", mContext.getPackageName());
             holder.img_thumbnail.setImageResource(id);
 
-            Log.d("ACAAA", ""+id + " y "+mData.get(position).getImg());
 
         /*if(true){
             mData.get(position).setBackground(colors.get(ThreadLocalRandom.current().nextInt(0,colors.size())));
