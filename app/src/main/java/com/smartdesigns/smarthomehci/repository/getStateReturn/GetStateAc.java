@@ -1,13 +1,13 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class getStateAc {
+public class GetStateAc {
     private String status;
     private int temperature;
     private String verticalSwing;
     private String horizontalSwing;
     private String fanSpeed;
 
-    public getStateAc(String status, int temperature, String verticalSwing, String horizontalSwing,
+    public GetStateAc(String status, int temperature, String verticalSwing, String horizontalSwing,
                       String fanSpeed){
         this.status = status;
         this.temperature = temperature;

@@ -17,12 +17,18 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 import com.smartdesigns.smarthomehci.backend.Device;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
 import com.smartdesigns.smarthomehci.repository.VolleySingleton;
@@ -31,6 +37,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -148,11 +155,10 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 event = event + aux[0] + " ";
             }
 
-            Log.d("STATUS", event);
-            Intent notificationIntent = new Intent(context, Devices.class);
+            Intent notificationIntent = new Intent(this.context, Home.class);
+            notificationIntent.putExtra("notification", "devices");
 
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-             stackBuilder.addParentStack(Devices.class);
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this.context);
             stackBuilder.addNextIntent(notificationIntent);
 
             final PendingIntent contentIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -162,7 +168,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                     .setContentTitle("A device has been changed!")
                     .setContentText(name + " " + event )
                     .setSmallIcon(R.drawable.ic_smarthome).setColor(ContextCompat.getColor(context,R.color.blue))
-
+//                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ac))
                     .setSound(defaultSoundUri)
                     .setContentIntent(contentIntent)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -177,4 +183,37 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
             notificationManager.notify(currId, notification);
         }
     }
+
+    private void handleError(VolleyError error) {
+        Error response = null;
+        if(error instanceof NoConnectionError || error instanceof TimeoutError){
+            String text = context.getResources().getString(R.string.error_request);
+            Toast.makeText(context, text , Toast.LENGTH_LONG).show();
+        }
+        else {
+            NetworkResponse networkResponse = error.networkResponse;
+            if ((networkResponse != null) && (error.networkResponse.data != null)) {
+                try {
+                    String json = new String(
+                            error.networkResponse.data,
+                            HttpHeaderParser.parseCharset(networkResponse.headers));
+
+                    JSONObject jsonObject = new JSONObject(json);
+                    json = jsonObject.getJSONObject("error").toString();
+
+                    Gson gson = new Gson();
+                    response = gson.fromJson(json, Error.class);
+                } catch (JSONException e) {
+                } catch (UnsupportedEncodingException e) {
+                }
+            }
+
+            Log.e("tag", error.toString());
+            String text = context.getResources().getString(R.string.error_request);
+//        if (response != null)
+//            text += " " + response.getDescription().get(0);
+
+            Toast.makeText(context, text, Toast.LENGTH_LONG).show();
+        }
+}
 }

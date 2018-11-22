@@ -2,22 +2,16 @@ package com.smartdesigns.smarthomehci;
 
 import android.app.AlertDialog;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatDelegate;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,13 +41,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Devices extends Fragment {
 
-    private BroadcastReceiver broadcastReceiver;
-    public static int MESSAGE_ID;
+    //TODO SEEKBAR arreglar, usar de ultima el import este que meti
 
-
-
-    private Room room = null;
-    private Routine routine = null;
     private Device device = null;
     private View view;
     private Context context;
@@ -62,7 +51,7 @@ public class Devices extends Fragment {
 
     /**
      * Buttons
-     * <p>
+     *
      * Ac
      */
     Switch onOffAc;
@@ -133,10 +122,8 @@ public class Devices extends Fragment {
 
         //getView().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         device = (Device) getArguments().getSerializable("Device");
         getActivity().setTitle(device.getName());
-
 
     }
 
@@ -152,6 +139,9 @@ public class Devices extends Fragment {
         if (device.getTypeId().equals(TypeId.Ac.getTypeId())) {
 
             getActivity().setTheme(R.style.acStyle);
+
+
+
             v = inflater.inflate(R.layout.ac, container, false);
             view = v;
 
@@ -337,8 +327,8 @@ public class Devices extends Fragment {
             v = inflater.inflate(R.layout.door, container, false);
             view = v;
 
-            openBut = (CheckBox) view.findViewById(R.id.OpenButton);
-            lockBut = (CheckBox) view.findViewById(R.id.LockButton);
+            openBut = view.findViewById(R.id.OpenButton);
+            lockBut = view.findViewById(R.id.LockButton);
 
             if (Home.getInstance().getCurrentMode() != 1) {
 

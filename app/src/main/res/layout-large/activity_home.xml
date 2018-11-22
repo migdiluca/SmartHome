@@ -19,9 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
+            android:backgroundTint="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:titleTextColor="?attr/titleColor"/>
+            app:titleTextColor="?attr/titleColor" />
 
         <FrameLayout
             android:id="@+id/main_frame"
@@ -44,9 +44,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
+            android:backgroundTint="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:titleTextColor="?attr/titleColor"/>
+            app:titleTextColor="?attr/titleColor" />
 
         <FrameLayout
             android:id="@+id/device_frame"
