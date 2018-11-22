@@ -58,23 +58,46 @@
                     android:layout_height="1dip"
                     android:background="#dddddddd" />
 
-                <Switch
-                    android:id="@+id/OnOffOven"
-                    android:layout_width="300dp"
+
+
+                <RelativeLayout
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/OnOff"
-                    android:textOff="@string/Off"
-                    android:textOn="@string/On"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.076"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.365" />
+                    android:layout_width="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/OnOff"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        />
+
+                    <Switch
+                        android:id="@+id/OnOffOven"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_alignParentEnd="true"
+                        android:textOff="@string/Off"
+                        android:textOn="@string/On"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.076"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.365" />
+
+                </RelativeLayout>
+
+
 
                 <View
                     android:layout_width="fill_parent"
@@ -115,6 +138,9 @@
                     android:background="#dddddddd" />
 
                 <LinearLayout
+                    android:id="@+id/HeatMode"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -122,12 +148,9 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/HeatMode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:clickable="true"
-                        android:focusable="true"
                         android:text="@string/HeatMode"
                         android:textColor="#000000"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -142,6 +165,9 @@
                     android:background="#dddddddd" />
 
                 <LinearLayout
+                    android:id="@+id/GrillMode"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -149,12 +175,9 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/GrillMode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:clickable="true"
-                        android:focusable="true"
                         android:text="@string/GrillMode"
                         android:textColor="#000000"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -170,6 +193,9 @@
 
 
                 <LinearLayout
+                    android:id="@+id/ConvectionMode"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -177,12 +203,9 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/ConvectionMode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:clickable="true"
-                        android:focusable="true"
                         android:text="@string/ConvectionMode"
                         android:textColor="#000000"
                         app:layout_constraintBottom_toBottomOf="parent"
