@@ -94,15 +94,12 @@ public class RoomFragment extends Fragment {
 
 
         roomList = new ArrayList<>();
-        Log.d("ROOMSIZEASD", "asd");
         ApiConnection api = ApiConnection.getInstance(getContext());
         api.getRooms(new Response.Listener<List<Room>>() {
             @Override
             public void onResponse(List<Room> response) {
-                Log.d("ROOMSIZEASD", Integer.toString(response.size()));
                 for(Room room: response) {
-                    if(!roomList.contains(room))
-                        roomList.add(room);
+                    roomList.add(room);
                     if(room.getMeta().matches("\"background\"") == false){
                         int aux = room.getBackground();
                         ApiConnection.getInstance(getContext()).updateRoom(room, new Response.Listener<Boolean>() {
@@ -117,13 +114,14 @@ public class RoomFragment extends Fragment {
                             }
                         });
                     }
-                    addCards();
+
                 }
+                addCards();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ERRORLOADINGROOMS", error.toString());
+                Log.d("LOADINGROOMS", error.toString());
             }
         });
 

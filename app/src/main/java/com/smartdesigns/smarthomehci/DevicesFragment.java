@@ -113,6 +113,9 @@ public class DevicesFragment extends Fragment {
     @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Context appContext = getContext();
+        ApiConnection api = ApiConnection.getInstance(appContext);
+
         View view = inflater.inflate(R.layout.fragment_devices, container, false);
         setBackgroundColor(view);
 
@@ -126,29 +129,39 @@ public class DevicesFragment extends Fragment {
         FloatingActionButton playRoutineButton = (FloatingActionButton) view.findViewById(R.id.play_routine_button);
         playRoutineButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //ACTIVAR RUTINA API
-                Log.d("hola", "hola");
-                //SI anda bien
-                Toast.makeText(getActivity(), getResources().getString(R.string.apply_routine), Toast.LENGTH_LONG).show();
+
+                Context appContext = getContext();
+                ApiConnection api = ApiConnection.getInstance(appContext);
+
+                api.executeRoutine(routine, new Response.Listener<Object>() {
+                    @Override
+                    public void onResponse(Object response) {
+                        Toast.makeText(getActivity(), getResources().getString(R.string.apply_routine), Toast.LENGTH_LONG).show();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
             }
         });
 
-        if (Home.getInstance().getCurrentMode() != 1)
+        if (Home.getInstance().getCurrentMode() != 1) {
             playRoutineButton.setVisibility(View.GONE);
 
+        }
 
-        Context appContext = getContext();
-        ApiConnection api = ApiConnection.getInstance(appContext);
 
-        if (Home.getInstance().getCurrentMode() == 0)
+        if (Home.getInstance().getCurrentMode() == 0){
             api.getRoomDevices(room, new Response.Listener<List<Device>>() {
                 @Override
                 public void onResponse(List<Device> response) {
-                    Log.d("ROOMSIZEASD", Integer.toString(response.size()));
-                    for(Device device: response) {
-                        if(!devicesList.contains(device))
+                    for (Device device : response) {
+                        if (!devicesList.contains(device))
                             devicesList.add(device);
-                        if(device.getMeta().matches("\"background\"") == false){
+                        if (device.getMeta().matches("\"background\"") == false) {
                             int aux = device.getBackground();
                             ApiConnection.getInstance(getContext()).updateDevice(device, new Response.Listener<Boolean>() {
                                 @Override
@@ -158,12 +171,14 @@ public class DevicesFragment extends Fragment {
                             }, new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-
+                                    Log.d("LOADINGDEVICES", error.toString());
                                 }
                             });
                         }
-                        addCards();
+
                     }
+
+                    addCards();
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -171,8 +186,39 @@ public class DevicesFragment extends Fragment {
 
                 }
             });
-        else if (Home.getInstance().getCurrentMode() == 1) {
-        //getRoutineDevices();
+        }else if (Home.getInstance().getCurrentMode() == 1) {
+            devicesList = new ArrayList<>();
+            api.getDevices(new Response.Listener<List<Device>>() {
+                @Override
+                public void onResponse(List<Device> response) {
+                    for(Device device: response) {
+                        if(routine.containsDevice(device)) {
+                            devicesList.add(device);
+                            if (device.getMeta().matches("\"background\"") == false) {
+                                int aux = device.getBackground();
+                                ApiConnection.getInstance(getContext()).updateDevice(device, new Response.Listener<Boolean>() {
+                                    @Override
+                                    public void onResponse(Boolean response) {
+
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+
+                                    }
+                                });
+                            }
+                        }
+                    }
+
+                    addCards();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("LOADINGDEVICES", error.toString());
+                }
+            });
         }
 
         return view;

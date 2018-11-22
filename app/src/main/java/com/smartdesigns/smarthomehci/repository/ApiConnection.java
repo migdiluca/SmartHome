@@ -361,12 +361,12 @@ public class ApiConnection {
         return uuid;
     }
 
-    public String executeRoutine(Routine routine, Response.Listener<Boolean> listener, Response.ErrorListener errorListener){
+    public String executeRoutine(Routine routine, Response.Listener<Object> listener, Response.ErrorListener errorListener){
         String url = apiUrl + "routines/" + routine.getId() + "/execute";
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Content-Type", "application/json");
-        GsonRequest<Object, Boolean> request =
-                new GsonRequest<>(Request.Method.PUT, url, null, "result", new TypeToken<Boolean>(){}, headers, listener, errorListener);
+        GsonRequest<Object, Object> request =
+                new GsonRequest<>(Request.Method.PUT, url, null, null, new TypeToken<Object>(){}, headers, listener, errorListener);
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
         requestQueue.add(request);
