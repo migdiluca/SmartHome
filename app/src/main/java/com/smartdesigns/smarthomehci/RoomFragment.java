@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.GridLayoutManager;
@@ -45,7 +46,6 @@ public class RoomFragment extends Fragment {
     private static Room currentRoom;
     
     private ActionBar toolbar;
-
     private OnFragmentInteractionListener mListener;
     RecyclerView roomRecycler;
 
@@ -84,16 +84,7 @@ public class RoomFragment extends Fragment {
         toolbar = Home.getMainActionBar();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recycler, container, false);
-
-        roomRecycler = view.findViewById(R.id.recyclerview);
-
-        toolbar.setTitle(R.string.title_rooms);
-
-
-        roomList = new ArrayList<>();
+    public void loadRooms() {
         ApiConnection api = ApiConnection.getInstance(getContext());
         api.getRooms(new Response.Listener<List<Room>>() {
             @Override
@@ -125,7 +116,17 @@ public class RoomFragment extends Fragment {
                 Log.d("LOADINGROOMS", error.toString());
             }
         });
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_recycler, container, false);
+
+        roomRecycler = view.findViewById(R.id.recyclerview);
+        toolbar.setTitle(R.string.title_rooms);
+
+        roomList = new ArrayList<>();
+        loadRooms();
         return view;
     }
 
@@ -136,6 +137,8 @@ public class RoomFragment extends Fragment {
         }
 
     }
+
+
 
     @Override
     public void onResume() {
