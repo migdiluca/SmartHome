@@ -18,6 +18,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,7 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
-import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
+import com.smartdesigns.smarthomehci.backend.Device;
 
 import java.util.Stack;
 
@@ -38,6 +39,9 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 
     private static int currentMode = 0;
     static private Home homeInstance = null;
+
+    private static Toolbar mainToolbar;
+    private static Toolbar deviceToolbar;
 
     public static Home getInstance() {
         return homeInstance;
@@ -84,6 +88,24 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 
     }
 
+    public void setDeviceFragment( Device device){
+
+        if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE) {
+            Devices fragment = new Devices();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            Bundle arguments = new Bundle();
+            arguments.putSerializable("Device", device);
+            fragment.setArguments(arguments);
+            fragmentTransaction.replace(R.id.device_frame, fragment);
+            fragmentTransaction.commit();
+        } else {
+            Intent intent = new Intent(getBaseContext(), DeviceActivity.class);
+            intent.putExtra("Device",device);
+            startActivity(intent);
+        }
+    }
+
     public void setFragment(Fragment fragment){
         bottomStacks[currentMode].push(fragment);
 
@@ -103,10 +125,24 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         return super.onOptionsItemSelected(item);
     }
 
+    public static android.support.v7.app.ActionBar getMainActionBar(){
+        return Home.getInstance().getSupportActionBar();
+    }
+
+    private void setTheme(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean darkTheme = preferences.getBoolean("dark_theme_checkbox",false);
+        if(darkTheme == true) {
+            setTheme(R.style.AppThemeDark);
+        } else {
+            setTheme(R.style.AppThemeLight);
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        setTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         if( getIntent().getBooleanExtra("Exit me", false)){
@@ -115,6 +151,21 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         }
         homeInstance = this;
 
+        mainToolbar = findViewById(R.id.main_toolbar);
+        if(getSupportActionBar() == null) {
+            setSupportActionBar(mainToolbar);
+        }
+
+        if ((getResources().getConfiguration().screenLayout &
+                Configuration.SCREENLAYOUT_SIZE_MASK) >=
+                Configuration.SCREENLAYOUT_SIZE_LARGE) {
+            deviceToolbar = findViewById(R.id.device_toolbar);
+            deviceToolbar.setTitle(R.string.title_device);
+        } else {
+            deviceToolbar = mainToolbar;
+        }
+
+        mainToolbar.inflateMenu(R.menu.up_menu);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
@@ -126,13 +177,6 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         RoutinesFragment routinesFragment = new RoutinesFragment();
         FavouritesFragment favouritesFragment = new FavouritesFragment();
 
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            RecyclerViewAdapter.setColumns(3);
-        }
-        else {
-            RecyclerViewAdapter.setColumns(5);
-        }
-
 
         if(bottomStacks[0] == null){
             for(int i = 0; i<3; i++) {
@@ -141,7 +185,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         }
 
         if(!bottomStacks[currentMode].empty()) {
-            setFragment(bottomStacks[currentMode].peek());
+            setFragment(bottomStacks[currentMode].pop());
             return;
         }
         else {
@@ -173,13 +217,13 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         Intent intent = new Intent(this, Home.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("Exit me", true);
+        currentMode = 0;
         startActivity(intent);
         finish();
     }
 
     @Override
     public void onBackPressed() {
-
         if(bottomStacks[currentMode].size() <= 1){
             endApp();
         }

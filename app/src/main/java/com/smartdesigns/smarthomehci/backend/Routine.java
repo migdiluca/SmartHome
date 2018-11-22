@@ -72,4 +72,12 @@ public class Routine implements RecyclerInterface, Serializable{
         Home home = Home.getInstance();
         home.setFragment(fragment);
     };
+
+    public boolean containsDevice(Device device){
+        for(Action action: actions){
+            if(action.getDeviceId().equals(device.getId()))
+                return true;
+        }
+        return false;
+    }
 }

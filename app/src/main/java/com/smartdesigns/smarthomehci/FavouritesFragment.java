@@ -1,5 +1,6 @@
 package com.smartdesigns.smarthomehci;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -8,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +37,7 @@ public class FavouritesFragment extends Fragment {
 
     private static final int AMOUNT_TO_SHOW = 10;
 
+    private ActionBar toolbar;
 
     RecyclerView favouritesRecycler;
     private OnFragmentInteractionListener mListener;
@@ -42,6 +45,7 @@ public class FavouritesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        toolbar = Home.getMainActionBar();
         if(favouritesList == null) {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
             Gson gson = new Gson();
@@ -56,10 +60,22 @@ public class FavouritesFragment extends Fragment {
     }
 
     public static void access(Device device){
+        if(favouritesList == null) {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Home.getInstance());
+            Gson gson = new Gson();
+            String json = preferences.getString("FavouriteList", null);
+            if(json == null) {
+                favouritesList = new FavouritesList();
+                saveList();
+            }
+            else
+                favouritesList=gson.fromJson(json, FavouritesList.class);
+        }
         favouritesList.access(device);
         saveList();
     }
 
+    @SuppressLint({"CommitPrefEdits", "ApplySharedPref"})
     private static void saveList() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Home.getInstance().getApplicationContext());
         Gson gson = new Gson();
@@ -80,10 +96,7 @@ public class FavouritesFragment extends Fragment {
     }
 
     private void addCards() {
-
-        favouritesList.access(new Device("asd","asd",""));
         RecyclerViewAdapter favouritesRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), favouritesList.getFavouritesDevices(AMOUNT_TO_SHOW));
-        Log.d("ELTAMAÑOES",Integer.toString(favouritesList.getFavouritesDevices(AMOUNT_TO_SHOW).size()));
         favouritesRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), getColumns()));
         favouritesRecycler.setAdapter(favouritesRecyclerAdapter);
     }
@@ -94,9 +107,12 @@ public class FavouritesFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_recycler, container, false);
 
+
+        ApiConnection api = ApiConnection.getInstance(getContext());
+
+
         favouritesRecycler = view.findViewById(R.id.recyclerview);
-        getActivity().setTitle(R.string.title_favourites);
-        setBackgroundColor(view);
+        toolbar.setTitle(R.string.title_favourites);
         addCards();
 
         return view;
@@ -123,29 +139,10 @@ public class FavouritesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("On resume", "here");
-        setBackgroundColor(getView());
+        favouritesList.getFavouritesDevices(AMOUNT_TO_SHOW);
+        addCards();
     }
 
-    private void setBackgroundColor(View view) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        Boolean darkTheme = preferences.getBoolean("dark_theme_checkbox",false);
-        if(darkTheme == true) {
-            Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_YES);
-            view.setBackgroundColor(getResources().getColor(R.color.black));
-            Home.setNavColor(R.color.dark_grey);
-            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_grey)));
-            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey_navbar));
-        } else if(getView() != null) {
-            Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_NO);
-            view.setBackgroundColor(getResources().getColor(R.color.white));
-            Home.setNavColor(R.color.colorPrimary);
-            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey));
-            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
-        }
-    }
 
     @Override
     public void onDetach() {

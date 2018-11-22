@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +44,8 @@ public class RoutinesFragment extends Fragment {
 
     private static Routine currentRoutine;
 
+    private ActionBar toolbar;
+
     private OnFragmentInteractionListener mListener;
 
     public RoutinesFragment() {
@@ -69,8 +72,6 @@ public class RoutinesFragment extends Fragment {
     }
 
     private void addCards() {
-
-
         RecyclerViewAdapter routineRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), routineList);
         routineRecycler.setLayoutManager(new GridLayoutManager(this.getContext(),getColumns()));
         routineRecycler.setAdapter(routineRecyclerAdapter);
@@ -92,16 +93,15 @@ public class RoutinesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        toolbar = Home.getMainActionBar();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recycler, container, false);
 
-        setBackgroundColor(view);
-
         routineRecycler = view.findViewById(R.id.recyclerview);
-        getActivity().setTitle(R.string.title_routines);
+        toolbar.setTitle(R.string.title_routines);
         Context appContext = getContext();
         ApiConnection api = ApiConnection.getInstance(appContext);
 
@@ -109,10 +109,8 @@ public class RoutinesFragment extends Fragment {
         api.getRoutines(new Response.Listener<List<Routine>>() {
             @Override
             public void onResponse(List<Routine> response) {
-                Log.d("ROOMSIZEASD", Integer.toString(response.size()));
                 for(Routine routine: response) {
-                    if(!routineList.contains(routine))
-                        routineList.add(routine);
+                    routineList.add(routine);
                     if(routine.getMeta().matches("\"background\"") == false){
                         int aux = routine.getBackground();
                         ApiConnection.getInstance(getContext()).updateRoutine(routine, new Response.Listener<Boolean>() {
@@ -133,7 +131,7 @@ public class RoutinesFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ERRORLOADINGROOMS", error.toString());
+                Log.d("LOADINGROUTINES", error.toString());
             }
         });
         addCards();
@@ -143,29 +141,10 @@ public class RoutinesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        setBackgroundColor(getView());
         //addCards(routineList);
     }
 
-    private void setBackgroundColor(View view) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        Boolean darkTheme = preferences.getBoolean("dark_theme_checkbox",false);
-        if(darkTheme == true) {
-            Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_YES);
-            view.setBackgroundColor(getResources().getColor(R.color.black));
-            Home.setNavColor(R.color.dark_grey);
-            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_grey)));
-            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey_navbar));
-        } else if(getView() != null) {
-            Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_NO);
-            view.setBackgroundColor(getResources().getColor(R.color.white));
-            Home.setNavColor(R.color.colorPrimary);
-            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey));
-            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
-        }
-    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

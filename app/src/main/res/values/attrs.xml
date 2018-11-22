@@ -2,5 +2,11 @@
 <resources>
     <declare-styleable name="ds">
         <attr name="backgroundColor" format="color"/>
+        <attr name="colorPrimary" format="color"/>
+        <attr name="colorPrimaryDark" format="color"/>
+        <attr name="colorAccent" format="color"/>
+        <attr name="titleColor" format="color"/>
+
+        backgroundColor
     </declare-styleable>
 </resources>

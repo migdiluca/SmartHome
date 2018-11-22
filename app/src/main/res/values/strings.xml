@@ -70,13 +70,22 @@
 
 
     <string name="Refrigerator">Refrigerator</string>
+    <string name="FreezerTemperature">Freezer Temperature</string>
+    <string name="Party">Party</string>
+    <string name="Vacations">Vacations</string>
+    <string name="SuccessFMode">Success! Fridge Mode has successfully changed.</string>
 
     <string name="Timer">Timer</string>
+    <string name="enterMinutes">Minutes!</string>
+    <string name="Start">Start</string>
+    <string name="Stop">Stop</string>
+    <string name="timer" translatable="false">00:00:00</string>
+    <string name="Set">Set</string>
+    <string name="TimerFinished">Timer Finished!</string>
+    <string name="SetDone">Success! The time has changed.</string>
 
     <string name="Alarm">Alarm</string>
 
-
-    <string name="devState"></string>
     <string name="ColumnsAmountPotrait">Columns amount (Potrait mode)</string>
     <string name="ColumnsAmountLandscape">Columns amount (Landscape mode)</string>
     <string name="title_activity_settings">Settings</string>
@@ -120,6 +129,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_favourites">Favourites</string>
+    <string name="title_device">Device</string>
+    <string name="title_activity_device">Device activity</string>
     <string-array name="VSwing">
         <item>auto</item>
         <item>22</item>
@@ -164,5 +175,12 @@
 
     <string name="error_request">Error getting the JSON Request</string>
     <string name="activate_dev_not">Activate Device Notifications</string>
+    
+    <string-array name="FridgeMode">
+        <item>@string/Normal</item>
+        <item>@string/Party</item>
+        <item>@string/Vacations</item>
+    </string-array>
+
 
 </resources>

@@ -28,9 +28,9 @@
     <string name="Heat">Calefacción</string>
     <string name="Fan">Ventiladora</string>
 
-    <string name="SuccessMsgOnOff">El Dispositivo esta </string>
-    <string name="OnM">Prendido</string>
-    <string name="OffM">Apagado</string>
+    <string name="SuccessMsgOnOff">El dispositivo esta\ </string>
+    <string name="OnM">prendido</string>
+    <string name="OffM">apagado</string>
     <string name="SuccessMsgTemp">La temperatura ha cambiado.</string>
 
     <string name="Door">Puerta</string>
@@ -64,8 +64,20 @@
     <string name="SuccessHMode">Se ha cambiado el Modo Calor.</string>
 
     <string name="Refrigerator">Heladera</string>
+    <string name="FreezerTemperature">Temperatura Congelador</string>
+    <string name="Party">Fiesta</string>
+    <string name="Vacations">Vacaciones</string>
+    <string name="SuccessFMode">Se ha cambiado el Modo de la Heladora.</string>
 
     <string name="Timer">Temporizador</string>
+    <string name="enterMinutes">Minutos</string>
+    <string name="Start">Iniciar</string>
+    <string name="Stop">Parar</string>
+    <string name="Set">Ajustar</string>
+    <string name="TimerFinished">Se terminó la Alarma!</string>
+    <string name="SetDone">Se ha establecido el Temporizador!</string>
+
+
 
     <string name="Alarm">Alarma</string>
     <string name="ColumnsAmount">Cantidad de columnas</string>
