@@ -67,7 +67,8 @@
     <string name="FreezerTemperature">Temperatura congelador</string>
     <string name="Party">Fiesta</string>
     <string name="Vacations">Vacaciones</string>
-    <string name="SuccessFMode">Se ha cambiado el modo de la heladera.</string>
+    <string name="SuccessFMode">Se ha cambiado el Modo de la Heladora.</string>
+    <string name="Default">Estándar</string>
 
     <string name="Timer">Temporizador</string>
     <string name="enterMinutes">Minutos</string>

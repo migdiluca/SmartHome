@@ -74,6 +74,7 @@
     <string name="Party">Party</string>
     <string name="Vacations">Vacations</string>
     <string name="SuccessFMode">Success! Fridge mode has successfully changed.</string>
+    <string name="Default">Default</string>
 
     <string name="Timer">Timer</string>
     <string name="enterMinutes">Minutes!</string>
@@ -177,11 +178,14 @@
     <string name="activate_dev_not">Activate Device Notifications</string>
     
     <string-array name="FridgeMode">
-        <item>@string/Normal</item>
+        <item>@string/Default</item>
         <item>@string/Party</item>
         <item>@string/Vacations</item>
     </string-array>
 
     <string name="ChangeMessage">A device has been changed!</string>
+    <string name="empty_room">This room is empty!</string>
+    <string name="no_rooms_available">There are no rooms yet!</string>
+    <string name="no_favorites_available">There are no favourites device, access a device to add one to your favourites!</string>
 
 </resources>
