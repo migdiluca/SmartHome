@@ -35,6 +35,7 @@ import com.smartdesigns.smarthomehci.backend.TypeId;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateAc;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateBlinds;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateDoor;
 
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
@@ -379,6 +380,30 @@ public class Devices extends Fragment {
 
             openBut = view.findViewById(R.id.OpenButton);
             lockBut = view.findViewById(R.id.LockButton);
+
+            api.getStateDoor(device, new Response.Listener<GetStateDoor>() {
+                @Override
+                public void onResponse(GetStateDoor response) {
+                    if(response.getStatus().equals("closed")) {
+                        openBut.setChecked(false);
+                    }
+                    else {
+                        openBut.setChecked(true);
+                    }
+                    if(response.getStatus().equals("locked")) {
+                        lockBut.setChecked(true);
+                    }
+                    else {
+                        lockBut.setChecked(false);
+                    }
+                }
+
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
 
             if (Home.getInstance().getCurrentMode() != 1) {
 
