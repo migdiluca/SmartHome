@@ -63,6 +63,7 @@ public class Devices extends Fragment {
 
     ImageView image;
 
+
     /**
      * Buttons
      * <p>
@@ -79,6 +80,7 @@ public class Devices extends Fragment {
     TextView fanSpeedStat;
     TextView acModeStat;
     TextView acTempStats;
+    private GetStateAc responseAc;
 
 
     /**
@@ -86,6 +88,8 @@ public class Devices extends Fragment {
      */
     RadioButton up;
     RadioButton down;
+    private GetStateBlinds responseBlinds;
+
 
     /**
      * Oven
@@ -99,12 +103,16 @@ public class Devices extends Fragment {
     TextView heatModeStats;
     TextView convectionModeStats;
     TextView ovenTempStats;
+    private GetStateOven responseOven;
+
 
     /**
      * Door
      */
     CheckBox openBut;
     CheckBox lockBut;
+    private GetStateDoor responseDoor;
+
 
     /**
      * Lamp
@@ -116,6 +124,8 @@ public class Devices extends Fragment {
     TextView lampBrightnessStats;
     View colorPickerView;
     int col;
+    private GetStateLamp responseLamp;
+
 
     /**
      * Refrigerator
@@ -126,6 +136,8 @@ public class Devices extends Fragment {
     TextView fridgeModeStats;
     TextView freezerTempStats;
     TextView fridgeTempStats;
+    private GetStateRefrigerator responseRefrigerator;
+
 
 
     /**
@@ -139,6 +151,8 @@ public class Devices extends Fragment {
     Button setButton;
     TextView timer;
     CountDownTimer countDownTimer;
+    private GetStateTimer responseTimer;
+
 
 
     View thumbView;
@@ -191,6 +205,9 @@ public class Devices extends Fragment {
             api.getStateAc(device, new Response.Listener<GetStateAc>() {
                 @Override
                 public void onResponse(GetStateAc response) {
+
+                    responseAc = response;
+
                     if (response.getStatus().equals("on"))
                         onOffAc.setChecked(true);
                     else
@@ -349,6 +366,8 @@ public class Devices extends Fragment {
             api.getStateBlinds(device, new Response.Listener<GetStateBlinds>() {
                 @Override
                 public void onResponse(GetStateBlinds response) {
+                    responseBlinds = response;
+
                     if (response.getStatus().equals("open") || response.getStatus().equals("opening")) {
                         up.toggle();
                     } else {
@@ -428,12 +447,14 @@ public class Devices extends Fragment {
             api.getStateDoor(device, new Response.Listener<GetStateDoor>() {
                 @Override
                 public void onResponse(GetStateDoor response) {
+                    responseDoor = response;
+
                     if (response.getStatus().equals("closed")) {
                         openBut.setChecked(false);
                     } else {
                         openBut.setChecked(true);
                     }
-                    if (response.getStatus().equals("locked")) {
+                    if (response.getLock().equals("locked")) {
                         lockBut.setChecked(true);
                     } else {
                         lockBut.setChecked(false);
@@ -535,6 +556,8 @@ public class Devices extends Fragment {
             api.getStateLamp(device, new Response.Listener<GetStateLamp>() {
                 @Override
                 public void onResponse(GetStateLamp response) {
+                    responseLamp = response;
+
                     if (response.getStatus().equals("on"))
                         onOffLamp.setChecked(true);
                     else
@@ -648,10 +671,9 @@ public class Devices extends Fragment {
                         cp.setCallback(new ColorPickerCallback() {
                             @Override
                             public void onColorChosen(@ColorInt int color) {
-
                                 col = color;
-                                colorPickerView.setBackgroundColor(col);
-                                String s = String.format("#%06X", (0xFFFFFF & col));
+                                colorPickerView.setBackgroundColor(color);
+                                String s = String.format("#%06X", (0xFFFFFF & color));
                                 LinkedList<String> ll = new LinkedList<>();
                                 ll.add(s);
                                 Action action = new Action(device.getId(), "setColor", ll);
@@ -703,6 +725,8 @@ public class Devices extends Fragment {
             api.getStateOven(device, new Response.Listener<GetStateOven>() {
                 @Override
                 public void onResponse(GetStateOven response) {
+                    responseOven = response;
+
                     if (response.getStatus().equals("on"))
                         onOffOven.setChecked(true);
                     else
@@ -726,9 +750,9 @@ public class Devices extends Fragment {
 
                     switch (response.getConvection()) {
                         case "normal":
-                            convectionModeStats.setText(R.string.Large);
+                            convectionModeStats.setText(R.string.Normal);
                             break;
-                        case "Normal":
+                        case "eco":
                             convectionModeStats.setText(R.string.Eco);
                             break;
                         default:
@@ -879,6 +903,7 @@ public class Devices extends Fragment {
             api.getStateRefrigerator(device, new Response.Listener<GetStateRefrigerator>() {
                 @Override
                 public void onResponse(GetStateRefrigerator response) {
+                    responseRefrigerator = response;
 
                     fridgeTempStats.setText(Integer.toString(response.getTemperature()) + " C");
                     freezerTempStats.setText(Integer.toString(response.getTemperature()) + " C");
@@ -1040,6 +1065,7 @@ public class Devices extends Fragment {
             api.getStateTimer(device, new Response.Listener<GetStateTimer>() {
                 @Override
                 public void onResponse(GetStateTimer response) {
+                    responseTimer = response;
 
                     int value = response.getInterval();
                     hour.setValue(value / 3600);
@@ -1214,13 +1240,24 @@ public class Devices extends Fragment {
 
     public int numberDialogue;
 
+    public int findString(String[] array, String str){
+        for(int i=0; i < array.length; i++){
+            if(array[i].equals(str)) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
     public void showDialogueConvectionMode(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(R.string.ConvectionMode);
 
+        int aux = findString(getResources().getStringArray(R.array.ConvectionMode), (String)convectionModeStats.getText());
+
         //list of items
         String[] items = getResources().getStringArray(R.array.ConvectionMode);
-        builder.setSingleChoiceItems(items, 0,
+        builder.setSingleChoiceItems(items, aux,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -1271,9 +1308,11 @@ public class Devices extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(R.string.HeatMode);
 
+        int aux = findString(getResources().getStringArray(R.array.HeatMode), (String)heatModeStats.getText());
+
         //list of items
         String[] items = getResources().getStringArray(R.array.HeatMode);
-        builder.setSingleChoiceItems(items, 0,
+        builder.setSingleChoiceItems(items, aux,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -1325,9 +1364,12 @@ public class Devices extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(R.string.GrillMode);
 
+
+        int aux = findString(getResources().getStringArray(R.array.GrillMode), (String)grillModeStats.getText());
+
         //list of items
         String[] items = getResources().getStringArray(R.array.GrillMode);
-        builder.setSingleChoiceItems(items, 0,
+        builder.setSingleChoiceItems(items, aux,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -1380,9 +1422,11 @@ public class Devices extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(R.string.VerticalSwing);
 
+        int aux = findString(getResources().getStringArray(R.array.VSwing), (String)vSwingStat.getText());
+
         //list of items
         String[] items = getResources().getStringArray(R.array.VSwing);
-        builder.setSingleChoiceItems(items, 0,
+        builder.setSingleChoiceItems(items, aux,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -1424,9 +1468,11 @@ public class Devices extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(R.string.HSwingSuccess);
 
+        int aux = findString(getResources().getStringArray(R.array.HSwing), (String)hSwingStat.getText());
+
         //list of items
         String[] items = getResources().getStringArray(R.array.HSwing);
-        builder.setSingleChoiceItems(items, 0,
+        builder.setSingleChoiceItems(items, aux,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -1467,9 +1513,11 @@ public class Devices extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(R.string.FanSpeed);
 
+        int aux = findString(getResources().getStringArray(R.array.FanSpeed), (String)fanSpeedStat.getText());
+
         //list of items
         String[] items = getResources().getStringArray(R.array.FanSpeed);
-        builder.setSingleChoiceItems(items, 0,
+        builder.setSingleChoiceItems(items, aux,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -1510,9 +1558,11 @@ public class Devices extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(R.string.AcMode);
 
+        int aux = findString(getResources().getStringArray(R.array.AcMode), (String)acModeStat.getText());
+
         //list of items
         String[] items = getResources().getStringArray(R.array.AcMode);
-        builder.setSingleChoiceItems(items, 0,
+        builder.setSingleChoiceItems(items, aux,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -1567,9 +1617,11 @@ public class Devices extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(R.string.AcMode);
 
+        int aux = findString(getResources().getStringArray(R.array.FridgeMode), (String)fridgeModeStats.getText());
+
         //list of items
         String[] items = getResources().getStringArray(R.array.FridgeMode);
-        builder.setSingleChoiceItems(items, 0,
+        builder.setSingleChoiceItems(items, aux,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
