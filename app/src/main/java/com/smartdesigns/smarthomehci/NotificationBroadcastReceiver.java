@@ -158,8 +158,8 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 if(Home.currentClass.equals(Home.class) || Home.currentClass.equals(SettingsActivity.class)) {
                     Toast.makeText(context, name + " has changed its state: " + event, Toast.LENGTH_LONG).show();
                 }
-            } else /*if (!Home.changedHere)*/{
-
+            } else if (!Home.changedHere){
+                Home.changedHere = false;
                 Intent notificationIntent = new Intent(this.context, Home.class);
 
 
