@@ -1697,7 +1697,7 @@ public class Devices extends Fragment {
 
     @Override
     public void onPause() {
-        Log.d("a:","onPause");
+        Log.d("apalapapa","onPause");
         super.onPause();
         Home.activityPaused();
     }
@@ -1705,7 +1705,7 @@ public class Devices extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("a", "onDestroy");
+        Log.d("apalapapa", "onDestroy");
     }
 
 }
