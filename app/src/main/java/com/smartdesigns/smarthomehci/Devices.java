@@ -4,17 +4,12 @@ import android.app.AlertDialog;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -1079,11 +1074,23 @@ public class Devices extends Fragment {
                         startTimer(rem/3600, (rem % 3600) / 60, ((rem % 3600) % 60) / 60);
                         timer.setText(hms);//set text
                         startButton.setClickable(false);
+                        stopButton.setClickable(true);
+                        setButton.setClickable(false);
+                        stopButton.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                        setButton.setBackgroundColor(getResources().getColor(R.color.buttonColorOff));
+                        startButton.setBackgroundColor(getResources().getColor(R.color.buttonColorOff));
                     }
                     else {
                         String hms = String.format("%02d:%02d:%02d", hour.getValue(), minute.getValue(), second.getValue());
                         timer.setText(hms);//set text
+
+                        startButton.setClickable(true);
                         stopButton.setClickable(false);
+                        setButton.setClickable(true);
+
+                        stopButton.setBackgroundColor(getResources().getColor(R.color.buttonColorOff));
+                        setButton.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                        startButton.setBackgroundColor(getResources().getColor(R.color.buttonColor));
                     }
                 }
 
@@ -1129,6 +1136,10 @@ public class Devices extends Fragment {
                                 startTimer(hour.getValue(), minute.getValue(), second.getValue());
                                 startButton.setClickable(false);
                                 setButton.setClickable(false);
+                                stopButton.setClickable(true);
+                                stopButton.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                                setButton.setBackgroundColor(getResources().getColor(R.color.buttonColorOff));
+                                startButton.setBackgroundColor(getResources().getColor(R.color.buttonColorOff));
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -1155,6 +1166,9 @@ public class Devices extends Fragment {
                                 stopButton.setClickable(false);
                                 startButton.setClickable(true);
                                 setButton.setClickable(true);
+                                stopButton.setBackgroundColor(getResources().getColor(R.color.buttonColorOff));
+                                setButton.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                                startButton.setBackgroundColor(getResources().getColor(R.color.buttonColor));
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -1178,6 +1192,7 @@ public class Devices extends Fragment {
                             @Override
                             public void onResponse(Object response) {
                                 String hms = String.format("%02d:%02d:%02d", hour.getValue(), minute.getValue(), second.getValue());
+                                timer.setText(hms);
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SetDone)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
@@ -1234,6 +1249,9 @@ public class Devices extends Fragment {
                 setButton.setClickable(true);
                 stopButton.setClickable(false);
                 startButton.setClickable(true);
+                stopButton.setBackgroundColor(getResources().getColor(R.color.buttonColorOff));
+                setButton.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                startButton.setBackgroundColor(getResources().getColor(R.color.buttonColor));
             }
         }.start();
     }
@@ -1679,8 +1697,15 @@ public class Devices extends Fragment {
 
     @Override
     public void onPause() {
+        Log.d("apalapapa","onPause");
         super.onPause();
         Home.activityPaused();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("apalapapa", "onDestroy");
     }
 
 }
