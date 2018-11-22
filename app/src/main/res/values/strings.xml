@@ -225,6 +225,8 @@
     <string name="connection_error">There are some connection issues, check your connection and swipe down to refresh.</string>
     <string name="apply_routine_error">The routine could not be applied because there are some connection issues, check your connection and try again.</string>
     <string name="no_routines_error">The routines could not be loaded because there are some connection issues, check your connection and try again.</string>
+    <string name="no_routines_available">The are no routines yet!.</string>
     <string name="loading">Loading</string>
+    <string name="device_not_exist">There was a connection error or this devices does not exist anymore. Please swipe to refresh.</string>
 
 </resources>
