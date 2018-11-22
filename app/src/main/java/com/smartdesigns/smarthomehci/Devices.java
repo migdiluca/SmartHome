@@ -1177,6 +1177,7 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
+                                String hms = String.format("%02d:%02d:%02d", hour.getValue(), minute.getValue(), second.getValue());
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SetDone)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
