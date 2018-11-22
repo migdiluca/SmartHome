@@ -1,6 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/acStyle">
+
+
+    <LinearLayout
+        android:id="@+id/deviceMiniTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/DeviceLogo"
+                android:layout_width="174dp"
+                android:layout_height="99dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="73dp"
+                android:layout_marginTop="39dp"
+                android:layout_marginEnd="73dp"
+                android:layout_marginBottom="54dp"
+                android:contentDescription="@string/Timer"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.889"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.08"
+                app:srcCompat="@drawable/timer" />
+
+            <TextView
+                android:id="@+id/countdownText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/DeviceLogo"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-54dp"
+                android:gravity="center"
+                android:text="@string/timer"
+                android:textColor="#4CAF50"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/TemperatureLL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dip"
+                    android:background="#dddddddd" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                    <NumberPicker
+                        android:id="@+id/Hour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <View
+                        android:layout_width="4dip"
+                        android:layout_height="fill_parent"
+                        android:background="#ffffffff" />
+
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:text=":"
+                        android:textColor="@color/black"
+                        android:textSize="21sp"
+                        />
+
+                    <View
+                        android:layout_width="4dip"
+                        android:layout_height="fill_parent"
+                        android:background="#ffffffff" />
+
+                    <NumberPicker
+                        android:id="@+id/Minute"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <View
+                        android:layout_width="4dip"
+                        android:layout_height="fill_parent"
+                        android:background="#ffffffff" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:text=":"
+                        android:textColor="@color/black"
+                        android:textSize="21sp"
+                        />
+
+                    <View
+                        android:layout_width="4dip"
+                        android:layout_height="fill_parent"
+                        android:background="#ffffffff" />
+
+                    <NumberPicker
+                        android:id="@+id/Second"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/StopTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="#009688"
+                    android:padding="10dp"
+                    android:text="@string/Stop"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="25dip"
+                    android:layout_height="fill_parent"
+                    android:background="#ffffffff" />
+
+                <Button
+                    android:id="@+id/SetTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="#009688"
+                    android:padding="10dp"
+                    android:text="@string/Set"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="25dip"
+                    android:layout_height="fill_parent"
+                    android:background="#ffffffff" />
+
+                <Button
+                    android:id="@+id/StartTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="#009688"
+                    android:padding="10dp"
+                    android:text="@string/Start"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
