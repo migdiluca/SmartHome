@@ -25,6 +25,7 @@ import com.google.gson.reflect.TypeToken;
 import com.smartdesigns.smarthomehci.Utils.FavouritesList;
 import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
 import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
+import com.smartdesigns.smarthomehci.Utils.RefreshFragment;
 import com.smartdesigns.smarthomehci.backend.Device;
 import com.smartdesigns.smarthomehci.backend.Room;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
@@ -33,7 +34,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavouritesFragment extends Fragment {
+public class FavouritesFragment extends RefreshFragment {
 
     private static FavouritesList favouritesList = null;
 
@@ -57,6 +58,8 @@ public class FavouritesFragment extends Fragment {
         favouritesList.access(device);
         saveList();
     }
+
+    public void refresh(){}
 
     private static void loadList() {
         if(favouritesList == null) {

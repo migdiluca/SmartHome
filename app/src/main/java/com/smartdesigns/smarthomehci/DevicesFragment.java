@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
 import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
+import com.smartdesigns.smarthomehci.Utils.RefreshFragment;
 import com.smartdesigns.smarthomehci.backend.Device;
 import com.smartdesigns.smarthomehci.backend.Room;
 import com.smartdesigns.smarthomehci.backend.Routine;
@@ -41,7 +42,7 @@ import java.util.List;
  * Use the {@link DevicesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DevicesFragment extends Fragment {
+public class DevicesFragment extends RefreshFragment {
 
     private Room room = null;
     private Routine routine = null;
@@ -120,8 +121,7 @@ public class DevicesFragment extends Fragment {
     @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Context appContext = getContext();
-        ApiConnection api = ApiConnection.getInstance(appContext);
+
 
         View view = inflater.inflate(R.layout.fragment_devices, container, false);
 
@@ -159,7 +159,15 @@ public class DevicesFragment extends Fragment {
 
         }
 
+        refresh();
 
+
+        return view;
+    }
+
+    public void refresh() {
+
+        ApiConnection api = ApiConnection.getInstance(getContext());
         if (Home.getInstance().getCurrentMode() == 0){
             api.getRoomDevices(room, new Response.Listener<List<Device>>() {
                 @Override
@@ -225,8 +233,6 @@ public class DevicesFragment extends Fragment {
                 }
             });
         }
-
-        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

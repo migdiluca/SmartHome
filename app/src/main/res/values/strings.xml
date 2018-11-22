@@ -183,5 +183,6 @@
         <item>@string/Vacations</item>
     </string-array>
 
+    <string name="ChangeMessage">A device has been changed!</string>
 
 </resources>

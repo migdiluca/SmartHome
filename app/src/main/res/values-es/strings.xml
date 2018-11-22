@@ -94,6 +94,9 @@
     <string name="Medium">30 min</string>
     <string name="Short">1 min</string>
     <string name="title_favourites">Favortios</string>
+    <string name="ChangeMessage">Un dispositivo ha sido modificado!</string>
+    <string name="title_device">Pantalla del dispostivo</string>
+    <string name="title_activity_device">Actividad del dispositivo</string>
 
 
 </resources>

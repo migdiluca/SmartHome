@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.smartdesigns.smarthomehci.DevicesFragment;
 import com.smartdesigns.smarthomehci.Home;
 import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
+import com.smartdesigns.smarthomehci.Utils.RefreshFragment;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
 import java.io.Serializable;
@@ -81,13 +82,19 @@ public class Room implements RecyclerInterface, Serializable {
     }
 
     public void onClickAction(Serializable arg, Context context) {
-        Fragment fragment = new DevicesFragment();
+        RefreshFragment fragment = new DevicesFragment();
         Bundle arguments = new Bundle();
         arguments.putSerializable("Object", this);
         fragment.setArguments(arguments);
 
         Home home = Home.getInstance();
         home.setFragment(fragment);
+    }
+
+    public String getImg(){
+        Gson gson = new Gson();
+        Meta aux = gson.fromJson(this.meta, Meta.class);
+        return aux.getImg();
     }
 
     @Override

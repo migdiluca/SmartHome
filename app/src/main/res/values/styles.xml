@@ -4,13 +4,23 @@
     <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:textColorSecondary">@color/dark_grey</item>
         <item name="actionMenuTextColor">@android:color/white</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="backgroundColor">@color/white</item>
         <item name="android:textColor">@color/black</item>
         <item name="titleColor">@color/white</item>
         <item name="android:textColorAlertDialogListItem">@color/dark_grey</item>
+    </style>
+
+    <style name="AppTheme.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- THIS is where you can color the arrow and the overflow button! -->
+        <item name="colorControlNormal">@color/white</item> <!-- sets the color for the back arrow -->
+        <item name="actionOverflowButtonStyle">@style/DotsLightTheme</item> <!-- sets the style for the overflow button -->
+    </style>
+
+    <style name="DotsLightTheme" parent="@style/Widget.AppCompat.ActionButton.Overflow" >
+        <item name="android:tint">@color/white</item>
     </style>
 
     <style name="AppThemeDark" parent="Theme.AppCompat.Light.NoActionBar">
@@ -26,8 +36,14 @@
         <item name="backgroundColor">@color/black</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textColorAlertDialogListItem">@color/white</item>
-
+        <item name="colorControlNormal">@color/white</item>
+        <item name="actionOverflowButtonStyle">@style/DotsDarkTheme</item>
     </style>
+
+    <style name="DotsDarkTheme" parent="@style/Widget.AppCompat.ActionButton.Overflow" >
+        <item name="android:tint">@color/white</item>
+    </style>
+
 
 
     <style name="PopupMenuDark" parent="ThemeOverlay.AppCompat.Light">
