@@ -3,7 +3,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.smartdesigns.smarthomehci.Devices;
 import com.smartdesigns.smarthomehci.FavouritesFragment;
@@ -12,6 +15,7 @@ import com.smartdesigns.smarthomehci.R;
 import com.smartdesigns.smarthomehci.RoutinesFragment;
 import com.smartdesigns.smarthomehci.Utils.FavouritesList;
 import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
+import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
 import java.io.Serializable;
 import java.util.List;
@@ -23,6 +27,8 @@ public class Device implements RecyclerInterface, Serializable {
     private String typeId;
     private String meta;
     //private int background = -1;
+
+    private Device thisDevice;
 
 
     public Device(String name, String typeId,String meta){
@@ -98,22 +104,24 @@ public class Device implements RecyclerInterface, Serializable {
         }
     }
 
-    public void onClickAction(Serializable arg, Context context) {
+    public void onClickAction(Serializable arg, final Context context) {
 
-        FavouritesFragment.access(this);
+        thisDevice = this;
+        ApiConnection api = ApiConnection.getInstance(context);
+        api.getDevice(this.id,new Response.Listener<Device>() {
+            @Override
+            public void onResponse(Device response) {
+                FavouritesFragment.access(thisDevice);
+                Home.getInstance().setDeviceFragment(thisDevice);
+            }
 
-        Home.getInstance().setDeviceFragment(this);
-     /*
-        Intent device = new Intent(context, Devices.class);
-        if(Home.getInstance().getCurrentMode() == 0)
-            device.putExtra("mode", 0);
-        else {
-            device.putExtra("mode", 1);
-            device.putExtra("routine",RoutinesFragment.getCurrentRoutine());
-        }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, context.getResources().getString(R.string.device_not_exist), Toast.LENGTH_LONG).show();
 
-        device.putExtra("device", this);
-        context.startActivity(device);*/
+            }
+        });
     }
 
     @Override

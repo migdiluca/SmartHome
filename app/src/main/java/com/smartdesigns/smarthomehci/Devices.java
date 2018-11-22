@@ -559,7 +559,6 @@ public class Devices extends Fragment {
                     lampBrightness.setProgress(response.getBrightness());
                     lampBrightnessStats.setText(Integer.toString(response.getBrightness()));
 
-
                     col = Color.parseColor(response.getColor());
                     colorPickerView.setBackgroundColor(col);
 
