@@ -242,6 +242,7 @@ public class Devices extends Fragment {
                                     Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) + " " + sPrint
                                             , Toast.LENGTH_LONG);
                                     toast.show();
+                                    Home.changedHere = true;
                                 }
                                 ft = true;
                             }
@@ -284,6 +285,7 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgTemp)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
+                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -372,6 +374,7 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessBlindsUp)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
+                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -395,6 +398,7 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessBlindsDown)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
+                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -464,6 +468,7 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgDoor) + f
                                         , Toast.LENGTH_LONG);
                                 toast.show();
+                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -496,6 +501,7 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgDoor) + f
                                         , Toast.LENGTH_LONG);
                                 toast.show();
+                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -763,6 +769,7 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgOnOff) + " " + sPrint
                                         , Toast.LENGTH_LONG);
                                 toast.show();
+                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -805,6 +812,7 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgTemp)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
+                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -922,6 +930,7 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgTemp)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
+                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -964,6 +973,7 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessMsgTemp)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
+                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -1120,6 +1130,7 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SetDone)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
+                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -1213,6 +1224,7 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessCMode)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
+                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -1265,6 +1277,7 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessHMode)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
+                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -1320,6 +1333,7 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessGMode)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
+                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -1362,6 +1376,7 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.VSwingSuccess)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
+                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -1405,6 +1420,7 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.HSwingSuccess)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
+                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -1447,6 +1463,7 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.FanSpeedSuccess)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
+                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -1503,6 +1520,7 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.AcModeSuccess)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
+                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -1556,6 +1574,7 @@ public class Devices extends Fragment {
                                 Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessFMode)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
+                                Home.changedHere = true;
                             }
                         }, new Response.ErrorListener() {
                             @Override

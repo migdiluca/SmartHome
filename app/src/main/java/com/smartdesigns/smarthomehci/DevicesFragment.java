@@ -213,6 +213,7 @@ public class DevicesFragment extends RefreshFragment {
             api.getDevices(new Response.Listener<List<Device>>() {
                 @Override
                 public void onResponse(List<Device> response) {
+                    text.setText("");
                     for (Device device : response) {
                         if (routine.containsDevice(device)) {
                             devicesList.add(device);
@@ -221,7 +222,7 @@ public class DevicesFragment extends RefreshFragment {
                                 ApiConnection.getInstance(getContext()).updateDevice(device, new Response.Listener<Boolean>() {
                                     @Override
                                     public void onResponse(Boolean response) {
-                                        text.setText("");
+
                                     }
                                 }, new Response.ErrorListener() {
                                     @Override

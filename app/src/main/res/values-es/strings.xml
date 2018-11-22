@@ -27,9 +27,9 @@
     <string name="Cool">Enfriar</string>
     <string name="Heat">Calefacción</string>
     <string name="Fan">Ventilador</string>
-    <string name="VSwingSuccess">Se ha cambiado la Oscilación vertical.</string>
-    <string name="HSwingSuccess">Se ha cambiado la Oscilación horizontal.</string>
-    <string name="FanSpeedSuccess">Se ha cambiado la Velocidad del ventilador.</string>
+    <string name="VSwingSuccess">Se ha cambiado la oscilación vertical.</string>
+    <string name="HSwingSuccess">Se ha cambiado la oscilación horizontal.</string>
+    <string name="FanSpeedSuccess">Se ha cambiado la velocidad del ventilador.</string>
     <string name="AcModeSuccess">Se ha cambiado el modo.</string>
 
     <string name="SuccessMsgOnOff">El dispositivo esta </string>
@@ -61,7 +61,7 @@
     <string name="Normal">Normal</string>
     <string name="Large">Grande</string>
     <string name="ConvectionMode">Convección</string>
-    <string name="Bottom">Fondo</string>
+    <string name="Bottom">Debajo</string>
     <string name="Top">Arriba</string>
     <string name="Conventional">Convencional</string>
     <string name="HeatMode">Modo calor</string>
@@ -74,7 +74,7 @@
     <string name="FreezerTemperature">Temperatura congelador</string>
     <string name="Party">Fiesta</string>
     <string name="Vacations">Vacaciones</string>
-    <string name="SuccessFMode">Se ha cambiado el Modo de la Heladora.</string>
+    <string name="SuccessFMode">Se ha cambiado el modo de la heladera.</string>
     <string name="Default">Estándar</string>
 
     <string name="Timer">Temporizador</string>
@@ -82,8 +82,8 @@
     <string name="Start">Iniciar</string>
     <string name="Stop">Parar</string>
     <string name="Set">Ajustar</string>
-    <string name="TimerFinished">Se terminó la Alarma!</string>
-    <string name="SetDone">Se ha establecido el Temporizador!</string>
+    <string name="TimerFinished">Se terminó la alarma!</string>
+    <string name="SetDone">Se ha establecido el temporizador!</string>
 
 
 
@@ -94,8 +94,8 @@
     <string name="GrillMode">Modo Grill</string>
     <string name="error_request">Error intentando conseguir el request de JSON</string>
     <string name="activate_dev_not">Activar notificaciones de dispositivo</string>
-    <string name="ColumnsAmountPotrait">Cantidad de Columnas(Modo Retrato)</string>
-    <string name="ColumnsAmountLandscape">Cantidad de Columnas(Modo Paisaje)</string>
+    <string name="ColumnsAmountPotrait">Cantidad de columnas(Modo retrato)</string>
+    <string name="ColumnsAmountLandscape">Cantidad de columnas(Modo paisaje)</string>
     <string name="Interval">Intervalo entre notificaciones (Debe reiniciar la app)</string>
     <string name="Long">60 min</string>
     <string name="Medium">30 min</string>
@@ -106,7 +106,7 @@
     <string name="title_activity_device">Actividad del dispositivo</string>
 
 
-    <string name="empty_room">La habitacion esta vacia</string>
+    <string name="empty_room">La habitación esta vacia</string>
     <string name="no_rooms_available">No hay habitaciones</string>
     <string name="no_rooms_error">Las habitaciones no pudieron ser cargadas debido a problemas de conectividad, comprobá tu conexión e intenta de nuevo.</string>
     <string name="no_favorites_available">No hay dispositivos en favoritos.</string>
