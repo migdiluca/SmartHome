@@ -47,14 +47,6 @@ public class FavouritesFragment extends RefreshFragment {
     RecyclerView favouritesRecycler;
     private OnFragmentInteractionListener mListener;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        toolbar = Home.getMainActionBar();
-        toolbar.setTitle(R.string.title_favourites);
-        loadList();
-    }
-
     public static void access(Device device){
         loadList();
         favouritesList.access(device);
@@ -109,18 +101,22 @@ public class FavouritesFragment extends RefreshFragment {
 
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        toolbar = Home.getMainActionBar();
+        toolbar.setTitle(R.string.title_favourites);
+        loadList();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_recycler, container, false);
         text = view.findViewById(R.id.fragment_text);
-
-        ApiConnection api = ApiConnection.getInstance(getContext());
-
         loadList();
 
         favouritesRecycler = view.findViewById(R.id.recyclerview);
         toolbar.setTitle(R.string.title_favourites);
-        addCards();
 
         return view;
     }
