@@ -59,6 +59,17 @@ public class FavouritesFragment extends Fragment {
     }
 
     public static void access(Device device){
+        if(favouritesList == null) {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Home.getInstance());
+            Gson gson = new Gson();
+            String json = preferences.getString("FavouriteList", null);
+            if(json == null) {
+                favouritesList = new FavouritesList();
+                saveList();
+            }
+            else
+                favouritesList=gson.fromJson(json, FavouritesList.class);
+        }
         favouritesList.access(device);
         saveList();
     }
