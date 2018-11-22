@@ -149,7 +149,6 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         mainToolbar = findViewById(R.id.main_toolbar);
         if(getSupportActionBar() == null) {
             setSupportActionBar(mainToolbar);
-            Log.d("TOOLBAR", "NULL");
         }
 
         if ((getResources().getConfiguration().screenLayout &
@@ -191,9 +190,6 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 
             setFragment(bottomStacks[currentMode].pop());
         }
-
-        Log.d("First stackkkkkk:", Integer.toString(bottomStacks[0].size()));
-
     }
 
     private void endApp() {
@@ -215,10 +211,6 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
             Fragment back = bottomStacks[currentMode].pop();
             setFragment(back);
         }
-
-        Log.d("First stack:", Integer.toString(bottomStacks[0].size()));
-        Log.d("Seconda stack:", Integer.toString(bottomStacks[1].size()));
-        Log.d("Third stack:", Integer.toString(bottomStacks[2].size()));
     }
 
     @Override

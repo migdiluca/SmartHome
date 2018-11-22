@@ -100,12 +100,19 @@ public class DevicesFragment extends Fragment {
         } else if (Home.getInstance().getCurrentMode() == 1) {
             routine = (Routine) getArguments().getSerializable("Object");
             getActivity().setTitle(routine.getName());
+            getActivity().setTitle(routine.getName());
         }
     }
 
     @Override
     public void onPause(){
         super.onPause();
+        //Home.getInstance().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
         Home.getInstance().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
@@ -231,26 +238,6 @@ public class DevicesFragment extends Fragment {
         }
     }
 
-    private void setBackgroundColor(View view) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        Boolean darkTheme = preferences.getBoolean("dark_theme_checkbox",false);
-        if(darkTheme == true) {
-            Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_YES);
-            view.setBackgroundColor(getResources().getColor(R.color.black));
-            Home.setNavColor(R.color.dark_grey);
-            toolbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_grey)));
-            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey_navbar));
-        } else if(getView() != null) {
-            Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_NO);
-            view.setBackgroundColor(getResources().getColor(R.color.white));
-            Home.setNavColor(R.color.colorPrimary);
-            toolbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey));
-            toolbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -271,11 +258,11 @@ public class DevicesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Home.getInstance().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (room != null)
-            getActivity().setTitle(room.getName());
+            Home.getMainActionBar().setTitle(room.getName());
         else
-            getActivity().setTitle(routine.getName());
-        setBackgroundColor(getView());
+            Home.getMainActionBar().setTitle(routine.getName());
         addCards();
     }
 

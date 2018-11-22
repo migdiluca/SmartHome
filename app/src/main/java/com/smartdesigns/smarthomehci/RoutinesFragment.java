@@ -72,8 +72,6 @@ public class RoutinesFragment extends Fragment {
     }
 
     private void addCards() {
-
-
         RecyclerViewAdapter routineRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), routineList);
         routineRecycler.setLayoutManager(new GridLayoutManager(this.getContext(),getColumns()));
         routineRecycler.setAdapter(routineRecyclerAdapter);
