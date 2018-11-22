@@ -45,13 +45,6 @@ import java.util.concurrent.TimeUnit;
 
 public class Devices extends Fragment {
 
-    private BroadcastReceiver broadcastReceiver;
-    public static int MESSAGE_ID;
-
-
-
-    private Room room = null;
-    private Routine routine = null;
     private Device device = null;
     private View view;
     private Context context;
