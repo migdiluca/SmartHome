@@ -117,7 +117,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                                 @Override
                                 public void onResponse(String response) {
                                     Log.d("NOTIF", response);
-                                    sendNotification(response, device.getName(), device.getId());
+                                    sendNotification(response, device.getName(), device.getTypeId());
                                 }
                             }
                             StringRequest stringRequest = new StringRequest(Request.Method.GET, api.getApiUrl() + "devices/" + device.getId() + "/events",
@@ -167,7 +167,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                     .setContentTitle("A device has been changed!")
                     .setContentText(name + " " + event )
                     .setSmallIcon(R.drawable.ic_smarthome).setColor(ContextCompat.getColor(context,R.color.blue))
-                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), getDrawable(type)))
+                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), getDrawable(id)))
                     .setSound(defaultSoundUri)
                     .setContentIntent(contentIntent)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -183,24 +183,24 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
-    private int getDrawable(String type){
-        if(type.equals("ac")){
+    private int getDrawable(String id){
+        if(id.equals("li6cbv5sdlatti0j")){
             return R.drawable.ac;
-        }else if(type.equals("blind")){
+        }else if(id.equals("eu0v2xgprrhhg41g")){
             return R.drawable.blind;
-        }else if(type.equals("door")){
+        }else if(id.equals("lsf78ly0eqrjbz91")){
             return R.drawable.door;
-        }else if(type.equals("lamp")){
+        }else if(id.equals("go46xmbqeomjrsjr")){
             return R.drawable.lamp;
-        }else if(type.equals("oven")){
+        }else if(id.equals("im77xxyulpegfmv8")){
             return R.drawable.oven;
-        }else if(type.equals("refrigerator")){
+        }else if(id.equals("rnizejqr2di0okho")){
             return R.drawable.refrigerator;
-        }else if(type.equals("alarm")){
+        }else if(id.equals("mxztsyjzsrq7iaqc")){
             return R.drawable.alarm;
-        }else if(type.equals("oven")){
-            return R.drawable.oven;
-        }else{
+        }else if(id.equals("ofglvd9gqX8yfl3l")){
+            return R.drawable.timer;
+        } else{
             return R.drawable.notfound;
         }
     }
