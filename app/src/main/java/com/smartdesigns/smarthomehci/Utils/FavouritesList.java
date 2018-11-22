@@ -12,9 +12,9 @@ import java.util.Comparator;
 
 public class FavouritesList implements Serializable {
 
-    private class DeviceFavorite{
+    private class DeviceFavorite implements Serializable{
         private Device device;
-        private int access;
+        private Integer access;
 
         public DeviceFavorite(Device device) {
             this.device = device;

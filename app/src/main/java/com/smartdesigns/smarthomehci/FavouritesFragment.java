@@ -68,10 +68,8 @@ public class FavouritesFragment extends RefreshFragment {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Home.getInstance());
             Gson gson = new Gson();
             String json = preferences.getString("FavouriteList", null);
-            Type type = new TypeToken<FavouritesList>() {}.getType();
-            favouritesList=gson.fromJson(json, type);
+            favouritesList=gson.fromJson(json, FavouritesList.class);
             if(favouritesList == null) {
-                Log.d("QWERTY","ASD");
                 favouritesList = new FavouritesList();
                 saveList();
             }
@@ -81,10 +79,11 @@ public class FavouritesFragment extends RefreshFragment {
 
     private static void saveList() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Home.getInstance());
+        SharedPreferences.Editor editor = preferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(favouritesList);
-        preferences.edit().putString("FavouriteList", json);
-        preferences.edit().apply();
+        editor.putString("FavouriteList", json);
+        editor.apply();
     }
 
     private int getColumns() {
@@ -117,6 +116,7 @@ public class FavouritesFragment extends RefreshFragment {
 
         ApiConnection api = ApiConnection.getInstance(getContext());
 
+        loadList();
 
         favouritesRecycler = view.findViewById(R.id.recyclerview);
         toolbar.setTitle(R.string.title_favourites);

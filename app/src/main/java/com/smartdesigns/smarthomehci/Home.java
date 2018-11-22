@@ -13,7 +13,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -139,7 +138,6 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
             setTheme(R.style.AppThemeLight);
         }
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

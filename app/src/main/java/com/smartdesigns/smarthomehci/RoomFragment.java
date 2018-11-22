@@ -36,7 +36,7 @@ import java.util.List;
 
 public class RoomFragment extends RefreshFragment {
 
-    private static List<Room> roomList = new ArrayList<>();
+    private static List<Room> roomList;
     private static Room currentRoom;
 
     private TextView text;
@@ -72,29 +72,36 @@ public class RoomFragment extends RefreshFragment {
 
     public void refresh() {
         roomList = new ArrayList<>();
+
+        Log.d("SIZEOFROOMS","asdasdasd");
         ApiConnection api = ApiConnection.getInstance(getContext());
         api.getRooms(new Response.Listener<List<Room>>() {
             @Override
             public void onResponse(List<Room> response) {
+
                 for (Room room : response) {
 
-                    roomList.add(room);
-                    if (room.getMeta().matches("\"background\"") == false) {
-                        int aux = room.getBackground();
-                        ApiConnection.getInstance(getContext()).updateRoom(room, new Response.Listener<Boolean>() {
-                            @Override
-                            public void onResponse(Boolean response) {
+                    if(!roomList.contains(room)) {
+                        roomList.add(room);
 
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
 
-                            }
-                        });
+                        if (room.getMeta().matches("\"background\"") == false) {
+                            int aux = room.getBackground();
+                            ApiConnection.getInstance(getContext()).updateRoom(room, new Response.Listener<Boolean>() {
+                                @Override
+                                public void onResponse(Boolean response) {
+
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+
+                                }
+                            });
+                        }
                     }
-
                 }
+
                 if(roomList.isEmpty())
                     text.setText(R.string.no_rooms_available);
                 else
@@ -124,8 +131,8 @@ public class RoomFragment extends RefreshFragment {
         roomRecycler = view.findViewById(R.id.recyclerview);
         toolbar.setTitle(R.string.title_rooms);
 
-
         refresh();
+
         return view;
     }
 
@@ -142,7 +149,7 @@ public class RoomFragment extends RefreshFragment {
     public void onResume() {
         toolbar.setTitle(R.string.title_rooms);
         super.onResume();
-        addCards();
+        refresh();
     }
 
 
