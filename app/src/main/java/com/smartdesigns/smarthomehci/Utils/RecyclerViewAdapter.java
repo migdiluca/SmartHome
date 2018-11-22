@@ -90,12 +90,10 @@ public class RecyclerViewAdapter<T extends RecyclerInterface & Serializable> ext
         }
 
         tv.getLayoutParams().width = lp.width;
-        tv.getLayoutParams().height = lp.width* 25 / 100;
+        tv.getLayoutParams().height = lp.width* 27 / 100;
         tv.setTextSize((float) (tv.getTextSize() / (columns /((columns*2.1+10)/10))));
 
         lp.height = lp.width + tv.getLayoutParams().height;
-        Log.d("ALTURA",Integer.toString(lp.height));
-        Log.d("ALTURAANCHO",Integer.toString(lp.width));
 
 
         ImageView iv = (ImageView) view.findViewById(R.id.card_view_img);
