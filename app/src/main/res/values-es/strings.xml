@@ -27,6 +27,10 @@
     <string name="Cool">Enfriar</string>
     <string name="Heat">Calefacción</string>
     <string name="Fan">Ventilador</string>
+    <string name="VSwingSuccess">Se ha cambiado la Oscilación vertical.</string>
+    <string name="HSwingSuccess">Se ha cambiado la Oscilación horizontal.</string>
+    <string name="FanSpeedSuccess">Se ha cambiado la Velocidad del ventilador.</string>
+    <string name="AcModeSuccess">Se ha cambiado el modo.</string>
 
     <string name="SuccessMsgOnOff">El dispositivo esta </string>
     <string name="OnM">prendido</string>

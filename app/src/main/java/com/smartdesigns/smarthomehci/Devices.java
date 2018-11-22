@@ -1,6 +1,5 @@
 package com.smartdesigns.smarthomehci;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 
 import android.content.Context;
@@ -962,7 +961,7 @@ public class Devices extends Fragment {
         } else {
             Toast.makeText(context, "Not valid deviceType", Toast.LENGTH_LONG).show();
         }
-        if(view != null) {
+        if (view != null) {
             image = view.findViewById(R.id.DeviceLogo);
             image.setImageResource(context.getResources().getIdentifier(device.getImg().split(".png$")[0], "drawable", context.getPackageName()));
         }
@@ -996,6 +995,8 @@ public class Devices extends Fragment {
             }
         }.start();
     }
+
+    public int numberDialogue;
 
     public void showDialogueConvectionMode(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
@@ -1132,7 +1133,7 @@ public class Devices extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // item selected logic
-
+                        numberDialogue = which;
                         LinkedList<String> l = new LinkedList<>();
                         l.add(getResources().getStringArray(R.array.VSwing)[which]);
 
@@ -1140,7 +1141,8 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessGMode)
+                                vSwingStat.setText(getResources().getStringArray(R.array.VSwing)[numberDialogue]);
+                                Toast toast = Toast.makeText(context, getResources().getString(R.string.VSwingSuccess)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
                             }
@@ -1174,7 +1176,7 @@ public class Devices extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // item selected logic
-
+                        numberDialogue = which;
                         LinkedList<String> l = new LinkedList<>();
                         l.add(getResources().getStringArray(R.array.HSwing)[which]);
 
@@ -1182,7 +1184,8 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessGMode)
+                                hSwingStat.setText(getResources().getStringArray(R.array.HSwing)[numberDialogue]);
+                                Toast toast = Toast.makeText(context, getResources().getString(R.string.HSwingSuccess)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
                             }
@@ -1215,7 +1218,7 @@ public class Devices extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // item selected logic
-
+                        numberDialogue = which;
                         LinkedList<String> l = new LinkedList<>();
                         l.add(getResources().getStringArray(R.array.FanSpeed)[which]);
 
@@ -1223,7 +1226,8 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessGMode)
+                                fanSpeedStat.setText(getResources().getStringArray(R.array.FanSpeed)[numberDialogue]);
+                                Toast toast = Toast.makeText(context, getResources().getString(R.string.FanSpeedSuccess)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
                             }
@@ -1256,6 +1260,7 @@ public class Devices extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // item selected logic
+                        numberDialogue = which;
 
                         LinkedList<String> l = new LinkedList<>();
                         l.add(getResources().getStringArray(R.array.AcMode)[which]);
@@ -1264,7 +1269,8 @@ public class Devices extends Fragment {
                         api.runAction(action, new Response.Listener<Object>() {
                             @Override
                             public void onResponse(Object response) {
-                                Toast toast = Toast.makeText(context, getResources().getString(R.string.SuccessGMode)
+                                acModeStat.setText(getResources().getStringArray(R.array.AcMode)[numberDialogue]);
+                                Toast toast = Toast.makeText(context, getResources().getString(R.string.AcModeSuccess)
                                         , Toast.LENGTH_LONG);
                                 toast.show();
                             }
