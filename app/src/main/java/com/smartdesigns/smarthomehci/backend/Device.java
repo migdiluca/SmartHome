@@ -90,7 +90,12 @@ public class Device implements RecyclerInterface, Serializable {
     public String getImg(){
         Gson gson = new Gson();
         Meta aux = gson.fromJson(this.meta, Meta.class);
-        return aux.getImg();
+        String img = aux.getImg();
+        if(img == null) {
+            return TypeId.getImg(typeId);
+        }else{
+            return img;
+        }
     }
 
     public void onClickAction(Serializable arg, Context context) {
