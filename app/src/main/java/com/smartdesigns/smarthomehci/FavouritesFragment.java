@@ -106,8 +106,11 @@ public class FavouritesFragment extends RefreshFragment {
                     devicesList.add(device);
                 }
                 for(int i = 0; i < favListAux.size(); i++) {
-                    if(!devicesList.contains(favListAux.get(i)))
+                    if(!devicesList.contains(favListAux.get(i))) {
+                        favouritesList.remove(favListAux.get(i));
                         favListAux.remove(i);
+
+                    }
                 }
 
                 if(favListAux.isEmpty())

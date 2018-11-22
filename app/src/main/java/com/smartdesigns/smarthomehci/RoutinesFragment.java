@@ -63,7 +63,7 @@ public class RoutinesFragment extends RefreshFragment {
     }
 
     private int getColumns() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Home.getInstance());
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_potrait", "2").charAt(0) - '0');
         } else {
@@ -112,6 +112,8 @@ public class RoutinesFragment extends RefreshFragment {
 
     public void refresh() {
         routineList = new ArrayList<>();
+        addCards();
+        text.setText(R.string.loading);
         ApiConnection api = ApiConnection.getInstance(getContext());
         api.getRoutines(new Response.Listener<List<Routine>>() {
             @Override

@@ -75,7 +75,7 @@ public class DevicesFragment extends RefreshFragment {
     }
 
     private int getColumns() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Home.getInstance());
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_potrait", "2").charAt(0) - '0');
         } else {
@@ -155,7 +155,6 @@ public class DevicesFragment extends RefreshFragment {
             toolbar.setTitle(routine.getName());
 
         text = view.findViewById(R.id.fragment_text);
-        text.setText(R.string.loading);
         devicesRecycler = view.findViewById(R.id.devices_recyclerview);
 
         FloatingActionButton playRoutineButton = (FloatingActionButton) view.findViewById(R.id.play_routine_button);
@@ -174,6 +173,9 @@ public class DevicesFragment extends RefreshFragment {
     public void refresh() {
 
         devicesList = new ArrayList<>();
+        addCards();
+        text.setText(R.string.loading);
+
         ApiConnection api = ApiConnection.getInstance(getContext());
         if (Home.getInstance().getCurrentMode() == 0) {
             api.getRoomDevices(room, new Response.Listener<List<Device>>() {
@@ -208,8 +210,10 @@ public class DevicesFragment extends RefreshFragment {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+
                     text.setText(R.string.connection_error);
                 }
+
             });
         } else if (Home.getInstance().getCurrentMode() == 1) {
             devicesList = new ArrayList<>();

@@ -1062,13 +1062,12 @@ public class Devices extends Fragment {
                 public void onResponse(GetStateTimer response) {
                     responseTimer = response;
 
-                    int value = response.getInterval();
+                    int value = Integer.parseInt(response.getInterval());
                     hour.setValue(value / 3600);
                     value = value - hour.getValue() * 3600;
                     minute.setValue(value/60);
 
                     second.setValue(value - minute.getValue() * 60);
-
                     hour.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
                     minute.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
                     second.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
@@ -1076,7 +1075,8 @@ public class Devices extends Fragment {
 
 
 
-                    if(response.getNewStatus().equals("active")) {
+
+                    if(response.getStatus().equals("active")) {
                         int rem = response.getRemaining();
                         int h, m, s;
                         h = rem / 3600;
