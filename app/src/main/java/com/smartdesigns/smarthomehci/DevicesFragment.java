@@ -124,7 +124,6 @@ public class DevicesFragment extends Fragment {
         ApiConnection api = ApiConnection.getInstance(appContext);
 
         View view = inflater.inflate(R.layout.fragment_devices, container, false);
-        setBackgroundColor(view);
 
         if (room != null)
             toolbar.setTitle(room.getName());
