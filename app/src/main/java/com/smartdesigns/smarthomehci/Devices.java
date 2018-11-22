@@ -55,7 +55,7 @@ public class Devices extends Fragment {
 
     private ApiConnection api = ApiConnection.getInstance(getActivity());
 
-    ImageView image = view.findViewById(R.id.DeviceLogo);
+    ImageView image;
 
     /**
      * Buttons
@@ -840,7 +840,7 @@ public class Devices extends Fragment {
                 @Override
                 public void onResponse(GetStateTimer response) {
 
-                    //int value = response.
+//                    int value = response.;
 
 
                 }
@@ -939,9 +939,10 @@ public class Devices extends Fragment {
         } else {
             Toast.makeText(context, "Not valid deviceType", Toast.LENGTH_LONG).show();
         }
-
-        image.setImageResource(context.getResources().getIdentifier(device.getImg().split(".png$")[0], "drawable", context.getPackageName()));
-
+        if(view != null) {
+            image = view.findViewById(R.id.DeviceLogo);
+            image.setImageResource(context.getResources().getIdentifier(device.getImg().split(".png$")[0], "drawable", context.getPackageName()));
+        }
         return v;
 
     }
