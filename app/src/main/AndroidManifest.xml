@@ -32,6 +32,7 @@
             android:theme="@style/AppThemeLight"></activity>
         <activity
             android:name=".DeviceActivity"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_device"
             android:theme="@style/AppThemeLight"
             android:configChanges="screenLayout|orientation|screenSize"></activity>
