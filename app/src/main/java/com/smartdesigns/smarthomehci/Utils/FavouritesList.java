@@ -50,10 +50,6 @@ public class FavouritesList implements Serializable {
 
     private ArrayList<DeviceFavorite> list = new ArrayList<>();
 
-    List<Device> devicesList = new ArrayList<>();
-
-    int errorFlag = 0;
-
     public boolean access(Device device) {
         DeviceFavorite df = contains(device);
         if (df != null) {
@@ -87,31 +83,6 @@ public class FavouritesList implements Serializable {
             }
         });
 
-
-        devicesList = new ArrayList<>();
-
-        ApiConnection api = ApiConnection.getInstance(context);
-        api.getDevices(new Response.Listener<List<Device>>() {
-            @Override
-            public void onResponse(List<Device> response) {
-                for (Device device : response) {
-                    devicesList.add(device);
-                }
-                for(int i = 0; i < list.size(); i++) {
-                    if(!devicesList.contains(list.get(i).getDevice()))
-                        list.remove(i);
-                }
-                Log.d("FINISH:", "onResponse");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-
-        Log.d("FINISH:", "creating resp");
         ArrayList<Device> resp = new ArrayList<>();
         for (int i = 0; i < amount && i < list.size(); i++) {
             resp.add(list.get(i).getDevice());

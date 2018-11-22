@@ -34,10 +34,14 @@ import com.smartdesigns.smarthomehci.repository.ApiConnection;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
+import static java.lang.Thread.sleep;
 
 public class FavouritesFragment extends RefreshFragment {
 
     private static FavouritesList favouritesList = null;
+    List<Device> favListAux;
 
     private static final int AMOUNT_TO_SHOW = 10;
 
@@ -53,7 +57,9 @@ public class FavouritesFragment extends RefreshFragment {
         saveList();
     }
 
-    public void refresh(){}
+    public void refresh(){
+        addCards();
+    }
 
     private static void loadList() {
         if(favouritesList == null) {
@@ -89,15 +95,35 @@ public class FavouritesFragment extends RefreshFragment {
         return RecyclerViewAdapter.getColumns();
     }
 
-    private void addCards(){
-        List<Device> favListAux = favouritesList.getFavouritesDevices(AMOUNT_TO_SHOW, getContext());
-        if(favListAux.isEmpty())
-            text.setText(R.string.no_favorites_available);
-        else
-            text.setText("");
-        RecyclerViewAdapter favouritesRecyclerAdapter = new RecyclerViewAdapter(this.getContext(), favListAux);
-        favouritesRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), getColumns()));
-        favouritesRecycler.setAdapter(favouritesRecyclerAdapter);
+    private void addCards(){ ;
+        ApiConnection api = ApiConnection.getInstance(getContext());
+        api.getDevices(new Response.Listener<List<Device>>() {
+            @Override
+            public void onResponse(List<Device> response) {
+                favListAux = favouritesList.getFavouritesDevices(AMOUNT_TO_SHOW, getContext());
+                ArrayList<Device> devicesList = new ArrayList<>();
+                for (Device device : response) {
+                    devicesList.add(device);
+                }
+                for(int i = 0; i < favListAux.size(); i++) {
+                    if(!devicesList.contains(favListAux.get(i)))
+                        favListAux.remove(i);
+                }
+
+                if(favListAux.isEmpty())
+                    text.setText(R.string.no_favorites_available);
+                else
+                    text.setText("");
+                RecyclerViewAdapter favouritesRecyclerAdapter = new RecyclerViewAdapter(getContext(), favListAux);
+                favouritesRecycler.setLayoutManager(new GridLayoutManager(getContext(), getColumns()));
+                favouritesRecycler.setAdapter(favouritesRecyclerAdapter);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                text.setText("");
+            }
+        });
     }
 
 
