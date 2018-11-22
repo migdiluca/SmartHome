@@ -1473,4 +1473,17 @@ public class Devices extends Fragment {
         return new BitmapDrawable(getResources(), bitmap);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Home.activityResumed();
+        Home.setCurrentClass(Device.class);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Home.activityPaused();
+    }
+
 }
