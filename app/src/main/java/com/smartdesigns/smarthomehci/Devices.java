@@ -432,7 +432,7 @@ public class Devices extends Fragment {
                     } else {
                         openBut.setChecked(true);
                     }
-                    if (response.getStatus().equals("locked")) {
+                    if (response.getLock().equals("locked")) {
                         lockBut.setChecked(true);
                     } else {
                         lockBut.setChecked(false);

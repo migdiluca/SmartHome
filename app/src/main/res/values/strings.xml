@@ -214,7 +214,7 @@
     <string-array name="FridgeMode2">
         <item>default</item>
         <item>party</item>
-        <item>vacations</item>
+        <item>vacation</item>
     </string-array>
 
     <string name="ChangeMessage">A device has been changed!</string>
