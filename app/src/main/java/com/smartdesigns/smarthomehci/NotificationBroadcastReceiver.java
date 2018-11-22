@@ -95,10 +95,12 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
             auxList.add("ofglvd9gqX8yfl3l");
         }
         this.deviceTypes = auxList;
+        Log.d("LOG","selecting desired devices");
     }
 
     private void getEvents() {
         ApiConnection api = ApiConnection.getInstance(context);
+        Log.d("Talking to API", "hellp");
         api.getDevices(new Response.Listener<List<Device>>() {
             @Override
             public void onResponse(List<Device> response) {

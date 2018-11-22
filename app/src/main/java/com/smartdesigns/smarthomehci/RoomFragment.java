@@ -77,8 +77,6 @@ public class RoomFragment extends RefreshFragment {
             public void onResponse(List<Room> response) {
 
                 for (Room room : response) {
-
-                    if(!roomList.contains(room)) {
                         roomList.add(room);
 
 
@@ -96,7 +94,7 @@ public class RoomFragment extends RefreshFragment {
                                 }
                             });
                         }
-                    }
+
                 }
 
                 if(roomList.isEmpty())
@@ -129,9 +127,14 @@ public class RoomFragment extends RefreshFragment {
         roomRecycler = view.findViewById(R.id.recyclerview);
         toolbar.setTitle(R.string.title_rooms);
 
-        refresh();
-
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        toolbar.setTitle(R.string.title_rooms);
+        super.onResume();
+        refresh();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -143,12 +146,6 @@ public class RoomFragment extends RefreshFragment {
     }
 
 
-    @Override
-    public void onResume() {
-        toolbar.setTitle(R.string.title_rooms);
-        super.onResume();
-        refresh();
-    }
 
 
     @Override
