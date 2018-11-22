@@ -32,6 +32,8 @@ import java.util.Stack;
 public class Home extends AppCompatActivity implements OnFragmentInteractionListener {
 
     private FrameLayout mMainFrame;
+    public static boolean activityVisible;
+    public static Class currentClass;
 
     private static Stack<RefreshFragment> bottomStacks[] = new Stack[3];
 
@@ -284,6 +286,35 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         startActivity(settings);
     }
 
+
+    public static boolean isActivityVisible() {
+        return activityVisible;
+    }
+
+    public static void activityResumed() {
+        activityVisible = true;
+    }
+
+    public static void activityPaused() {
+        activityVisible = false;
+    }
+
+    public static void setCurrentClass(Class toAdd){
+        currentClass = toAdd;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Home.activityResumed();
+        setCurrentClass(Home.class);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Home.activityPaused();
+    }
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
 //        if (item.getItemId() == R.id.app_bar_search) {

@@ -67,4 +67,17 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Home.activityResumed();
+        Home.setCurrentClass(SettingsActivity.class);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Home.activityPaused();
+    }
 }

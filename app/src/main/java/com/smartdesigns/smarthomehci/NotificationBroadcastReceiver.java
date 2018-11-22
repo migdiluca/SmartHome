@@ -53,7 +53,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.d("Im In", "Entered Broadcast Reciever");
         existingIds = new HashMap<>();
-        this.context= context;
+        this.context = context;
         getAllowedDevices();
         getEvents();
     }
@@ -70,47 +70,47 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         boolean alarm = sharedPreferences.getBoolean("alarm_preference", false);
         boolean timer = sharedPreferences.getBoolean("timer_preference", false);
 
-        if(ac) {
+        if (ac) {
             auxList.add("li6cbv5sdlatti0j");
         }
-        if(blind){
+        if (blind) {
             auxList.add("eu0v2xgprrhhg41g");
         }
-        if(door){
+        if (door) {
             auxList.add("lsf78ly0eqrjbz91");
         }
-        if(lamp){
+        if (lamp) {
             auxList.add("go46xmbqeomjrsjr");
         }
-        if(oven){
+        if (oven) {
             auxList.add("im77xxyulpegfmv8");
         }
-        if(refrigerator){
+        if (refrigerator) {
             auxList.add("rnizejqr2di0okho");
         }
-        if(alarm) {
+        if (alarm) {
             auxList.add("mxztsyjzsrq7iaqc");
         }
-        if(timer){
+        if (timer) {
             auxList.add("ofglvd9gqX8yfl3l");
         }
         this.deviceTypes = auxList;
     }
 
-    private void getEvents(){
+    private void getEvents() {
         ApiConnection api = ApiConnection.getInstance(context);
         api.getDevices(new Response.Listener<List<Device>>() {
             @Override
             public void onResponse(List<Device> response) {
-                for(Device device: response){
+                for (Device device : response) {
                     boolean aux = true;
-                    for(int i=0; i<deviceTypes.size() && aux; i++){
-                        if(deviceTypes.get(i).equals(device.getTypeId())){
+                    for (int i = 0; i < deviceTypes.size() && aux; i++) {
+                        if (deviceTypes.get(i).equals(device.getTypeId())) {
                             ApiConnection api = ApiConnection.getInstance(context);
-                            class EventsResponse implements Response.Listener<String>{
+                            class EventsResponse implements Response.Listener<String> {
                                 private Device device;
 
-                                public EventsResponse(Device device){
+                                public EventsResponse(Device device) {
                                     this.device = device;
                                 }
 
@@ -143,7 +143,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     private void sendNotification(String response, String name, String id) {
         String[] events = response.split("event");
 
-        if(events.length > 1){
+        if (events.length > 1) {
             String[] aux;
             String event = "";
             for (int i = 1; i < events.length; i++) {
@@ -154,54 +154,61 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 event = event + aux[0] + " ";
             }
 
-            Intent notificationIntent = new Intent(this.context, Home.class);
-//            notificationIntent.putExtra("notification", "devices");
+            if (Home.isActivityVisible()) {
+                if(Home.currentClass.equals(Home.class) || Home.currentClass.equals(SettingsActivity.class)) {
+                    Toast.makeText(context, name + " has changed its state: " + event, Toast.LENGTH_LONG).show();
+                }
+            } else {
 
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this.context);
-            stackBuilder.addParentStack(Home.class);
-            stackBuilder.addNextIntent(notificationIntent);
+                Intent notificationIntent = new Intent(this.context, Home.class);
 
-            final PendingIntent contentIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            @SuppressLint("ResourceAsColor") Notification notification = new Notification.Builder(context)
-                    .setContentTitle(context.getResources().getString(R.string.ChangeMessage))
-                    .setContentText(name + " " + event )
-                    .setSmallIcon(R.drawable.ic_smarthome).setColor(ContextCompat.getColor(context,R.color.blue))
-                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), getDrawable(id)))
-                    .setSound(defaultSoundUri)
-                    .setContentIntent(contentIntent)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setAutoCancel(true)
-                    .build();
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(this.context);
+                stackBuilder.addParentStack(Home.class);
+                stackBuilder.addNextIntent(notificationIntent);
 
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            Integer currId = existingIds.get(name);
-            if(currId == null){
-                currId = NOTIFICATION_ID++;
+                final PendingIntent contentIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                @SuppressLint("ResourceAsColor") Notification notification = new Notification.Builder(context)
+                        .setContentTitle(context.getResources().getString(R.string.ChangeMessage))
+                        .setContentText(name + " " + event)
+                        .setSmallIcon(R.drawable.ic_smarthome).setColor(ContextCompat.getColor(context, R.color.blue))
+                        .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), getDrawable(id)))
+                        .setSound(defaultSoundUri)
+                        .setContentIntent(contentIntent)
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setAutoCancel(true)
+                        .build();
+
+                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                Integer currId = existingIds.get(name);
+                if (currId == null) {
+                    currId = NOTIFICATION_ID++;
+                }
+                notificationManager.notify(currId, notification);
             }
-            notificationManager.notify(currId, notification);
         }
     }
 
-    private int getDrawable(String id){
-        if(id.equals("li6cbv5sdlatti0j")){
+    private int getDrawable(String id) {
+        if (id.equals("li6cbv5sdlatti0j")) {
             return R.drawable.ac;
-        }else if(id.equals("eu0v2xgprrhhg41g")){
+        } else if (id.equals("eu0v2xgprrhhg41g")) {
             return R.drawable.blind;
-        }else if(id.equals("lsf78ly0eqrjbz91")){
+        } else if (id.equals("lsf78ly0eqrjbz91")) {
             return R.drawable.door;
-        }else if(id.equals("go46xmbqeomjrsjr")){
+        } else if (id.equals("go46xmbqeomjrsjr")) {
             return R.drawable.lamp;
-        }else if(id.equals("im77xxyulpegfmv8")){
+        } else if (id.equals("im77xxyulpegfmv8")) {
             return R.drawable.oven;
-        }else if(id.equals("rnizejqr2di0okho")){
+        } else if (id.equals("rnizejqr2di0okho")) {
             return R.drawable.refrigerator;
-        }else if(id.equals("mxztsyjzsrq7iaqc")){
+        } else if (id.equals("mxztsyjzsrq7iaqc")) {
             return R.drawable.alarm;
-        }else if(id.equals("ofglvd9gqX8yfl3l")){
+        } else if (id.equals("ofglvd9gqX8yfl3l")) {
             return R.drawable.timer;
-        } else{
+        } else {
             return R.drawable.notfound;
         }
     }
