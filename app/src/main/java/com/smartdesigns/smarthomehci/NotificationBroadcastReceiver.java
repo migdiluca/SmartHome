@@ -155,16 +155,17 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
             }
 
             Intent notificationIntent = new Intent(this.context, Home.class);
-            notificationIntent.putExtra("notification", "devices");
+//            notificationIntent.putExtra("notification", "devices");
 
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(this.context);
+            stackBuilder.addParentStack(Home.class);
             stackBuilder.addNextIntent(notificationIntent);
 
             final PendingIntent contentIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             @SuppressLint("ResourceAsColor") Notification notification = new Notification.Builder(context)
-                    .setContentTitle("A device has been changed!")
+                    .setContentTitle(context.getResources().getString(R.string.ChangeMessage))
                     .setContentText(name + " " + event )
                     .setSmallIcon(R.drawable.ic_smarthome).setColor(ContextCompat.getColor(context,R.color.blue))
                     .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), getDrawable(id)))
