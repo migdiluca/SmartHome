@@ -13,5 +13,6 @@ public interface RecyclerInterface {
     public void setBackground(int color);
     public String getMeta();
     public String getId();
+    public String getImg();
     public void onClickAction(Serializable arg, Context context);
 }

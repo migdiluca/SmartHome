@@ -61,6 +61,12 @@ public class Routine implements RecyclerInterface, Serializable{
         return Integer.parseInt(aux.getBackground());
     }
 
+    public String getImg(){
+        Gson gson = new Gson();
+        Meta aux = gson.fromJson(this.meta, Meta.class);
+        return aux.getImg();
+    }
+
     public void onClickAction(Serializable arg, Context context){
         RoutinesFragment.setCurrentRoutine(this);
 
