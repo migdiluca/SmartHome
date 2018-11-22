@@ -709,7 +709,7 @@ public class Devices extends Fragment {
             api.getStateRefrigerator(device, new Response.Listener<GetStateRefrigerator>() {
                 @Override
                 public void onResponse(GetStateRefrigerator response) {
-                    
+
                     fridgeTempStats.setText(Integer.toString(response.getTemperature()) + " C");
                     freezerTempStats.setText(Integer.toString(response.getTemperature()) + " C");
 
@@ -1440,6 +1440,19 @@ public class Devices extends Fragment {
         thumbView.draw(canvas);
 
         return new BitmapDrawable(getResources(), bitmap);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Home.activityResumed();
+        Home.setCurrentClass(Device.class);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Home.activityPaused();
     }
 
 }
