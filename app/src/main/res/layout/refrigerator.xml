@@ -78,6 +78,12 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <TextView
+                        android:id="@+id/FridgeTempStat"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/grey" />
+
                     <SeekBar
                         android:id="@+id/FridgeTempSeekBar"
                         android:layout_width="match_parent"
@@ -109,6 +115,12 @@
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/FreezerTempStat"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/grey" />
 
                     <SeekBar
                         android:id="@+id/FreezerTempSeekBar"

@@ -92,6 +92,7 @@ public class Devices extends Fragment {
     TextView grillModeStats;
     TextView heatModeStats;
     TextView convectionModeStats;
+    TextView ovenTempStats;
 
     /**
      * Door
@@ -106,6 +107,7 @@ public class Devices extends Fragment {
     Switch onOffLamp;
     LinearLayout lampColor;
     SeekBar lampBrightness;
+    TextView lampBrightnessStats;
 
     /**
      * Refrigerator
@@ -114,6 +116,9 @@ public class Devices extends Fragment {
     SeekBar fridgeTemperature;
     LinearLayout fridgeMode;
     TextView fridgeModeStats;
+    TextView freezerTempStats;
+    TextView fridgeTempStats;
+
 
     /**
      * Timer
@@ -253,7 +258,6 @@ public class Devices extends Fragment {
                         int aux = 18 + progress;
                         acTempStats.setText(Integer.toString(aux) + " C");
 
-                        //seekBar.setThumb(getThumb(aux));
                     }
 
                     @Override
@@ -526,6 +530,7 @@ public class Devices extends Fragment {
             grillModeStats = view.findViewById(R.id.GrillModeStats);
             heatModeStats = view.findViewById(R.id.HeatModeStats);
             convectionModeStats = view.findViewById(R.id.ConvectionModeStats);
+            ovenTempStats = view.findViewById(R.id.OvenTempStat);
 
             api.getStateOven(device, new Response.Listener<GetStateOven>() {
                 @Override
@@ -535,7 +540,9 @@ public class Devices extends Fragment {
                     else
                         onOffOven.setChecked(false);
 
-                    //temperatureOven.setProgress(response.getTemperature() - 90);
+                    ovenTempStats.setText(Integer.toString(response.getTemperature()) + " C");
+
+                    temperatureOven.setProgress(response.getTemperature() - 90);
 
                     switch (response.getGrill()) {
                         case "large":
@@ -622,7 +629,9 @@ public class Devices extends Fragment {
 
                         int aux = 90 + progress;
 
-                        seekBar.setThumb(getThumb(aux));
+                        ovenTempStats.setText(Integer.toString(aux) + " C");
+
+                        //seekBar.setThumb(getThumb(aux));
                     }
 
                     @Override
@@ -693,12 +702,22 @@ public class Devices extends Fragment {
             fridgeTemperature = view.findViewById(R.id.FridgeTempSeekBar);
             fridgeMode = view.findViewById(R.id.FridgeMode);
             fridgeModeStats = view.findViewById(R.id.FridgeModeStatus);
+            fridgeTempStats = view.findViewById(R.id.FridgeTempStat);
+            freezerTempStats = view.findViewById(R.id.FreezerTempStat);
+
 
             api.getStateRefrigerator(device, new Response.Listener<GetStateRefrigerator>() {
                 @Override
                 public void onResponse(GetStateRefrigerator response) {
-                    //fridgeTemperature.setProgress(response.getTemperature() - 2);
-                    //freezerTemperature.setProgress(response.getFreezerTemperature() + 20);
+                    
+                    fridgeTempStats.setText(Integer.toString(response.getTemperature()) + " C");
+                    freezerTempStats.setText(Integer.toString(response.getTemperature()) + " C");
+
+
+                    fridgeTemperature.setProgress(response.getTemperature() - 2);
+                    freezerTemperature.setProgress(response.getFreezerTemperature() + 20);
+
+
 
                     switch (response.getMode()) {
                         case "default":
@@ -729,8 +748,8 @@ public class Devices extends Fragment {
                         // You can have your own calculation for progress
 
                         int aux = 2 + progress;
-
-                        seekBar.setThumb(getThumb(aux));
+                        fridgeTempStats.setText(Integer.toString(aux) + " C");
+                        //seekBar.setThumb(getThumb(aux));
                     }
 
                     @Override
@@ -770,7 +789,9 @@ public class Devices extends Fragment {
 
                         int aux = -20 + progress;
 
-                        seekBar.setThumb(getThumb(aux));
+                        freezerTempStats.setText(Integer.toString(aux) + " C");
+
+                        //seekBar.setThumb(getThumb(aux));
                     }
 
                     @Override
