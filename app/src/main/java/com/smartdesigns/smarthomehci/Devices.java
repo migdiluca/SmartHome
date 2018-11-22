@@ -645,10 +645,9 @@ public class Devices extends Fragment {
                         cp.setCallback(new ColorPickerCallback() {
                             @Override
                             public void onColorChosen(@ColorInt int color) {
-
-                                col = (Color.red(color) & 0xff) << 16 | (Color.green(color) & 0xff) << 8 | (Color.blue(color) & 0xff);
-                                colorPickerView.setBackgroundColor(col);
-                                String s = String.format("#%06X", (0xFFFFFF & col));
+                                col = color;
+                                colorPickerView.setBackgroundColor(color);
+                                String s = String.format("#%06X", (0xFFFFFF & color));
                                 LinkedList<String> ll = new LinkedList<>();
                                 ll.add(s);
                                 Action action = new Action(device.getId(), "setColor", ll);
