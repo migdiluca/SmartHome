@@ -23,6 +23,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.smartdesigns.smarthomehci.backend.Device;
+import com.smartdesigns.smarthomehci.repository.ApiConnection;
 import com.smartdesigns.smarthomehci.repository.VolleySingleton;
 
 import org.json.JSONArray;
@@ -37,7 +39,6 @@ import java.util.Map;
 public class NotificationBroadcastReceiver extends BroadcastReceiver {
     private List<String> deviceTypes;
     private Context context;
-    private String api = "http://181.28.198.15:8080/api/";
     private Map<String, Integer> existingIds;
     private int NOTIFICATION_ID = 0;
 
@@ -47,10 +48,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         existingIds = new HashMap<>();
         this.context= context;
         getAllowedDevices();
-        for (int i = 0; i < deviceTypes.size(); i++) {
-            getDevicesForType(deviceTypes.get(i));
-        }
-
+        getEvents();
     }
 
     private void getAllowedDevices() {
@@ -93,52 +91,48 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         this.deviceTypes = auxList;
     }
 
-    private void getDevicesForType(String type) {
-        String url = api +"devices/devicetypes/" + type;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+    private void getEvents(){
+        ApiConnection api = ApiConnection.getInstance(context);
+        api.getDevices(new Response.Listener<List<Device>>() {
             @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    parseResponse(response);
-                }catch (JSONException e){
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("JSON ERROR ", String.valueOf(R.string.error_request));
-                error.printStackTrace();
-            }
-        });
-        VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
-    }
+            public void onResponse(List<Device> response) {
+                for(Device device: response){
+                    boolean aux = true;
+                    for(int i=0; i<deviceTypes.size() && aux; i++){
+                        if(deviceTypes.get(i).equals(device.getTypeId())){
+                            ApiConnection api = ApiConnection.getInstance(context);
+                            class EventsResponse implements Response.Listener<String>{
+                                private Device device;
 
-    private void parseResponse(JSONObject response) throws JSONException{
-        JSONArray jsonArray = response.getJSONArray("devices");
-        for(int i = 0; i < jsonArray.length(); i++){
-            JSONObject device = jsonArray.getJSONObject(i);
-            final String name = device.getString("name");
-            final String id = device.getString("id");
-            StringRequest request = new StringRequest(Request.Method.GET, api + "devices/" + id + "/events",  new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    if (response != null) {
-                        Log.d("Response", response);
-                        sendNotification(response, name, id);
+                                public EventsResponse(Device device){
+                                    this.device = device;
+                                }
+
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d("NOTIF", response);
+                                    sendNotification(response, device.getName(), device.getId());
+                                }
+                            }
+                            StringRequest stringRequest = new StringRequest(Request.Method.GET, api.getApiUrl() + "devices/" + device.getId() + "/events",
+                                    new EventsResponse(device), new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.d("NOTIFERROR2", error.toString());
+                                }
+                            });
+                            VolleySingleton.getInstance(context).addToRequestQueue(stringRequest);
+                        }
                     }
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d("JSON ERROR", String.valueOf(R.string.error_request));
-                    error.printStackTrace();
-                }
-            });
-            VolleySingleton.getInstance(context).addToRequestQueue(request);
-        }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("NOTIFERROR1", error.toString());
+            }
+        });
     }
-
 
     private void sendNotification(String response, String name, String id) {
         String[] events = response.split("event");

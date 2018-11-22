@@ -1,8 +1,9 @@
 package com.smartdesigns.smarthomehci.backend;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Action {
+public class Action implements Serializable {
     private String deviceId;
     private String actionName;
     private List<String> params;

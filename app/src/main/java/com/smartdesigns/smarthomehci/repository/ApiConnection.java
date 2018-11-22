@@ -41,8 +41,8 @@ import java.util.UUID;
 
 public class ApiConnection {
 
-    private static final String apiUrl = "http://181.28.198.15:8080/api/";
-    //private static final String apiUrl = "http://190.210.157.78:8080/api/";
+    private static final String apiUrl = "http://190.210.157.78:8080/api/";
+    //private static final String apiUrl = "http://192.168.1.137:8080/api/";
 
 
     private static ApiConnection instance;
@@ -57,6 +57,10 @@ public class ApiConnection {
             instance = new ApiConnection(context);
         }
         return instance;
+    }
+
+    public static String getApiUrl() {
+        return apiUrl;
     }
 
     public String getDevices(Response.Listener<List<Device>> listener, Response.ErrorListener errorListener){
@@ -339,7 +343,7 @@ public class ApiConnection {
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Content-Type", "application/json");
         GsonRequest<Object, String> request =
-                new GsonRequest<>(Request.Method.GET, url, null, "events", new TypeToken<String>(){}, null, listener, errorListener);
+                new GsonRequest<>(Request.Method.GET, url, null, "String", new TypeToken<String>(){}, null, listener, errorListener);
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
         requestQueue.add(request);

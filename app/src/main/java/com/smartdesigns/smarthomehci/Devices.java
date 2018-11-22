@@ -37,6 +37,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.smartdesigns.smarthomehci.backend.Action;
 import com.smartdesigns.smarthomehci.backend.Device;
+import com.smartdesigns.smarthomehci.backend.Room;
+import com.smartdesigns.smarthomehci.backend.Routine;
 import com.smartdesigns.smarthomehci.backend.TypeId;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
 
