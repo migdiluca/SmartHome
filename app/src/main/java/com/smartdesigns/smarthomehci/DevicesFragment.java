@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -46,6 +47,7 @@ public class DevicesFragment extends RefreshFragment {
 
     private Room room = null;
     private Routine routine = null;
+    private TextView text;
     private List<Device> devicesList = new ArrayList<>();
     private ActionBar toolbar = Home.getMainActionBar();
 
@@ -130,6 +132,7 @@ public class DevicesFragment extends RefreshFragment {
         else
             toolbar.setTitle(routine.getName());
 
+        text = view.findViewById(R.id.fragment_text);
         devicesRecycler = view.findViewById(R.id.devices_recyclerview);
 
         FloatingActionButton playRoutineButton = (FloatingActionButton) view.findViewById(R.id.play_routine_button);
@@ -191,6 +194,11 @@ public class DevicesFragment extends RefreshFragment {
                             }
                         }
                     }
+                    if(devicesList.isEmpty())
+                        text.setText(R.string.empty_room);
+                    else
+                        text.setText("");
+
                     addCards();
                 }
             }, new Response.ErrorListener() {
