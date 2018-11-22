@@ -52,57 +52,59 @@ public class Devices extends Fragment {
      * <p>
      * Ac
      */
-    Switch onOffAc = (Switch) view.findViewById(R.id.OnOffAc);
-    SeekBar temperatureAc = (SeekBar) view.findViewById(R.id.AcTempSeekBar);
-    TextView vSwing = (TextView) view.findViewById(R.id.VSwing);
-    TextView hSwing = (TextView) view.findViewById(R.id.HSwing);
-    TextView fanSpeed = (TextView) view.findViewById(R.id.FanSpeed);
-    TextView acMode = (TextView) view.findViewById(R.id.AcMode);
+    Switch onOffAc;
+    SeekBar temperatureAc;
+    TextView vSwing;
+    TextView hSwing;
+    TextView fanSpeed;
+    TextView acMode;
 
     /**
      * Blinds
      */
-    RadioButton up = (RadioButton) view.findViewById(R.id.UpBut);
-    RadioButton down = (RadioButton) view.findViewById(R.id.DownBut);
+    RadioButton up;
+    RadioButton down;
 
     /**
      * Oven
      */
-    Switch onOffOven = (Switch) view.findViewById(R.id.OnOffOven);
-    SeekBar temperatureOven = (SeekBar) view.findViewById(R.id.OvenTempSeekBar);
-    TextView grillMode = (TextView) view.findViewById(R.id.GrillMode);
-    TextView heatMode = (TextView) view.findViewById(R.id.HeatMode);
-    TextView convectionMode = (TextView) view.findViewById(R.id.ConvectionMode);
+    Switch onOffOven;
+    SeekBar temperatureOven;
+    TextView grillMode;
+    TextView heatMode;
+    TextView convectionMode;
 
     /**
      * Door
      */
-    CheckBox openBut = (CheckBox) view.findViewById(R.id.OpenButton);
-    CheckBox lockBut = (CheckBox) view.findViewById(R.id.LockButton);
+    CheckBox openBut;
+    CheckBox lockBut;
 
     /**
      * Lamp
      */
-    Button onOffLights = (Button) view.findViewById(R.id.OnOff);
-    Button lampColorPicker = (Button) view.findViewById(R.id.colorPickerView);
+
+    Switch onOffLamp;
+    TextView lampColor;
+    SeekBar lampBrightness;
 
     /**
      * Refrigerator
      */
-    SeekBar freezerTemperature = (SeekBar) view.findViewById(R.id.FreezerTempSeekBar);
-    SeekBar fridgeTemperature = (SeekBar) view.findViewById(R.id.FridgeTempSeekBar);
-    TextView fridgeMode = (TextView) view.findViewById(R.id.FridgeMode);
+    SeekBar freezerTemperature;
+    SeekBar fridgeTemperature;
+    TextView fridgeMode;
 
     /**
      * Timer
      */
-    NumberPicker hour = (NumberPicker) view.findViewById(R.id.Hour);
-    NumberPicker minute = (NumberPicker) view.findViewById(R.id.Minute);
-    NumberPicker second = (NumberPicker) view.findViewById(R.id.Second);
-    Button startButton = (Button) view.findViewById(R.id.StartTimer);
-    Button stopButton = (Button) view.findViewById(R.id.StopTimer);
-    Button setButton = (Button) view.findViewById(R.id.SetTimer);
-    TextView timer = (TextView) view.findViewById(R.id.countdownText);
+    NumberPicker hour;
+    NumberPicker minute;
+    NumberPicker second;
+    Button startButton;
+    Button stopButton;
+    Button setButton;
+    TextView timer;
 
 
     View thumbView;
@@ -137,6 +139,14 @@ public class Devices extends Fragment {
             getActivity().setTheme(R.style.acStyle);
             v = inflater.inflate(R.layout.ac, container, false);
             view = v;
+
+            onOffAc = view.findViewById(R.id.OnOffAc);
+            temperatureAc = view.findViewById(R.id.AcTempSeekBar);
+            vSwing = view.findViewById(R.id.VSwing);
+            hSwing = view.findViewById(R.id.HSwing);
+            fanSpeed = view.findViewById(R.id.FanSpeed);
+            acMode = view.findViewById(R.id.AcMode);
+
             if (Home.getInstance().getCurrentMode() != 1) {
 
                 onOffAc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -225,6 +235,9 @@ public class Devices extends Fragment {
             v = inflater.inflate(R.layout.blinds, container, false);
             view = v;
 
+            up = view.findViewById(R.id.UpBut);
+            down = view.findViewById(R.id.DownBut);
+
             if (Home.getInstance().getCurrentMode() != 1) {
 
                 up.setOnClickListener(new View.OnClickListener() {
@@ -280,6 +293,9 @@ public class Devices extends Fragment {
             getActivity().setTheme(R.style.doorStyle);
             v = inflater.inflate(R.layout.door, container, false);
             view = v;
+
+            openBut = (CheckBox) view.findViewById(R.id.OpenButton);
+            lockBut = (CheckBox) view.findViewById(R.id.LockButton);
 
             if (Home.getInstance().getCurrentMode() != 1) {
 
@@ -358,18 +374,18 @@ public class Devices extends Fragment {
             v = inflater.inflate(R.layout.lamp, container, false);
             view = v;
 
-            lampColorPicker.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    openColorPicker();
-                }
-            });
 
         } else if (device.getTypeId().equals(TypeId.Oven.getTypeId())) {
 
             getActivity().setTheme(R.style.ovenStyle);
             v = inflater.inflate(R.layout.oven, container, false);
             view = v;
+
+            onOffOven = view.findViewById(R.id.OnOffOven);
+            temperatureOven = view.findViewById(R.id.OvenTempSeekBar);
+            grillMode = view.findViewById(R.id.GrillMode);
+            heatMode = view.findViewById(R.id.HeatMode);
+            convectionMode = view.findViewById(R.id.ConvectionMode);
 
             if (Home.getInstance().getCurrentMode() != 1) {
 
@@ -456,6 +472,10 @@ public class Devices extends Fragment {
             getActivity().setTheme(R.style.refrigeratorStyle);
             v = inflater.inflate(R.layout.refrigerator, container, false);
             view = v;
+
+            freezerTemperature = (SeekBar) view.findViewById(R.id.FreezerTempSeekBar);
+            fridgeTemperature = (SeekBar) view.findViewById(R.id.FridgeTempSeekBar);
+            fridgeMode = (TextView) view.findViewById(R.id.FridgeMode);
 
             if (Home.getInstance().getCurrentMode() != 1) {
 
@@ -555,6 +575,16 @@ public class Devices extends Fragment {
             getActivity().setTheme(R.style.timerStyle);
             v = inflater.inflate(R.layout.timer, container, false);
             view = v;
+
+            hour = view.findViewById(R.id.Hour);
+            minute = view.findViewById(R.id.Minute);
+            second = view.findViewById(R.id.Second);
+            startButton = view.findViewById(R.id.StartTimer);
+            stopButton = view.findViewById(R.id.StopTimer);
+            setButton = view.findViewById(R.id.SetTimer);
+            timer = view.findViewById(R.id.countdownText);
+
+
             hour.setMinValue(0);
             minute.setMinValue(0);
             second.setMinValue(0);
