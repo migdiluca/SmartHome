@@ -75,7 +75,7 @@ public class DevicesFragment extends RefreshFragment {
     }
 
     private int getColumns() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Home.getInstance());
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             RecyclerViewAdapter.setColumns(preferences.getString("columns_amount_potrait", "2").charAt(0) - '0');
         } else {
