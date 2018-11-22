@@ -1,32 +1,26 @@
 package com.smartdesigns.smarthomehci;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.design.bottomappbar.BottomAppBar;
 import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.MenuItemImpl;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.ActionProvider;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
-import com.smartdesigns.smarthomehci.Utils.RecyclerViewAdapter;
 
 import java.util.Stack;
 
@@ -40,6 +34,9 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 
     private static int currentMode = 0;
     static private Home homeInstance = null;
+
+    private static Toolbar mainToolbar;
+    private static Toolbar deviceToolbar;
 
     public static Home getInstance() {
         return homeInstance;
@@ -105,10 +102,24 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         return super.onOptionsItemSelected(item);
     }
 
+    public static android.support.v7.app.ActionBar getMainActionBar(){
+        return Home.getInstance().getSupportActionBar();
+    }
+
+    private void setTheme(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean darkTheme = preferences.getBoolean("dark_theme_checkbox",false);
+        if(darkTheme == true) {
+            setTheme(R.style.AppThemeDark);
+        } else {
+            setTheme(R.style.AppThemeLight);
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        setTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         if( getIntent().getBooleanExtra("Exit me", false)){
@@ -117,6 +128,22 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         }
         homeInstance = this;
 
+        mainToolbar = findViewById(R.id.main_toolbar);
+        if(getSupportActionBar() == null) {
+            setSupportActionBar(mainToolbar);
+            Log.d("TOOLBAR", "NULL");
+        }
+
+        if ((getResources().getConfiguration().screenLayout &
+                Configuration.SCREENLAYOUT_SIZE_MASK) >=
+                Configuration.SCREENLAYOUT_SIZE_LARGE) {
+            deviceToolbar = findViewById(R.id.device_toolbar);
+            deviceToolbar.setTitle(R.string.title_device);
+        } else {
+            deviceToolbar = mainToolbar;
+        }
+
+        mainToolbar.inflateMenu(R.menu.up_menu);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
@@ -128,13 +155,6 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         RoutinesFragment routinesFragment = new RoutinesFragment();
         FavouritesFragment favouritesFragment = new FavouritesFragment();
 
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            RecyclerViewAdapter.setColumns(3);
-        }
-        else {
-            RecyclerViewAdapter.setColumns(5);
-        }
-
 
         if(bottomStacks[0] == null){
             for(int i = 0; i<3; i++) {
@@ -143,7 +163,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         }
 
         if(!bottomStacks[currentMode].empty()) {
-            setFragment(bottomStacks[currentMode].peek());
+            setFragment(bottomStacks[currentMode].pop());
             return;
         }
         else {
@@ -154,19 +174,21 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
             setFragment(bottomStacks[currentMode].pop());
         }
 
+        Log.d("First stackkkkkk:", Integer.toString(bottomStacks[0].size()));
+
     }
 
     private void endApp() {
         Intent intent = new Intent(this, Home.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("Exit me", true);
+        currentMode = 0;
         startActivity(intent);
         finish();
     }
 
     @Override
     public void onBackPressed() {
-
         if(bottomStacks[currentMode].size() <= 1){
             endApp();
         }
@@ -175,6 +197,10 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
             Fragment back = bottomStacks[currentMode].pop();
             setFragment(back);
         }
+
+        Log.d("First stack:", Integer.toString(bottomStacks[0].size()));
+        Log.d("Seconda stack:", Integer.toString(bottomStacks[1].size()));
+        Log.d("Third stack:", Integer.toString(bottomStacks[2].size()));
     }
 
     @Override

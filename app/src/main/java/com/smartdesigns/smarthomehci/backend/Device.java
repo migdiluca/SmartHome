@@ -1,6 +1,7 @@
 package com.smartdesigns.smarthomehci.backend;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 
 import com.google.gson.Gson;
 import com.smartdesigns.smarthomehci.Devices;
@@ -87,6 +88,7 @@ public class Device implements RecyclerInterface, Serializable {
     public void onClickAction(Serializable arg, Context context) {
 
         FavouritesFragment.access(this);
+
         Intent device = new Intent(context, Devices.class);
         if(Home.getInstance().getCurrentMode() == 0)
             device.putExtra("mode", 0);
