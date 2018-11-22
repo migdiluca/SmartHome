@@ -150,7 +150,7 @@ public class Devices extends Fragment {
         thumbView = inflater.inflate(R.layout.layout_seekbar_thumb, null, false);
         Home.getInstance().getSupportActionBar().setHomeButtonEnabled(true);
 
-        image.setImageResource(context.getResources().getIdentifier(device.getImage().split(".png$")[0], "drawable", context.getPackageName()));
+        image.setImageResource(context.getResources().getIdentifier(device.getImg().split(".png$")[0], "drawable", context.getPackageName()));
 
         //Empiezo con los devices
 
