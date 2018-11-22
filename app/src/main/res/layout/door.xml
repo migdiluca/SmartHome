@@ -15,109 +15,115 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/DeviceLogo"
-                android:layout_width="174dp"
-                android:layout_height="99dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="78dp"
-                android:layout_marginTop="39dp"
-                android:layout_marginEnd="68dp"
-                android:layout_marginBottom="54dp"
-                android:contentDescription="@string/Door"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.889"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.08"
-                app:srcCompat="@drawable/door" />
-        </RelativeLayout>
-
-
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/OCLL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="2dip"
-                    android:background="#eeeeeeee" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/DeviceLogo"
+                        android:layout_width="174dp"
+                        android:layout_height="99dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="78dp"
+                        android:layout_marginTop="39dp"
+                        android:layout_marginEnd="68dp"
+                        android:layout_marginBottom="54dp"
+                        android:contentDescription="@string/Door"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.889"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.08"
+                        app:srcCompat="@drawable/door" />
+                </RelativeLayout>
+
 
                 <LinearLayout
+                    android:id="@+id/OCLL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    android:layout_gravity="end"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    android:orientation="vertical">
 
-                    <CheckBox
-                        android:id="@+id/OpenButton"
-                        android:layout_width="0dp"
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="2dip"
+                        android:background="#eeeeeeee" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
-                        android:text="@string/OpenClose"
-                        android:layout_marginStart="8dp"
-                        android:textAlignment="viewStart"
-                        android:button="@null"
-                        android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"/>
+                        android:layout_gravity="end"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
 
+                        <CheckBox
+                            android:id="@+id/OpenButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:button="@null"
+                            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+                            android:text="@string/OpenClose"
+                            android:textAlignment="viewStart" />
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="2dip"
+                        android:background="#eeeeeeee" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <CheckBox
+                            android:id="@+id/LockButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:button="@null"
+                            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+                            android:text="@string/LockUnlock"
+                            android:textAlignment="viewStart" />
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="2dip"
+                        android:background="#eeeeeeee" />
 
                 </LinearLayout>
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="2dip"
-                    android:background="#eeeeeeee" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    android:layout_gravity="end"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
-
-                    <CheckBox
-                        android:id="@+id/LockButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
-                        android:text="@string/LockUnlock"
-                        android:layout_marginStart="8dp"
-                        android:textAlignment="viewStart"
-                        android:button="@null"
-                        android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"/>
-
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="2dip"
-                    android:background="#eeeeeeee" />
-
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
