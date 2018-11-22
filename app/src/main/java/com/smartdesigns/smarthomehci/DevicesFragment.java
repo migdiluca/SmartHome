@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,6 +46,7 @@ public class DevicesFragment extends Fragment {
     private Room room = null;
     private Routine routine = null;
     private List<Device> devicesList = new ArrayList<>();
+    private ActionBar toolbar = Home.getMainActionBar();
 
     private OnFragmentInteractionListener mListener;
     RecyclerView devicesRecycler;
@@ -97,7 +99,6 @@ public class DevicesFragment extends Fragment {
             routine = (Routine) getArguments().getSerializable("Object");
             getActivity().setTitle(routine.getName());
         }
-
     }
 
     @Override
@@ -115,9 +116,9 @@ public class DevicesFragment extends Fragment {
         Home.getInstance().getSupportActionBar().setHomeButtonEnabled(true);
 
         if (room != null)
-            getActivity().setTitle(room.getName());
+            toolbar.setTitle(room.getName());
         else
-            getActivity().setTitle(routine.getName());
+            toolbar.setTitle(routine.getName());
 
         devicesRecycler = view.findViewById(R.id.devices_recyclerview);
 
@@ -190,18 +191,19 @@ public class DevicesFragment extends Fragment {
             Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_YES);
             view.setBackgroundColor(getResources().getColor(R.color.black));
             Home.setNavColor(R.color.dark_grey);
-            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_grey)));
+            toolbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_grey)));
             Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey_navbar));
         } else if(getView() != null) {
             Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_NO);
             view.setBackgroundColor(getResources().getColor(R.color.white));
             Home.setNavColor(R.color.colorPrimary);
-            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
+            toolbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
             Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey));
-            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
+            toolbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
             Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

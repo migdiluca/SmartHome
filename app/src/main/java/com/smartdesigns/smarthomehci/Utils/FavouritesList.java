@@ -23,6 +23,7 @@ public class FavouritesList {
 
         public Device getDevice(){return device;}
     }
+
     private ArrayList<DeviceFavorite> list = new ArrayList<>();
 
     public boolean access(Device device) {

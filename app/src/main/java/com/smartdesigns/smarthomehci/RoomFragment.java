@@ -1,6 +1,7 @@
 package com.smartdesigns.smarthomehci;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.Toolbar;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -39,6 +43,8 @@ public class RoomFragment extends Fragment {
 
     private static List<Room> roomList = new ArrayList<>();
     private static Room currentRoom;
+    
+    private ActionBar toolbar;
 
     private OnFragmentInteractionListener mListener;
     RecyclerView roomRecycler;
@@ -75,15 +81,17 @@ public class RoomFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        toolbar = Home.getMainActionBar();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_recycler, container, false);
 
         roomRecycler = view.findViewById(R.id.recyclerview);
-        getActivity().setTitle(R.string.title_rooms);
+
+        toolbar.setTitle(R.string.title_rooms);
+
 
         roomList = new ArrayList<>();
         Log.d("ROOMSIZEASD", "asd");
@@ -118,7 +126,6 @@ public class RoomFragment extends Fragment {
                 Log.d("ERRORLOADINGROOMS", error.toString());
             }
         });
-        setBackgroundColor(view);
 
         return view;
     }
@@ -133,30 +140,12 @@ public class RoomFragment extends Fragment {
 
     @Override
     public void onResume() {
+        toolbar.setTitle(R.string.title_rooms);
         super.onResume();
-        setBackgroundColor(getView());
+        //setBackgroundColor(getView());
         addCards();
     }
 
-    private void setBackgroundColor(View view) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        Boolean darkTheme = preferences.getBoolean("dark_theme_checkbox",false);
-        if(darkTheme == true) {
-            Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_YES);
-            view.setBackgroundColor(getResources().getColor(R.color.black));
-            Home.setNavColor(R.color.dark_grey);
-            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_grey)));
-            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey_navbar));
-        } else if(getView() != null) {
-            Home.getInstance().setTheme(AppCompatDelegate.MODE_NIGHT_NO);
-            view.setBackgroundColor(getResources().getColor(R.color.white));
-            Home.setNavColor(R.color.colorPrimary);
-            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.dark_grey));
-            Home.getInstance().getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimary)));
-            Home.getInstance().getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
