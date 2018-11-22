@@ -72,6 +72,7 @@ public class Devices extends Fragment {
     TextView hSwingStat;
     TextView fanSpeedStat;
     TextView acModeStat;
+    TextView acTempStats;
 
 
     /**
@@ -172,6 +173,7 @@ public class Devices extends Fragment {
             hSwingStat = view.findViewById(R.id.HSwingStatus);
             fanSpeedStat = view.findViewById(R.id.FanSpeedStatus);
             acModeStat = view.findViewById(R.id.AcModeStatus);
+            acTempStats = view.findViewById(R.id.AcTempStat);
 
             api.getStateAc(device, new Response.Listener<GetStateAc>() {
                 @Override
@@ -183,6 +185,7 @@ public class Devices extends Fragment {
                     vSwingStat.setText(response.getVerticalSwing());
                     hSwingStat.setText(response.getHorizontalSwing());
                     fanSpeedStat.setText(response.getFanSpeed());
+                    acTempStats.setText(Integer.toString(response.getTemperature()) + " C");
 
                     switch (response.getMode()) {
                         case "cool":
@@ -195,7 +198,7 @@ public class Devices extends Fragment {
                             acModeStat.setText(R.string.Fan);
                             break;
                     }
-                //    temperatureAc.setProgress(response.getTemperature() - 18);
+                    temperatureAc.setProgress(response.getTemperature() - 18);
 
                 }
 
@@ -248,8 +251,9 @@ public class Devices extends Fragment {
                         // You can have your own calculation for progress
 
                         int aux = 18 + progress;
+                        acTempStats.setText(Integer.toString(aux) + " C");
 
-                        seekBar.setThumb(getThumb(aux));
+                        //seekBar.setThumb(getThumb(aux));
                     }
 
                     @Override
