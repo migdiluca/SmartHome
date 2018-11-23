@@ -89,6 +89,19 @@ public class ApiConnection {
         return uuid;
     }
 
+    public String getRoutine(String id, Response.Listener<Routine> listener, Response.ErrorListener errorListener){
+        String url = apiUrl+"routines/"+id;
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        GsonRequest<Object, Routine> request =
+                new GsonRequest<>(Request.Method.GET, url, null, "routine", new TypeToken<Routine>(){}, null, listener, errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+
+        return uuid;
+    }
+
     public String getRooms(Response.Listener<List<Room>> listener, Response.ErrorListener errorListener) {
         String url = apiUrl + "rooms/";
         GsonRequest<Object, List<Room>> request =

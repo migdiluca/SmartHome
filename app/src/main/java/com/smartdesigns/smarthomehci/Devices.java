@@ -1625,8 +1625,7 @@ public class Devices extends Fragment {
         else if(device.getTypeId().equals(TypeId.Blind.getTypeId())) {
 
             responseBlinds = (GetStateBlinds) response;
-
-            if (responseBlinds.getStatus().equals("open") || responseBlinds.getStatus().equals("opening")) {
+            if (responseBlinds.getStatus().equals("opened") || responseBlinds.getStatus().equals("opening")) {
                 up.toggle();
             } else {
                 down.toggle();
@@ -1716,7 +1715,7 @@ public class Devices extends Fragment {
             responseRefrigerator = (GetStateRefrigerator) response;
 
             fridgeTempStats.setText(Integer.toString(responseRefrigerator.getTemperature()) + " C");
-            freezerTempStats.setText(Integer.toString(responseRefrigerator.getTemperature()) + " C");
+            freezerTempStats.setText(Integer.toString(responseRefrigerator.getFreezerTemperature()) + " C");
 
 
             fridgeTemperature.setProgress(responseRefrigerator.getTemperature() - 2);
