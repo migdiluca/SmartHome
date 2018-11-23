@@ -48,8 +48,6 @@ import java.util.concurrent.TimeUnit;
 
 public class Devices extends Fragment {
 
-    //TODO SEEKBAR arreglar, usar de ultima el import este que meti
-
     private Device device = null;
     private View view;
     private Context context;
@@ -272,6 +270,7 @@ public class Devices extends Fragment {
                 temperatureAc.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
                         // You can have your own calculation for progress
 
                         int aux = 18 + progress;
