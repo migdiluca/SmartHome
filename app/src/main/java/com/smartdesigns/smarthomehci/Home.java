@@ -25,6 +25,7 @@ import android.widget.FrameLayout;
 import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
 import com.smartdesigns.smarthomehci.Utils.RefreshFragment;
 import com.smartdesigns.smarthomehci.backend.Device;
+import com.smartdesigns.smarthomehci.backend.Routine;
 
 import java.util.Stack;
 
@@ -40,6 +41,7 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 
     private static int currentMode = 0;
     static private Home homeInstance = null;
+    private static Routine actualRoutine;
 
     private SwipeRefreshLayout sr;
     private static Toolbar mainToolbar;
@@ -88,6 +90,10 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
         BottomNavigationView navigation = (BottomNavigationView) homeInstance.findViewById(R.id.navigation);
         navigation.setBackgroundColor(homeInstance.getResources().getColor(color));
 
+    }
+
+    public static void setRoutine(Routine routine) {
+        actualRoutine = routine;
     }
 
     public void setDeviceFragment( Device device){
