@@ -11,6 +11,10 @@ public class GetStateLamp implements GetState{
         this.brightness = brightness;
     }
 
+    public GetStateLamp(){
+
+    }
+
     public int getBrightness() {
         return brightness;
     }
@@ -21,5 +25,17 @@ public class GetStateLamp implements GetState{
 
     public String getStatus(){
         return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setBrightness(int brightness) {
+        this.brightness = brightness;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

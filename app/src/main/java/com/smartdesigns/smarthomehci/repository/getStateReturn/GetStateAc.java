@@ -18,6 +18,10 @@ public class GetStateAc implements GetState{
         this.mode = mode;
     }
 
+    public GetStateAc(){
+
+    }
+
     public String getStatus() {
         return status;
     }
@@ -40,5 +44,29 @@ public class GetStateAc implements GetState{
 
     public String getMode() {
         return mode;
+    }
+
+    public void setFanSpeed(String fanSpeed) {
+        this.fanSpeed = fanSpeed;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setHorizontalSwing(String horizontalSwing) {
+        this.horizontalSwing = horizontalSwing;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    public void setTemperature(int temperature) {
+        this.temperature = temperature;
+    }
+
+    public void setVerticalSwing(String verticalSwing) {
+        this.verticalSwing = verticalSwing;
     }
 }

@@ -11,6 +11,10 @@ public class GetStateTimer implements GetState{
         this.remaining = remaining;
     }
 
+    public GetStateTimer(){
+
+    }
+
     public String getInterval() {
         return interval;
     }
@@ -21,5 +25,17 @@ public class GetStateTimer implements GetState{
 
     public String getStatus() {
         return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setInterval(String interval) {
+        this.interval = interval;
+    }
+
+    public void setRemaining(int remaining) {
+        this.remaining = remaining;
     }
 }
