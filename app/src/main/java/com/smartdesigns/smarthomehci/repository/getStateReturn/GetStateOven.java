@@ -1,6 +1,6 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class GetStateOven {
+public class GetStateOven implements GetState{
     private String status;
     private int temperature;
     private String heat;

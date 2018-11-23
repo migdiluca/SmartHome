@@ -1,6 +1,6 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class GetStateAlarm {
+public class GetStateAlarm implements GetState {
     private String status;
 
     public GetStateAlarm(String status){

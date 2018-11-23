@@ -1,6 +1,6 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class GetStateAc {
+public class GetStateAc implements GetState{
     private String status;
     private int temperature;
     private String verticalSwing;

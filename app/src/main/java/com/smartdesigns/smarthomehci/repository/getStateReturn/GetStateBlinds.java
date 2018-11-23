@@ -1,6 +1,6 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class GetStateBlinds {
+public class GetStateBlinds implements GetState {
     private String status;
     private int level;
 
