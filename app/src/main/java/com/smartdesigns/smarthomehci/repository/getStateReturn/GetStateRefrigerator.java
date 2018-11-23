@@ -1,6 +1,6 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class GetStateRefrigerator {
+public class GetStateRefrigerator implements GetState {
     private int freezerTemperature;
     private int temperature;
     private String mode;

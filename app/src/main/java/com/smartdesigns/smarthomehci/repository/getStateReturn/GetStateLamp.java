@@ -1,6 +1,6 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class GetStateLamp {
+public class GetStateLamp implements GetState{
     private String status;
     private String color;
     private int brightness;

@@ -1,6 +1,6 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class GetStateDoor {
+public class GetStateDoor implements GetState{
     private String status;
     private String lock;
 

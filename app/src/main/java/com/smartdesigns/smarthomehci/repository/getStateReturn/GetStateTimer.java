@@ -1,6 +1,6 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class GetStateTimer {
+public class GetStateTimer implements GetState{
     private String status;
     private String interval;
     private int remaining;
