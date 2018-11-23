@@ -5,7 +5,9 @@ import com.smartdesigns.smarthomehci.backend.Device;
 import com.smartdesigns.smarthomehci.backend.Routine;
 import com.smartdesigns.smarthomehci.backend.TypeId;
 
-public class DeviceWrapper {
+import java.io.Serializable;
+
+public class DeviceWrapper implements Serializable {
     private Device device;
     private GetState state;
 

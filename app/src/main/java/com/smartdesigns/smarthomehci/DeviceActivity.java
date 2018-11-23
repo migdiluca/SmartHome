@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.smartdesigns.smarthomehci.backend.Device;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.DeviceWrapper;
 
 
 public class DeviceActivity extends AppCompatActivity {
@@ -20,10 +21,10 @@ public class DeviceActivity extends AppCompatActivity {
         setTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
-        Device device = (Device) getIntent().getSerializableExtra("Device");
+        DeviceWrapper device = (DeviceWrapper) getIntent().getSerializableExtra("Device");
         Toolbar toolbar = findViewById(R.id.activity_fragment_toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle(device.getName());
+        toolbar.setTitle(device.getDevice().getName());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 

@@ -96,7 +96,7 @@
     <string name="ColumnsAmountPotrait">Columns amount (Potrait mode)</string>
     <string name="ColumnsAmountLandscape">Columns amount (Landscape mode)</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="pref_dark_theme">Dark theme</string>
+    <string name="pref_dark_theme">Dark theme (Unfinished, needs restart)</string>
 
     <!-- Strings related to Settings -->
 
@@ -197,14 +197,14 @@
         <item>@string/Long</item>
     </string-array>
 
-    <string name="Short" >1 min</string>
+    <string name="Short">1 min</string>
     <string name="Medium">30 min</string>
     <string name="Long">60 min</string>
     <string name="Interval">Notification interval (Restart Required)</string>
 
     <string name="error_request">Error getting the JSON Request</string>
     <string name="activate_dev_not">Activate Device Notifications</string>
-    
+
     <string-array name="FridgeMode">
         <item>@string/Default</item>
         <item>@string/Party</item>
@@ -228,5 +228,7 @@
     <string name="no_routines_available">The are no routines yet!.</string>
     <string name="loading">Loading</string>
     <string name="device_not_exist">There was a connection error or this devices does not exist anymore. Please swipe to refresh.</string>
+    <string name="about_us">About us</string>
+    <string name="about_us_message">We are a team componed by:\n      - Facundo Astiz\n      - Pedro Pingarilho\n      - Miguel Di Luca\n      - Pedro Vedoya\n \n </string>
 
 </resources>
