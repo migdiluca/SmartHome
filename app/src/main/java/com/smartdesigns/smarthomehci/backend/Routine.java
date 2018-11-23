@@ -81,6 +81,7 @@ public class Routine implements RecyclerInterface, Serializable{
         arguments.putSerializable("Object", this);
         fragment.setArguments(arguments);
 
+        Home.setRoutine(this);
         Home home = Home.getInstance();
         home.setFragment(fragment);
     };
