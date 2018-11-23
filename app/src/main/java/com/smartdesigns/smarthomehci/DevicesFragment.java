@@ -217,31 +217,43 @@ public class DevicesFragment extends RefreshFragment {
             });
         } else if (Home.getInstance().getCurrentMode() == 1) {
             devicesList = new ArrayList<>();
-            api.getDevices(new Response.Listener<List<Device>>() {
+            api.getRoutine(routine.getId(), new Response.Listener<Routine>() {
                 @Override
-                public void onResponse(List<Device> response) {
-                    text.setText("");
-                    for (Device device : response) {
-                        if (routine.containsDevice(device)) {
-                            devicesList.add(device);
-                            if (device.getMeta().matches("\"background\"") == false) {
-                                int aux = device.getBackground();
-                                ApiConnection.getInstance(getContext()).updateDevice(device, new Response.Listener<Boolean>() {
-                                    @Override
-                                    public void onResponse(Boolean response) {
+                public void onResponse(Routine response) {
+                    ApiConnection api = ApiConnection.getInstance(Home.getInstance());
+                    routine = response;
+                    api.getDevices(new Response.Listener<List<Device>>() {
+                        @Override
+                        public void onResponse(List<Device> response) {
+                            text.setText("");
+                            for (Device device : response) {
+                                if (routine.containsDevice(device)) {
+                                    devicesList.add(device);
+                                    if (device.getMeta().matches("\"background\"") == false) {
+                                        int aux = device.getBackground();
+                                        ApiConnection.getInstance(getContext()).updateDevice(device, new Response.Listener<Boolean>() {
+                                            @Override
+                                            public void onResponse(Boolean response) {
 
+                                            }
+                                        }, new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                text.setText(R.string.connection_error);
+                                            }
+                                        });
                                     }
-                                }, new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        text.setText(R.string.connection_error);
-                                    }
-                                });
+                                }
                             }
-                        }
-                    }
 
-                    addCards();
+                            addCards();
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            text.setText(R.string.connection_error);
+                        }
+                    });
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -249,6 +261,9 @@ public class DevicesFragment extends RefreshFragment {
                     text.setText(R.string.connection_error);
                 }
             });
+
+
+
         }
     }
 
