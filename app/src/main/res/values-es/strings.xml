@@ -115,6 +115,9 @@
     <string name="apply_routine_error">No se pudo aplicar la rutina por problemas de conectividad, comprobá tu conexión e intenta de nuevo.</string>
     <string name="no_routines_error">No se cargaron las rutinas por problemas de conectividad, comprobá tu conexión e intenta de nuevo.</string>
     <string name="loading">Cargando</string>
+    <string name="device_not_exist">Hubo un error de conexión o no existe mas el dispositivo. Por favor, arrastrá hacia abajo para actualizar.</string>
+    <string name="about_us">Sobre nosotros</string>
+    <string name="about_us_message">Integrantes de nuestro equipo:\n      - Facundo Astiz\n      - Pedro Pingarilho\n      - Miguel Di Luca\n      - Pedro Vedoya\n \n </string>
 
 
 </resources>

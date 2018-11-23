@@ -229,6 +229,6 @@
     <string name="loading">Loading</string>
     <string name="device_not_exist">There was a connection error or this devices does not exist anymore. Please swipe to refresh.</string>
     <string name="about_us">About us</string>
-    <string name="about_us_message">We are a team componed by:\n      - Facundo Astiz\n      - Pedro Pingarilho\n      - Miguel Di Luca\n      - Pedro Vedoya\n \n </string>
+    <string name="about_us_message">We are a team composed by:\n      - Facundo Astiz\n      - Pedro Pingarilho\n      - Miguel Di Luca\n      - Pedro Vedoya\n \n </string>
 
 </resources>
