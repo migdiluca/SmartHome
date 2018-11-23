@@ -31,6 +31,10 @@
             android:label="@string/title_activity_settings"
             android:theme="@style/AppThemeLight"></activity>
         <activity
+            android:name=".AboutUsActivity"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/AppThemeLight"></activity>
+        <activity
             android:name=".DeviceActivity"
             android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_device"
