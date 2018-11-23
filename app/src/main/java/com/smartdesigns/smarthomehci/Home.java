@@ -26,6 +26,7 @@ import com.smartdesigns.smarthomehci.Utils.OnFragmentInteractionListener;
 import com.smartdesigns.smarthomehci.Utils.RefreshFragment;
 import com.smartdesigns.smarthomehci.backend.Device;
 import com.smartdesigns.smarthomehci.backend.Routine;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.DeviceWrapper;
 
 import java.util.Stack;
 
@@ -98,19 +99,21 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
 
     public void setDeviceFragment( Device device){
 
+        DeviceWrapper deviceWrapper = new DeviceWrapper(device,null);
+
         if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE) {
             Devices fragment = new Devices();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             Bundle arguments = new Bundle();
-            arguments.putSerializable("Device", device);
+            arguments.putSerializable("Device", deviceWrapper);
             fragment.setArguments(arguments);
             fragmentTransaction.replace(R.id.device_frame, fragment);
             fragmentTransaction.commit();
             deviceToolbar.setTitle(device.getName());
         } else {
             Intent intent = new Intent(getBaseContext(), DeviceActivity.class);
-            intent.putExtra("Device",device);
+            intent.putExtra("Device",deviceWrapper);
             startActivity(intent);
         }
     }
@@ -321,6 +324,11 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
     protected void onPause() {
         super.onPause();
         Home.activityPaused();
+    }
+
+    public void about_onClick(MenuItem item) {
+        Intent about = new Intent(this, AboutUsActivity.class);
+        startActivity(about);
     }
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
