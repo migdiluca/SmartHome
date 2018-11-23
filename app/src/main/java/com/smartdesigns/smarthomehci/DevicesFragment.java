@@ -239,7 +239,7 @@ public class DevicesFragment extends RefreshFragment {
                                         }, new Response.ErrorListener() {
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
-                                                text.setText(R.string.connection_error);
+
                                             }
                                         });
                                     }
