@@ -324,7 +324,7 @@ public class Devices extends Fragment {
 
             } else {
 
-                stats(dw.getState());
+                stats(dw.getGetState());
 
                 onOffAc.setEnabled(false);
                 temperatureAc.setEnabled(false);
@@ -407,7 +407,7 @@ public class Devices extends Fragment {
                 });
 
             } else {
-                stats(dw.getState());
+                stats(dw.getGetState());
                 up.setEnabled(false);
                 down.setEnabled(false);
             }
@@ -506,7 +506,7 @@ public class Devices extends Fragment {
                 });
 
             } else {
-                stats(dw.getState());
+                stats(dw.getGetState());
                 lockBut.setEnabled(false);
                 openBut.setEnabled(false);
             }
@@ -662,7 +662,7 @@ public class Devices extends Fragment {
 
             } else {
 
-                stats(dw.getState());
+                stats(dw.getGetState());
                 lampBrightness.setEnabled(false);
                 onOffLamp.setEnabled(false);
                 lampColor.setClickable(false);
@@ -803,7 +803,7 @@ public class Devices extends Fragment {
 
             } else {
 
-                stats(dw.getState());
+                stats(dw.getGetState());
 
                 onOffOven.setEnabled(false);
                 temperatureOven.setEnabled(false);
@@ -933,7 +933,7 @@ public class Devices extends Fragment {
                 });
 
             } else {
-                stats(dw.getState());
+                stats(dw.getGetState());
 
                 fridgeTemperature.setEnabled(false);
                 freezerTemperature.setEnabled(false);
@@ -1096,7 +1096,7 @@ public class Devices extends Fragment {
 
             } else {
 
-                stats(dw.getState());
+                stats(dw.getGetState());
 
                 hour.setEnabled(false);
                 minute.setEnabled(false);

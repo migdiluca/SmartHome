@@ -1,6 +1,8 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class GetStateDoor implements GetState{
+import java.io.Serializable;
+
+public class GetStateDoor implements GetState, Serializable {
     private String status;
     private String lock;
 

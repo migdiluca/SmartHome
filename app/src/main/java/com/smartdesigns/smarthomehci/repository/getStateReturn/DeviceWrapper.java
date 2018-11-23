@@ -13,7 +13,8 @@ public class DeviceWrapper implements Serializable {
 
     public DeviceWrapper(Device device, Routine routine) {
         this.device = device;
-        generateState(routine);
+        if(routine != null)
+            generateState(routine);
     }
 
     public Device getDevice() {

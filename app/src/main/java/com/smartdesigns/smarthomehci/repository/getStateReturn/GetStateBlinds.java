@@ -1,6 +1,8 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class GetStateBlinds implements GetState {
+import java.io.Serializable;
+
+public class GetStateBlinds implements GetState, Serializable {
     private String status;
     private int level;
 

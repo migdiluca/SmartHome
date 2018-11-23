@@ -1,6 +1,8 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class GetStateLamp implements GetState{
+import java.io.Serializable;
+
+public class GetStateLamp implements GetState, Serializable {
     private String status;
     private String color;
     private int brightness;

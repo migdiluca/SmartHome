@@ -1,6 +1,8 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class GetStateAlarm implements GetState {
+import java.io.Serializable;
+
+public class GetStateAlarm implements GetState, Serializable {
     private String status;
 
     public GetStateAlarm(String status){

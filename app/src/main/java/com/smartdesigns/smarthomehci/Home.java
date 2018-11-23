@@ -98,8 +98,12 @@ public class Home extends AppCompatActivity implements OnFragmentInteractionList
     }
 
     public void setDeviceFragment( Device device){
-
-        DeviceWrapper deviceWrapper = new DeviceWrapper(device,null);
+        DeviceWrapper deviceWrapper;
+        if(Home.currentMode == 1) {
+            deviceWrapper = new DeviceWrapper(device,actualRoutine);
+        }
+        else
+            deviceWrapper = new DeviceWrapper(device,null);
 
         if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE) {
             Devices fragment = new Devices();

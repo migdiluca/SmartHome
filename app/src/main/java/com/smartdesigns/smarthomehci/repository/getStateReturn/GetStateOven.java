@@ -1,6 +1,8 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class GetStateOven implements GetState{
+import java.io.Serializable;
+
+public class GetStateOven implements GetState, Serializable {
     private String status;
     private int temperature;
     private String heat;

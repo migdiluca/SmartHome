@@ -1,6 +1,8 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class GetStateTimer implements GetState{
+import java.io.Serializable;
+
+public class GetStateTimer implements GetState, Serializable {
     private String status;
     private String interval;
     private int remaining;

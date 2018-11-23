@@ -1,6 +1,8 @@
 package com.smartdesigns.smarthomehci.repository.getStateReturn;
 
-public class GetStateRefrigerator implements GetState {
+import java.io.Serializable;
+
+public class GetStateRefrigerator implements GetState, Serializable {
     private int freezerTemperature;
     private int temperature;
     private String mode;
