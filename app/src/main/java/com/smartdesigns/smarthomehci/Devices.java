@@ -35,6 +35,8 @@ import com.smartdesigns.smarthomehci.backend.Action;
 import com.smartdesigns.smarthomehci.backend.Device;
 import com.smartdesigns.smarthomehci.backend.TypeId;
 import com.smartdesigns.smarthomehci.repository.ApiConnection;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.DeviceWrapper;
+import com.smartdesigns.smarthomehci.repository.getStateReturn.GetState;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateAc;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateBlinds;
 import com.smartdesigns.smarthomehci.repository.getStateReturn.GetStateDoor;
@@ -47,6 +49,8 @@ import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 
 public class Devices extends Fragment {
+
+    private DeviceWrapper dw = null;
 
     private Device device = null;
     private View view;
@@ -160,7 +164,8 @@ public class Devices extends Fragment {
 
         //getView().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        device = (Device) getArguments().getSerializable("Device");
+        dw = (DeviceWrapper) getArguments().getSerializable("Device");
+        device = dw.getDevice();
         getActivity().setTitle(device.getName());
 
     }
@@ -171,6 +176,7 @@ public class Devices extends Fragment {
         View v = null;
         thumbView = inflater.inflate(R.layout.layout_seekbar_thumb, null, false);
         Home.getInstance().getSupportActionBar().setHomeButtonEnabled(true);
+
 
         //Empiezo con los devices
 
@@ -193,44 +199,24 @@ public class Devices extends Fragment {
             acModeStat = view.findViewById(R.id.AcModeStatus);
             acTempStats = view.findViewById(R.id.AcTempStat);
 
-            api.getStateAc(device, new Response.Listener<GetStateAc>() {
-                @Override
-                public void onResponse(GetStateAc response) {
 
-                    responseAc = response;
-
-                    if (response.getStatus().equals("on"))
-                        onOffAc.setChecked(true);
-                    else
-                        onOffAc.setChecked(false);
-                    vSwingStat.setText(response.getVerticalSwing());
-                    hSwingStat.setText(response.getHorizontalSwing());
-                    fanSpeedStat.setText(response.getFanSpeed());
-                    acTempStats.setText(Integer.toString(response.getTemperature()) + " C");
-
-                    switch (response.getMode()) {
-                        case "cool":
-                            acModeStat.setText(R.string.Cool);
-                            break;
-                        case "heat":
-                            acModeStat.setText(R.string.Heat);
-                            break;
-                        default:
-                            acModeStat.setText(R.string.Fan);
-                            break;
-                    }
-                    temperatureAc.setProgress(response.getTemperature() - 18);
-
-                }
-
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            });
 
             if (Home.getInstance().getCurrentMode() != 1) {
+
+                api.getStateAc(device, new Response.Listener<GetStateAc>() {
+                    @Override
+                    public void onResponse(GetStateAc response) {
+
+                        stats(response);
+
+                    }
+
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
 
                 onOffAc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -337,6 +323,9 @@ public class Devices extends Fragment {
                 });
 
             } else {
+
+                stats(dw.getState());
+
                 onOffAc.setEnabled(false);
                 temperatureAc.setEnabled(false);
                 vSwing.setClickable(false);
@@ -355,26 +344,22 @@ public class Devices extends Fragment {
             up = view.findViewById(R.id.UpBut);
             down = view.findViewById(R.id.DownBut);
 
-            api.getStateBlinds(device, new Response.Listener<GetStateBlinds>() {
-                @Override
-                public void onResponse(GetStateBlinds response) {
-                    responseBlinds = response;
 
-                    if (response.getStatus().equals("open") || response.getStatus().equals("opening")) {
-                        up.toggle();
-                    } else {
-                        down.toggle();
-                    }
-                }
-
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            });
 
             if (Home.getInstance().getCurrentMode() != 1) {
+
+                api.getStateBlinds(device, new Response.Listener<GetStateBlinds>() {
+                    @Override
+                    public void onResponse(GetStateBlinds response) {
+                        stats(response);
+                    }
+
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
 
                 up.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -422,6 +407,7 @@ public class Devices extends Fragment {
                 });
 
             } else {
+                stats(dw.getState());
                 up.setEnabled(false);
                 down.setEnabled(false);
             }
@@ -436,31 +422,22 @@ public class Devices extends Fragment {
             openBut = view.findViewById(R.id.OpenButton);
             lockBut = view.findViewById(R.id.LockButton);
 
-            api.getStateDoor(device, new Response.Listener<GetStateDoor>() {
-                @Override
-                public void onResponse(GetStateDoor response) {
-                    responseDoor = response;
-
-                    if (response.getStatus().equals("closed")) {
-                        openBut.setChecked(false);
-                    } else {
-                        openBut.setChecked(true);
-                    }
-                    if (response.getLock().equals("locked")) {
-                        lockBut.setChecked(true);
-                    } else {
-                        lockBut.setChecked(false);
-                    }
-                }
-
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            });
 
             if (Home.getInstance().getCurrentMode() != 1) {
+
+                api.getStateDoor(device, new Response.Listener<GetStateDoor>() {
+                    @Override
+                    public void onResponse(GetStateDoor response) {
+                        stats(response);
+                    }
+
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
 
                 openBut.setOnClickListener(new View.OnClickListener() {
 
@@ -529,6 +506,7 @@ public class Devices extends Fragment {
                 });
 
             } else {
+                stats(dw.getState());
                 lockBut.setEnabled(false);
                 openBut.setEnabled(false);
             }
@@ -545,34 +523,23 @@ public class Devices extends Fragment {
             lampBrightnessStats = view.findViewById(R.id.LampBrightStat);
             colorPickerView = view.findViewById(R.id.ColorPickerView);
 
-            api.getStateLamp(device, new Response.Listener<GetStateLamp>() {
-                @Override
-                public void onResponse(GetStateLamp response) {
-                    responseLamp = response;
 
-                    if (response.getStatus().equals("on"))
-                        onOffLamp.setChecked(true);
-                    else
-                        onOffLamp.setChecked(false);
-
-                    lampBrightness.setProgress(response.getBrightness());
-                    lampBrightnessStats.setText(Integer.toString(response.getBrightness()));
-
-                    if(response.getColor().charAt(0) != '#')
-                        col = Color.parseColor("#"+response.getColor());
-                    else
-                        col = Color.parseColor(response.getColor());
-                    colorPickerView.setBackgroundColor(col);
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            });
 
             if (Home.getInstance().getCurrentMode() != 1) {
+
+                api.getStateLamp(device, new Response.Listener<GetStateLamp>() {
+                    @Override
+                    public void onResponse(GetStateLamp response) {
+
+                        stats(response);
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
 
                 onOffLamp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -694,6 +661,8 @@ public class Devices extends Fragment {
 
 
             } else {
+
+                stats(dw.getState());
                 lampBrightness.setEnabled(false);
                 onOffLamp.setEnabled(false);
                 lampColor.setClickable(false);
@@ -716,66 +685,23 @@ public class Devices extends Fragment {
             convectionModeStats = view.findViewById(R.id.ConvectionModeStats);
             ovenTempStats = view.findViewById(R.id.OvenTempStat);
 
-            api.getStateOven(device, new Response.Listener<GetStateOven>() {
-                @Override
-                public void onResponse(GetStateOven response) {
-                    responseOven = response;
-
-                    if (response.getStatus().equals("on"))
-                        onOffOven.setChecked(true);
-                    else
-                        onOffOven.setChecked(false);
-
-                    ovenTempStats.setText(Integer.toString(response.getTemperature()) + " C");
-
-                    temperatureOven.setProgress(response.getTemperature() - 90);
-
-                    switch (response.getGrill()) {
-                        case "large":
-                            grillModeStats.setText(R.string.Large);
-                            break;
-                        case "eco":
-                            grillModeStats.setText(R.string.Eco);
-                            break;
-                        default:
-                            grillModeStats.setText(R.string.Off);
-                            break;
-                    }
-
-                    switch (response.getConvection()) {
-                        case "normal":
-                            convectionModeStats.setText(R.string.Normal);
-                            break;
-                        case "eco":
-                            convectionModeStats.setText(R.string.Eco);
-                            break;
-                        default:
-                            convectionModeStats.setText(R.string.Off);
-                            break;
-                    }
-
-                    switch (response.getHeat()) {
-                        case "conventional":
-                            heatModeStats.setText(R.string.Conventional);
-                            break;
-                        case "bottom":
-                            heatModeStats.setText(R.string.Bottom);
-                            break;
-                        default:
-                            heatModeStats.setText(R.string.Top);
-                            break;
-                    }
-
-                }
-
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            });
 
             if (Home.getInstance().getCurrentMode() != 1) {
+
+                api.getStateOven(device, new Response.Listener<GetStateOven>() {
+                    @Override
+                    public void onResponse(GetStateOven response) {
+
+                        stats(response);
+
+                    }
+
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
 
                 onOffOven.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -876,6 +802,9 @@ public class Devices extends Fragment {
 
 
             } else {
+
+                stats(dw.getState());
+
                 onOffOven.setEnabled(false);
                 temperatureOven.setEnabled(false);
                 grillMode.setClickable(false);
@@ -897,40 +826,20 @@ public class Devices extends Fragment {
             freezerTempStats = view.findViewById(R.id.FreezerTempStat);
 
 
-            api.getStateRefrigerator(device, new Response.Listener<GetStateRefrigerator>() {
-                @Override
-                public void onResponse(GetStateRefrigerator response) {
-                    responseRefrigerator = response;
-
-                    fridgeTempStats.setText(Integer.toString(response.getTemperature()) + " C");
-                    freezerTempStats.setText(Integer.toString(response.getTemperature()) + " C");
-
-
-                    fridgeTemperature.setProgress(response.getTemperature() - 2);
-                    freezerTemperature.setProgress(response.getFreezerTemperature() + 20);
-
-
-                    switch (response.getMode()) {
-                        case "default":
-                            fridgeModeStats.setText(R.string.Default);
-                            break;
-                        case "vacation":
-                            fridgeModeStats.setText(R.string.Vacations);
-                            break;
-                        default:
-                            fridgeModeStats.setText(R.string.Party);
-                            break;
-                    }
-                }
-
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            });
-
             if (Home.getInstance().getCurrentMode() != 1) {
+
+                api.getStateRefrigerator(device, new Response.Listener<GetStateRefrigerator>() {
+                    @Override
+                    public void onResponse(GetStateRefrigerator response) {
+                        stats(response);
+                    }
+
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
 
                 fridgeTemperature.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
@@ -1024,6 +933,8 @@ public class Devices extends Fragment {
                 });
 
             } else {
+                stats(dw.getState());
+
                 fridgeTemperature.setEnabled(false);
                 freezerTemperature.setEnabled(false);
                 fridgeMode.setClickable(false);
@@ -1059,60 +970,23 @@ public class Devices extends Fragment {
             minute.setWrapSelectorWheel(true);
             second.setWrapSelectorWheel(true);
 
-            api.getStateTimer(device, new Response.Listener<GetStateTimer>() {
-                @Override
-                public void onResponse(GetStateTimer response) {
-                    responseTimer = response;
 
-                    int value = Integer.parseInt(response.getInterval());
-                    hour.setValue(value / 3600);
-                    value = value - hour.getValue() * 3600;
-                    minute.setValue(value / 60);
-
-                    second.setValue(value - minute.getValue() * 60);
-
-
-                    if (response.getStatus().equals("active")) {
-                        int rem = response.getRemaining();
-                        int h, m, s;
-                        h = rem / 3600;
-                        rem = rem - h * 3600;
-                        m = rem / 60;
-                        s = rem - m * 60;
-
-                        String hms = String.format("%02d:%02d:%02d", h, m, s);
-
-
-                        startTimer(h, m, s);
-                        timer.setText(hms);//set text
-                        startButton.setClickable(false);
-                        stopButton.setClickable(true);
-                        setButton.setClickable(false);
-                        stopButton.setBackgroundColor(getResources().getColor(R.color.buttonColor));
-                        setButton.setBackgroundColor(getResources().getColor(R.color.buttonColorOff));
-                        startButton.setBackgroundColor(getResources().getColor(R.color.buttonColorOff));
-                    } else {
-                        String hms = String.format("%02d:%02d:%02d", hour.getValue(), minute.getValue(), second.getValue());
-                        timer.setText(hms);//set text
-
-                        startButton.setClickable(true);
-                        stopButton.setClickable(false);
-                        setButton.setClickable(true);
-
-                        stopButton.setBackgroundColor(getResources().getColor(R.color.buttonColorOff));
-                        setButton.setBackgroundColor(getResources().getColor(R.color.buttonColor));
-                        startButton.setBackgroundColor(getResources().getColor(R.color.buttonColor));
-                    }
-                }
-
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            });
 
             if (Home.getInstance().getCurrentMode() != 1) {
+
+                api.getStateTimer(device, new Response.Listener<GetStateTimer>() {
+                    @Override
+                    public void onResponse(GetStateTimer response) {
+
+                        stats(response);
+                    }
+
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
 
                 hour.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                     @Override
@@ -1221,6 +1095,9 @@ public class Devices extends Fragment {
                 });
 
             } else {
+
+                stats(dw.getState());
+
                 hour.setEnabled(false);
                 minute.setEnabled(false);
                 second.setEnabled(false);
@@ -1242,6 +1119,8 @@ public class Devices extends Fragment {
         return v;
 
     }
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -1714,6 +1593,193 @@ public class Devices extends Fragment {
     public void onPause() {
         super.onPause();
         Home.activityPaused();
+    }
+
+    private void stats(GetState response) {
+        if(device.getTypeId().equals(TypeId.Ac.getTypeId())) {
+
+            responseAc = (GetStateAc) response;
+
+            if (responseAc.getStatus().equals("on"))
+                onOffAc.setChecked(true);
+            else
+                onOffAc.setChecked(false);
+            vSwingStat.setText(responseAc.getVerticalSwing());
+            hSwingStat.setText(responseAc.getHorizontalSwing());
+            fanSpeedStat.setText(responseAc.getFanSpeed());
+            acTempStats.setText(Integer.toString(responseAc.getTemperature()) + " C");
+
+            switch (responseAc.getMode()) {
+                case "cool":
+                    acModeStat.setText(R.string.Cool);
+                    break;
+                case "heat":
+                    acModeStat.setText(R.string.Heat);
+                    break;
+                default:
+                    acModeStat.setText(R.string.Fan);
+                    break;
+            }
+            temperatureAc.setProgress(responseAc.getTemperature() - 18);
+        }
+        else if(device.getTypeId().equals(TypeId.Blind.getTypeId())) {
+
+            responseBlinds = (GetStateBlinds) response;
+
+            if (responseBlinds.getStatus().equals("open") || responseBlinds.getStatus().equals("opening")) {
+                up.toggle();
+            } else {
+                down.toggle();
+            }
+        }
+        else if(device.getTypeId().equals(TypeId.Door.getTypeId())) {
+            responseDoor = (GetStateDoor) response;
+
+            if (responseDoor.getStatus().equals("closed")) {
+                openBut.setChecked(false);
+            } else {
+                openBut.setChecked(true);
+            }
+            if (responseDoor.getLock().equals("locked")) {
+                lockBut.setChecked(true);
+            } else {
+                lockBut.setChecked(false);
+            }
+        }
+        else if(device.getTypeId().equals(TypeId.Lamp.getTypeId())) {
+            responseLamp = (GetStateLamp) response;
+
+            if (responseLamp.getStatus().equals("on"))
+                onOffLamp.setChecked(true);
+            else
+                onOffLamp.setChecked(false);
+
+            lampBrightness.setProgress(responseLamp.getBrightness());
+            lampBrightnessStats.setText(Integer.toString(responseLamp.getBrightness()));
+
+            if(responseLamp.getColor().charAt(0) != '#')
+                col = Color.parseColor("#"+responseLamp.getColor());
+            else
+                col = Color.parseColor(responseLamp.getColor());
+            colorPickerView.setBackgroundColor(col);
+
+        }
+        else if(device.getTypeId().equals(TypeId.Oven.getTypeId())) {
+            responseOven = (GetStateOven) response;
+
+            if (responseOven.getStatus().equals("on"))
+                onOffOven.setChecked(true);
+            else
+                onOffOven.setChecked(false);
+
+            ovenTempStats.setText(Integer.toString(responseOven.getTemperature()) + " C");
+
+            temperatureOven.setProgress(responseOven.getTemperature() - 90);
+
+            switch (responseOven.getGrill()) {
+                case "large":
+                    grillModeStats.setText(R.string.Large);
+                    break;
+                case "eco":
+                    grillModeStats.setText(R.string.Eco);
+                    break;
+                default:
+                    grillModeStats.setText(R.string.Off);
+                    break;
+            }
+
+            switch (responseOven.getConvection()) {
+                case "normal":
+                    convectionModeStats.setText(R.string.Normal);
+                    break;
+                case "eco":
+                    convectionModeStats.setText(R.string.Eco);
+                    break;
+                default:
+                    convectionModeStats.setText(R.string.Off);
+                    break;
+            }
+
+            switch (responseOven.getHeat()) {
+                case "conventional":
+                    heatModeStats.setText(R.string.Conventional);
+                    break;
+                case "bottom":
+                    heatModeStats.setText(R.string.Bottom);
+                    break;
+                default:
+                    heatModeStats.setText(R.string.Top);
+                    break;
+            }
+        }
+        else if(device.getTypeId().equals(TypeId.Refrigerator.getTypeId())) {
+            responseRefrigerator = (GetStateRefrigerator) response;
+
+            fridgeTempStats.setText(Integer.toString(responseRefrigerator.getTemperature()) + " C");
+            freezerTempStats.setText(Integer.toString(responseRefrigerator.getTemperature()) + " C");
+
+
+            fridgeTemperature.setProgress(responseRefrigerator.getTemperature() - 2);
+            freezerTemperature.setProgress(responseRefrigerator.getFreezerTemperature() + 20);
+
+
+            switch (responseRefrigerator.getMode()) {
+                case "default":
+                    fridgeModeStats.setText(R.string.Default);
+                    break;
+                case "vacation":
+                    fridgeModeStats.setText(R.string.Vacations);
+                    break;
+                default:
+                    fridgeModeStats.setText(R.string.Party);
+                    break;
+            }
+        }
+        else if(device.getTypeId().equals(TypeId.Timer.getTypeId())) {
+            responseTimer = (GetStateTimer)response;
+
+            int value = Integer.parseInt(responseTimer.getInterval());
+            hour.setValue(value / 3600);
+            value = value - hour.getValue() * 3600;
+            minute.setValue(value / 60);
+
+            second.setValue(value - minute.getValue() * 60);
+
+
+            if (responseTimer.getStatus().equals("active")) {
+                int rem = responseTimer.getRemaining();
+                int h, m, s;
+                h = rem / 3600;
+                rem = rem - h * 3600;
+                m = rem / 60;
+                s = rem - m * 60;
+
+                String hms = String.format("%02d:%02d:%02d", h, m, s);
+
+
+                startTimer(h, m, s);
+                timer.setText(hms);//set text
+                startButton.setClickable(false);
+                stopButton.setClickable(true);
+                setButton.setClickable(false);
+                stopButton.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                setButton.setBackgroundColor(getResources().getColor(R.color.buttonColorOff));
+                startButton.setBackgroundColor(getResources().getColor(R.color.buttonColorOff));
+            } else {
+                String hms = String.format("%02d:%02d:%02d", hour.getValue(), minute.getValue(), second.getValue());
+                timer.setText(hms);//set text
+
+                startButton.setClickable(true);
+                stopButton.setClickable(false);
+                setButton.setClickable(true);
+
+                stopButton.setBackgroundColor(getResources().getColor(R.color.buttonColorOff));
+                setButton.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                startButton.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+            }
+        }
+
+
     }
 
 
