@@ -59,11 +59,16 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dip"
+                        android:background="#eeeeeeee" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -101,6 +106,10 @@
 
 
                     </LinearLayout>
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dip"
+                        android:background="#eeeeeeee" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

@@ -86,9 +86,9 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="8dp"
+                            android:layout_marginBottom="10dp"
                             android:textOff="@string/Off"
                             android:textOn="@string/On"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -109,8 +109,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -151,8 +151,8 @@
                         android:id="@+id/VSwing"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
                         android:clickable="true"
                         android:focusable="true"
                         android:orientation="horizontal">
@@ -195,8 +195,8 @@
                         android:id="@+id/HSwing"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
                         android:clickable="true"
                         android:focusable="true"
                         android:orientation="horizontal">
@@ -238,8 +238,8 @@
                         android:id="@+id/FanSpeed"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
                         android:clickable="true"
                         android:focusable="true"
                         android:orientation="horizontal">
@@ -282,8 +282,8 @@
                         android:id="@+id/AcMode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
                         android:clickable="true"
                         android:focusable="true"
                         android:orientation="horizontal">

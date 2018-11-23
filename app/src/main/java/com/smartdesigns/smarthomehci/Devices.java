@@ -1736,6 +1736,7 @@ public class Devices extends Fragment {
             }
         }
         else if(device.getTypeId().equals(TypeId.Timer.getTypeId())) {
+
             responseTimer = (GetStateTimer)response;
 
             int value = Integer.parseInt(responseTimer.getInterval());
