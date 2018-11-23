@@ -15,6 +15,10 @@ public class GetStateOven implements GetState{
         this.convection = convection;
     }
 
+    public GetStateOven(){
+
+    }
+
     public int getTemperature() {
         return temperature;
     }
@@ -33,5 +37,25 @@ public class GetStateOven implements GetState{
 
     public String getConvection() {
         return convection;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setTemperature(int temperature) {
+        this.temperature = temperature;
+    }
+
+    public void setConvection(String convection) {
+        this.convection = convection;
+    }
+
+    public void setGrill(String grill) {
+        this.grill = grill;
+    }
+
+    public void setHeat(String heat) {
+        this.heat = heat;
     }
 }

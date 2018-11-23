@@ -92,4 +92,8 @@ public class Routine implements RecyclerInterface, Serializable{
         }
         return false;
     }
+
+    public List<Action> getActions() {
+        return actions;
+    }
 }

@@ -11,6 +11,10 @@ public class GetStateRefrigerator implements GetState {
         this.mode = mode;
     }
 
+    public GetStateRefrigerator(){
+
+    }
+
     public int getTemperature() {
         return temperature;
     }
@@ -21,5 +25,17 @@ public class GetStateRefrigerator implements GetState {
 
     public String getMode() {
         return mode;
+    }
+
+    public void setTemperature(int temperature) {
+        this.temperature = temperature;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    public void setFreezerTemperature(int freezerTemperature) {
+        this.freezerTemperature = freezerTemperature;
     }
 }
