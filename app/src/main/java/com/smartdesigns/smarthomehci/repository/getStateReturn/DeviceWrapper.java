@@ -103,7 +103,7 @@ public class DeviceWrapper {
                     }else if (action.getActionName().equals("start")) {
                         ((GetStateTimer)state).setStatus("active");
                     }else if (action.getActionName().equals("stop")) {
-                        ((GetStateTimer)state).setStatus("");
+                        ((GetStateTimer)state).setStatus("inactive");
                     }
                 }else if(device.getTypeId().equals(TypeId.Refrigerator.getTypeId())){
                     if (action.getActionName().equals("setFreezerTemperature")) {
