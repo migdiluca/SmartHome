@@ -1625,7 +1625,6 @@ public class Devices extends Fragment {
         else if(device.getTypeId().equals(TypeId.Blind.getTypeId())) {
 
             responseBlinds = (GetStateBlinds) response;
-            Log.d("@@@@", responseBlinds.getStatus());
             if (responseBlinds.getStatus().equals("opened") || responseBlinds.getStatus().equals("opening")) {
                 up.toggle();
             } else {
