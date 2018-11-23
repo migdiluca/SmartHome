@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartHome</string>
+    <string name="title_rooms">Quartos</string>
+    <string name="title_routines">Rotinas</string>
+    <string name="apply_routine">Aplicar mudanças!</string>
+    <string name="title_cameras">Cameras</string>
+    <string name="Search">Buscar</string>
+    <string name="Settings">Configurações</string>
+    <string name="About">Sobre</string>
+
+    <string name="ActionFail">Erro, não foi realizar a troca!</string>
+
+    <string name="Blinds">Cortinas</string>
+    <string name="UpDown">Subir/Descer</string>
+    <string name="Up">Subir</string>
+    <string name="Down">Descer</string>
+    <string name="SuccessBlindsDown"> As cortinas desceram!</string>
+    <string name="SuccessBlindsUp"> As cortinas subiram!</string>
+
+    <string name="Ac">Ar Condicionado</string>
+    <string name="Temperature">Temperatura</string>
+    <string name="VerticalSwing">Oscilação vertical</string>
+    <string name="HorizontalSwing">Oscilação horizontal</string>
+    <string name="FanSpeed">Velocidade do ventilador</string>
+    <string name="AcMode">Modo</string>
+    <string name="Cool">Esfriar</string>
+    <string name="Heat">Esquentar</string>
+    <string name="Fan">Ventilador</string>
+    <string name="VSwingSuccess">A oscilação vertical mudou.</string>
+    <string name="HSwingSuccess">A oscilação horizontal mudou.</string>
+    <string name="FanSpeedSuccess">A velocidade do ventilador mudou.</string>
+    <string name="AcModeSuccess">O modo mudou.</string>
+
+    <string name="SuccessMsgOnOff">O dispositivo esta </string>
+    <string name="OnM">ligado</string>
+    <string name="OffM">desligado</string>
+    <string name="SuccessMsgTemp">A temperatura mudou.</string>
+
+    <string name="Door">Porta</string>
+    <string name="OpenClose">Porta aberta</string>
+    <string name="Open">Abrir</string>
+    <string name="Close">Fechar</string>
+    <string name="Lock">Bloquear</string>
+    <string name="Unlock">Desbloquear</string>
+    <string name="LockUnlock">Bloquear a porta</string>
+    <string name="SuccessMsgDoor">A porta agora esta </string>
+    <string name="OpenMsg">Aberta.</string>
+    <string name="CloseMsg">Fechada.</string>
+    <string name="LockMsg">Bloqueada.</string>
+    <string name="UnlockMsg">Desbloqueada.</string>
+
+    <string name="Lamp">Lâmpada</string>
+    <string name="Brightness">Brilho</string>
+    <string name="ColorPicker">Paleta</string>
+    <string name="SuccessMsgBright">O brilho foi trocado.</string>
+    <string name="SuccessMsgCol">A cor mudou.</string>
+
+
+    <string name="Oven">Forno</string>
+    <string name="Normal">Normal</string>
+    <string name="Large">Grande</string>
+    <string name="ConvectionMode">Convecção</string>
+    <string name="Bottom">Abaixo</string>
+    <string name="Top">Acima</string>
+    <string name="Conventional">Convencional</string>
+    <string name="HeatMode">Modo calor</string>
+
+    <string name="SuccessCMode">A convecção mudou.</string>
+    <string name="SuccessGMode">O modo Grill mudou.</string>
+    <string name="SuccessHMode">O modo calor mudou.</string>
+
+    <string name="Refrigerator">Geladeira</string>
+    <string name="FreezerTemperature">Temperatura do congelador</string>
+    <string name="Party">Festa</string>
+    <string name="Vacations">Ferias</string>
+    <string name="SuccessFMode">Ouve uma mudança no modo da geladeira.</string>
+    <string name="Default">Padrão</string>
+
+    <string name="Timer">Temporizador</string>
+    <string name="enterMinutes">Minutos</string>
+    <string name="Start">Iniciar</string>
+    <string name="Stop">Parar</string>
+    <string name="Set">Ajustar</string>
+    <string name="TimerFinished">Acabou o tempo do alarme!</string>
+    <string name="SetDone">Foi estabelecido um tempo para o temporizador!</string>
+
+
+
+    <string name="Alarm">Alarme</string>
+    <string name="ColumnsAmount">Quantidade de colunas</string>
+    <string name="title_activity_settings">Ajustes</string>
+    <string name="pref_dark_theme">Tema escuro</string>
+    <string name="GrillMode">Modo Grill</string>
+    <string name="error_request">Erro tentando conseguir o request de JSON</string>
+    <string name="activate_dev_not">Ativar notificações de dispositivo</string>
+    <string name="ColumnsAmountPotrait">Quantidade de colunas(Modo retrato)</string>
+    <string name="ColumnsAmountLandscape">Quantidade de colunas(Modo paisagem)</string>
+    <string name="Interval">Intervalo entre notificações (Deve reiniciar a app)</string>
+    <string name="Long">60 min</string>
+    <string name="Medium">30 min</string>
+    <string name="Short">1 min</string>
+    <string name="title_favourites">Favoritos</string>
+    <string name="ChangeMessage">Um dispositivo foi modificado!</string>
+    <string name="title_device">Tela do dispostivo</string>
+    <string name="title_activity_device">Atividade do dispositivo</string>
+
+
+    <string name="empty_room">O quarto esta vazio</string>
+    <string name="no_rooms_available">Não existem quartos</string>
+    <string name="no_rooms_error">Os quartos não conseguiram carregar devido a problemas de conexão, tente novamente.</string>
+    <string name="no_favorites_available">Não existem dispositivos nos favoritos.</string>
+    <string name="no_routines_available">Não existem dispositivos nas rotinas.</string>
+    <string name="connection_error">Existem problemas de conexão, tente novamente.</string>
+    <string name="apply_routine_error">Não foi possível aplicar a rotina por problemas de conexão, tente novamente.</string>
+    <string name="no_routines_error">Não foram carregadas as rotinas, tente novamente.</string>
+    <string name="loading">Carregando</string>
+    <string name="device_not_exist">Ouve um erro de conexão ou não existe mais o dispositivo. Tente novamente.</string>
+    <string name="about_us">Sobre nós</string>
+    <string name="about_us_message">Integrantes da nossa equipe:\n      - Facundo Astiz\n      - Pedro Pingarilho\n      - Miguel Di Luca\n      - Pedro Vedoya\n \n </string>
+
+
+</resources>

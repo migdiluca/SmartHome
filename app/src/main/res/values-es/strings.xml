@@ -48,7 +48,7 @@
     <string name="OpenMsg">Abierta.</string>
     <string name="CloseMsg">Cerrada.</string>
     <string name="LockMsg">Bloqueada.</string>
-    <string name="UnlockMsg">Desbloqueda.</string>
+    <string name="UnlockMsg">Desbloqueada.</string>
 
     <string name="Lamp">Lámpara</string>
     <string name="Brightness">Brillo</string>
